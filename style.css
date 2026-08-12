@@ -118,7 +118,7 @@ nav a:hover {
         url("images/hero-03.png");
 
     background-size: cover;
-    background-position: center;
+    background-position: center bottom;
     background-repeat: no-repeat;
 
     -webkit-mask-image:
