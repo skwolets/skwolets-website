@@ -104,18 +104,11 @@ nav a:hover {
 
 
 .hero::before {
-
     content: "";
 
     position: absolute;
 
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: auto;
-
-    aspect-ratio: 760 / 504;
+    inset: 0;
 
     background:
         linear-gradient(
@@ -124,7 +117,7 @@ nav a:hover {
         ),
         url("images/hero-01.png");
 
-    background-size: cover;
+    background-size: auto 100%;
     background-position: center;
     background-repeat: no-repeat;
 
@@ -132,7 +125,7 @@ nav a:hover {
         linear-gradient(
             to bottom,
             black 0%,
-            black 70%,
+            black 65%,
             transparent 100%
         );
 
@@ -140,7 +133,7 @@ nav a:hover {
         linear-gradient(
             to bottom,
             black 0%,
-            black 70%,
+            black 65%,
             transparent 100%
         );
 
