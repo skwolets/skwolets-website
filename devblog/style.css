@@ -1,8 +1,11 @@
 .devblog-content {
-
-    padding:80px 0 0 0;
-
+    padding: 80px 0 0 0;
 }
+
+
+/* ============================================================
+   DEV BLOG HERO
+============================================================ */
 
 .devblog-hero {
     height: 100vh;
@@ -67,6 +70,7 @@
 
     margin-left: auto;
     margin-right: 10%;
+
     text-align: right;
 }
 
@@ -74,132 +78,95 @@
     margin: 0;
 
     font-size: 22px;
+
     color: #aaa;
 }
 
+
+/* ============================================================
+   DEVELOPMENT BLOG ITEMS
+============================================================ */
+
 .devblog-item {
+    width: 100%;
 
-    width:100%;
+    padding: 100px 15%;
 
-    padding:100px 15%;
-
-    background:#050505;
-
+    background: #050505;
 }
 
 .devblog-item:nth-child(even) {
-
-    background:#0b0b0b;
-
+    background: #0b0b0b;
 }
 
 .devblog-number {
+    margin-bottom: 25px;
 
-    margin-bottom:25px;
+    font-size: 14px;
 
-    font-size:14px;
+    font-weight: 700;
 
-    font-weight:700;
+    letter-spacing: 4px;
 
-    letter-spacing:4px;
-
-    color:#555;
-
+    color: #555;
 }
 
 .devblog-item h1 {
+    margin-bottom: 15px;
 
-    margin-bottom:15px;
+    font-size: 52px;
 
-    font-size:52px;
+    line-height: 1;
 
-    line-height:1;
-
-    letter-spacing:1px;
-
+    letter-spacing: 1px;
 }
 
 .devblog-item h2 {
+    margin-bottom: 40px;
 
-    margin-bottom:40px;
+    font-size: 18px;
 
-    font-size:18px;
+    letter-spacing: 3px;
 
-    letter-spacing:3px;
-
-    color:#666;
-
+    color: #666;
 }
 
 .devblog-item p {
+    margin-bottom: 25px;
 
-    margin-bottom:25px;
+    font-size: 20px;
 
-    font-size:20px;
+    line-height: 1.7;
 
-    line-height:1.7;
-
-    color:#aaa;
-
+    color: #aaa;
 }
 
 .devblog-item strong {
-
-    color:white;
-
+    color: white;
 }
 
 .devblog-item ul {
+    margin: 30px 0;
 
-    margin:30px 0;
+    padding-left: 25px;
 
-    padding-left:25px;
-
-    max-width:900px;
-
+    max-width: 900px;
 }
 
 .devblog-item li {
+    margin-bottom: 15px;
 
-    margin-bottom:15px;
+    font-size: 19px;
 
-    font-size:19px;
+    line-height: 1.6;
 
-    line-height:1.6;
-
-    color:#aaa;
-
+    color: #aaa;
 }
 
-@media(max-width:800px) {
 
-    .devblog-item {
-
-        padding:70px 8%;
-
-    }
-
-    .devblog-item h1 {
-
-        font-size:38px;
-
-    }
-
-    .devblog-item h2 {
-
-        font-size:15px;
-
-    }
-
-    .devblog-item p,
-
-    .devblog-item li {
-
-        font-size:17px;
-
-    }
-
-}
+/* ============================================================
+   HERO ANIMATION
+============================================================ */
 
 @keyframes heroZoom {
 
@@ -213,71 +180,92 @@
 
 }
 
-@media(max-width:800px) {
 
-    .devblog-hero-content h1 {
-        font-size: 50px;
-    }
-
-}
+/* ============================================================
+   MARQUEE
+============================================================ */
 
 .marquee {
+    width: 100%;
 
-    width:100%;
+    overflow: hidden;
 
-    overflow:hidden;
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #222;
 
-    border-top:1px solid #222;
-    border-bottom:1px solid #222;
+    background: #050505;
 
-    background:#050505;
-
-    white-space:nowrap;
-
+    white-space: nowrap;
 }
 
 .marquee-track {
+    display: inline-flex;
 
-    display:inline-flex;
+    align-items: center;
 
-    align-items:center;
+    gap: 60px;
 
-    gap:60px;
+    padding: 14px 0;
 
-    padding:14px 0;
-
-    animation:marquee 180s linear infinite;
-
+    animation:
+        marquee
+        180s
+        linear
+        infinite;
 }
 
 .marquee-track span {
+    font-size: 13px;
 
-    font-size:13px;
+    font-weight: 700;
 
-    font-weight:700;
+    letter-spacing: 3px;
 
-    letter-spacing:3px;
-
-    color:#666;
-
+    color: #666;
 }
 
 .marquee-track span::after {
+    content: "◆";
 
-    content:"◆";
+    margin-left: 60px;
 
-    margin-left:60px;
-
-    color:#333;
-
+    color: #333;
 }
 
 @keyframes marquee {
 
     from {
-        transform:translateX(0);
+        transform: translateX(0);
     }
 
     to {
-        transform:translateX(-50%);
+        transform: translateX(-50%);
     }
+
+}
+
+
+/* ============================================================
+   MOBILE
+============================================================ */
+
+@media(max-width: 800px) {
+
+    .devblog-item {
+        padding: 70px 8%;
+    }
+
+    .devblog-item h1 {
+        font-size: 38px;
+    }
+
+    .devblog-item h2 {
+        font-size: 15px;
+    }
+
+    .devblog-item p,
+    .devblog-item li {
+        font-size: 17px;
+    }
+
+}
