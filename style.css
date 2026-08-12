@@ -559,6 +559,20 @@ footer {
         background-position: 40% center;
     }
 
+    .hero-content {
+    width: 100%;
+    text-align: right;
+    padding-right: 8%;
+    }
+
+    .hero p {
+        margin-left: auto;
+    }
+
+    .buttons {
+        text-align: right;
+    }
+
     .cards,
     .images,
     .news,
