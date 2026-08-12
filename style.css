@@ -555,10 +555,6 @@ footer {
         font-size: 50px;
     }
 
-    .hero::before {
-        background-size: 105% auto;
-    }
-
     .cards,
     .images,
     .news,
