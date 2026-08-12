@@ -262,6 +262,7 @@ MOBILE
     .devblog-hero .devblog-hero-content p {
         font-size: 50px !important;
         line-height: 0.9;
+        color: #aaa;
     }
 
     .devblog-item {
