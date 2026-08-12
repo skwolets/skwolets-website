@@ -64,21 +64,16 @@
 .devblog-hero-content {
     position: relative;
     z-index: 1;
-}
 
-.devblog-hero-content h1 {
-    font-size: 90px;
-    line-height: .9;
-    margin: 0;
+    margin-left: auto;
+    margin-right: 10%;
+    text-align: right;
 }
 
 .devblog-hero-content p {
-    margin-top: 30px;
+    margin: 0;
 
     font-size: 22px;
-
-    max-width: 500px;
-
     color: #aaa;
 }
 
