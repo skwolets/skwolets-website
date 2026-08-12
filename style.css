@@ -487,19 +487,28 @@ display:none;
 
 .language-menu {
 
-    position:fixed;
+    position:relative;
 
-    bottom:25px;
-    right:25px;
+    display:flex;
 
-    z-index:100;
+    justify-content:flex-end;
+
+    align-items:flex-end;
+
+    margin-bottom:25px;
 
 }
 
 .language-button {
 
-    width:80px;
-    height:42px;
+    min-width:130px;
+    height:55px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:12px;
 
     background:#050505;
 
@@ -507,7 +516,7 @@ display:none;
 
     color:#fff;
 
-    font-size:12px;
+    font-size:14px;
     font-weight:700;
 
     letter-spacing:2px;
@@ -520,7 +529,17 @@ display:none;
 
 .language-button:hover {
 
-    border-color:#fff;
+    border-color:#888;
+
+}
+
+.language-icon {
+
+    font-size:20px;
+
+    line-height:1;
+
+    opacity:.7;
 
 }
 
@@ -528,13 +547,10 @@ display:none;
 
     position:absolute;
 
-    bottom:100%;
-
     right:0;
+    bottom:61px;
 
-    width:120px;
-
-    margin-bottom:6px;
+    width:130px;
 
     display:flex;
 
@@ -566,13 +582,13 @@ display:none;
 
 .language-options a {
 
-    padding:13px 15px;
+    padding:16px;
 
     color:#aaa;
 
     text-decoration:none;
 
-    font-size:11px;
+    font-size:12px;
 
     font-weight:700;
 
