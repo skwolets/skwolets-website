@@ -6,7 +6,6 @@
 
 .devblog-hero {
     height: 30vh;
-
     position: relative;
     overflow: hidden;
 
@@ -22,7 +21,6 @@
     content: "";
 
     position: absolute;
-
     inset: 0;
 
     background-image:
@@ -32,7 +30,7 @@
         ),
         url("../images/hero-04.png");
 
-    background-size: cover;
+    background-size: 1920px auto;
     background-position: center 20%;
     background-repeat: no-repeat;
 
