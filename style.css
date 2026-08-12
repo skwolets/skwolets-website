@@ -656,3 +656,12 @@ footer {
     }
 
 }
+
+.button.dtf {
+    background: transparent;
+    border: 1px solid #333;
+}
+
+.button.dtf:hover {
+    border-color: #666;
+}
