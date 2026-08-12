@@ -125,18 +125,22 @@ nav a:hover {
 
     -webkit-mask-image:
     radial-gradient(
-        ellipse 75% 70% at center,
-        black 45%,
+        ellipse 60% 58% at center,
+        black 30%,
+        rgba(0,0,0,0.75) 50%,
+        rgba(0,0,0,0.3) 70%,
         transparent 100%
     );
 
-mask-image:
+    mask-image:
     radial-gradient(
-        ellipse 75% 70% at center,
-        black 45%,
+        ellipse 60% 58% at center,
+        black 30%,
+        rgba(0,0,0,0.75) 50%,
+        rgba(0,0,0,0.3) 70%,
         transparent 100%
     );
-
+    
     z-index: 0;
 
     animation:
