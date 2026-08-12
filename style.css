@@ -556,7 +556,7 @@ footer {
     }
 
     .hero::before {
-    background-size: auto 85%;
+    background-size: auto 65%;
     background-position: center center;
     }
 
