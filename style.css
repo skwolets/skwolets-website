@@ -104,11 +104,18 @@ nav a:hover {
 
 
 .hero::before {
+
     content: "";
 
     position: absolute;
 
-    inset: 0;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: auto;
+
+    aspect-ratio: 760 / 504;
 
     background:
         linear-gradient(
@@ -125,7 +132,7 @@ nav a:hover {
         linear-gradient(
             to bottom,
             black 0%,
-            black 65%,
+            black 70%,
             transparent 100%
         );
 
@@ -133,7 +140,7 @@ nav a:hover {
         linear-gradient(
             to bottom,
             black 0%,
-            black 65%,
+            black 70%,
             transparent 100%
         );
 
@@ -146,7 +153,6 @@ nav a:hover {
         infinite
         alternate;
 }
-
 
 @keyframes heroZoom {
 
