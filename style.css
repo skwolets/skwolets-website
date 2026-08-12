@@ -613,3 +613,25 @@ display:none;
     text-align:right;
 
 }
+
+@media(max-width:800px) {
+
+    .contact-area {
+
+        align-items:flex-start;
+
+    }
+
+    .contact-area .contact {
+
+        text-align:left;
+
+    }
+
+    .language-menu {
+
+        margin-bottom:30px;
+
+    }
+
+}
