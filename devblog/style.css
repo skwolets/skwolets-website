@@ -67,16 +67,19 @@
     position: relative;
     z-index: 1;
 
-    margin-left: auto;
-    margin-right: 10%;
+    width: 100%;
+    padding-right: 10%;
 
     text-align: right;
 }
 
 .devblog-hero-content p {
-    margin: 0;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: 0;
 
     font-size: 22px;
+    max-width: 500px;
 
     color: #aaa;
 }
