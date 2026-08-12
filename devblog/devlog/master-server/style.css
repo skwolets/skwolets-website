@@ -4,13 +4,17 @@ body {
     color: #fff;
 }
 
+header {
+    background: #000;
+}
+
 /* ============================================================
    DEVELOPMENT LOG
    ============================================================ */
 
 .devlog-article {
     width: 100%;
-    background: #050505;
+    background: #111;
 }
 
 
