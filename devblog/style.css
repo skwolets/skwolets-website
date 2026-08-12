@@ -244,6 +244,153 @@
 }
 
 /* ============================================================
+   UPDATES
+============================================================ */
+
+.updates details {
+    width: 100%;
+}
+
+.updates summary {
+    cursor: pointer;
+
+    list-style: none;
+
+    font-size: 52px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    color: #aaa;
+
+    transition:
+        color 0.2s ease,
+        padding-left 0.2s ease;
+}
+
+.updates summary::-webkit-details-marker {
+    display: none;
+}
+
+.updates summary::after {
+    content: "+";
+
+    display: inline-block;
+
+    margin-left: 20px;
+
+    font-size: 36px;
+    font-weight: 400;
+
+    color: #555;
+
+    transition:
+        transform 0.3s ease,
+        color 0.2s ease;
+}
+
+.updates details[open] summary::after {
+    content: "−";
+    color: #aaa;
+}
+
+.updates summary:hover {
+    color: #fff;
+}
+
+.updates-list {
+    margin-top: 45px;
+
+    border-top: 1px solid #222;
+}
+
+.update-item {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 40px;
+
+    padding: 30px 0;
+
+    border-bottom: 1px solid #222;
+
+    text-decoration: none;
+
+    transition:
+        padding-left 0.25s ease,
+        background 0.25s ease;
+}
+
+.update-item:hover {
+    padding-left: 15px;
+}
+
+.update-date {
+    flex-shrink: 0;
+
+    width: 110px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    color: #555;
+}
+
+.update-info {
+    flex: 1;
+}
+
+.update-info h3 {
+    margin: 0 0 10px 0;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    color: #aaa;
+
+    transition: color 0.2s ease;
+}
+
+.update-info p {
+    margin: 0;
+
+    max-width: 850px;
+
+    font-size: 16px;
+    line-height: 1.6;
+
+    color: #666;
+}
+
+.update-item:hover .update-info h3 {
+    color: #fff;
+}
+
+.update-arrow {
+    flex-shrink: 0;
+
+    font-size: 28px;
+
+    color: #444;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.update-item:hover .update-arrow {
+    color: #aaa;
+
+    transform: translateX(5px);
+}
+
+/* ============================================================
 MOBILE
 ============================================================ */
 
