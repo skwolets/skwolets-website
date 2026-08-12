@@ -30,7 +30,7 @@
         ),
         url("../images/hero-04.png");
 
-    background-size: 1920px auto;
+    background-size: 100% auto;
     background-position: center 20%;
     background-repeat: no-repeat;
 
