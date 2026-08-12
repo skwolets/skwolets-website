@@ -254,15 +254,31 @@
     }
 
     .devblog-hero-content {
+        position: relative;
+
         width: 100%;
+
         padding-right: 8%;
+        padding-left: 0;
+
+        margin-left: 0;
+        margin-right: 0;
+
         text-align: right;
     }
 
     .devblog-hero-content p {
+        width: 100%;
         max-width: 100%;
+
+        margin-top: 30px;
         margin-left: auto;
         margin-right: 0;
+
+        font-size: 50px;
+        line-height: .9;
+
+        color: #aaa;
     }
 
     .devblog-item {
