@@ -1,5 +1,5 @@
 /* ============================================================
-   DEVELOPMENT LOG
+DEVELOPMENT LOG
 ============================================================ */
 
 body {
@@ -14,25 +14,120 @@ header {
 
 .devlog-article {
     width: 100%;
+    background: #000;
+}
+
+
+/* ============================================================
+ALTERNATING SECTIONS
+============================================================ */
+
+/*
+    HEADER
+    BLACK
+*/
+
+/* ------------------------------------------------------------
+SECTION 01
+GRAY
+WHAT IS A MASTER SERVER?
+------------------------------------------------------------ */
+
+.devlog-article > .log-section:nth-of-type(1) {
+    background: #111;
+}
+
+
+/* ------------------------------------------------------------
+SECTION 02
+BLACK
+THE FIRST VERSION
+------------------------------------------------------------ */
+
+.devlog-article > .log-section:nth-of-type(2) {
+    background: #050505;
+}
+
+
+/* ------------------------------------------------------------
+SECTION 03
+GRAY
+WHY BUILD OUR OWN SYSTEM?
+------------------------------------------------------------ */
+
+.devlog-article > .log-section:nth-of-type(3) {
+    background: #111;
+}
+
+
+/* ------------------------------------------------------------
+SECTION 04
+BLACK
+HEARTBEAT SYSTEM
+------------------------------------------------------------ */
+
+.devlog-article > .log-section:nth-of-type(4) {
+    background: #050505;
+}
+
+
+/* ------------------------------------------------------------
+SECTION 05
+GRAY
+CONNECTION QUEUES
+------------------------------------------------------------ */
+
+.devlog-article > .log-section:nth-of-type(5) {
+    background: #111;
+}
+
+
+/* ------------------------------------------------------------
+SECTION 06
+BLACK
+WHAT DOES THIS GIVE THE PLAYER?
+------------------------------------------------------------ */
+
+.devlog-article > .log-section:nth-of-type(6) {
+    background: #050505;
+}
+
+
+/* ------------------------------------------------------------
+SECTION 07
+GRAY
+MORE THAN A SERVER LIST
+------------------------------------------------------------ */
+
+.devlog-article > .log-section:nth-of-type(7) {
+    background: #111;
+}
+
+
+/* ------------------------------------------------------------
+SECTION 08
+BLACK
+ACCESS CONTROL
+------------------------------------------------------------ */
+
+.devlog-article > .log-section:nth-of-type(8) {
+    background: #050505;
+}
+
+
+/* ------------------------------------------------------------
+SECTION 09
+GRAY
+CONCLUSION
+------------------------------------------------------------ */
+
+.devlog-article > .log-final {
     background: #111;
 }
 
 
 /* ============================================================
-   ALTERNATING SECTIONS
-============================================================ */
-
-.section-gray {
-    background: #111 !important;
-}
-
-.section-black {
-    background: #050505 !important;
-}
-
-
-/* ============================================================
-   HERO
+HERO
 ============================================================ */
 
 .log-hero {
@@ -46,7 +141,7 @@ header {
 
     padding: 120px 10%;
 
-    background: #111;
+    background: #000;
 }
 
 .log-hero::before {
@@ -58,9 +153,9 @@ header {
     background:
         linear-gradient(
             90deg,
-            rgba(0,0,0,0.85),
-            rgba(0,0,0,0.35),
-            rgba(0,0,0,0.85)
+            rgba(0, 0, 0, 0.85),
+            rgba(0, 0, 0, 0.35),
+            rgba(0, 0, 0, 0.85)
         ),
         url("../images/hero-02.png");
 
@@ -89,13 +184,12 @@ header {
         linear-gradient(
             to bottom,
             transparent 55%,
-            #111 100%
+            #000 100%
         );
 }
 
 .log-hero-content {
     position: relative;
-
     z-index: 2;
 
     max-width: 900px;
@@ -138,15 +232,24 @@ header {
 
 
 /* ============================================================
-   SECTIONS
+SECTIONS
 ============================================================ */
 
 .log-section {
-    max-width: 1200px;
+    width: 100%;
+    max-width: none;
 
-    margin: 0 auto;
+    margin: 0;
 
-    padding: 130px 40px;
+    box-sizing: border-box;
+
+    padding:
+        130px
+        max(40px, calc((100vw - 1200px) / 2));
+}
+
+.log-section > * {
+    box-sizing: border-box;
 }
 
 .section-number {
@@ -198,7 +301,7 @@ header {
 
 
 /* ============================================================
-   FEATURE GRID
+FEATURE GRID
 ============================================================ */
 
 .feature-grid {
@@ -264,14 +367,13 @@ header {
 
 
 /* ============================================================
-   ARCHITECTURE
+ARCHITECTURE
 ============================================================ */
 
 .architecture {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     gap: 25px;
@@ -288,7 +390,6 @@ header {
 
 .architecture-node {
     width: 220px;
-
     min-height: 150px;
 
     padding: 25px;
@@ -360,15 +461,17 @@ header {
 
 
 /* ============================================================
-   DISCLAIMER
+DISCLAIMER
 ============================================================ */
 
 .disclaimer {
     max-width: 1200px;
 
-    margin: 0 auto 80px;
+    margin: 0 auto;
 
     padding: 35px 40px;
+
+    box-sizing: border-box;
 
     background: #090909;
 
@@ -400,12 +503,11 @@ header {
 
 
 /* ============================================================
-   VIDEO
+VIDEO
 ============================================================ */
 
 .video-wrapper {
     width: 100%;
-
     max-width: 1200px;
 
     margin: 60px auto 0;
@@ -439,7 +541,7 @@ header {
 
 
 /* ============================================================
-   CONTROL LIST
+CONTROL LIST
 ============================================================ */
 
 .control-list {
@@ -476,7 +578,7 @@ header {
 
 
 /* ============================================================
-   QUOTE
+QUOTE
 ============================================================ */
 
 .quote-block {
@@ -513,21 +615,17 @@ header {
 
 
 /* ============================================================
-   HEARTBEAT
+HEARTBEAT
 ============================================================ */
 
 .heartbeat-section {
     max-width: none;
-
-    padding-left: max(40px, calc((100vw - 1200px) / 2));
-    padding-right: max(40px, calc((100vw - 1200px) / 2));
 }
 
 .heartbeat-visual {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     gap: 35px;
@@ -589,9 +687,12 @@ header {
     background: #ff3b3b;
 
     box-shadow:
-        0 0 0 0 rgba(255,59,59,0.7);
+        0 0 0 0 rgba(255, 59, 59, 0.7);
 
-    animation: pulse 1.5s infinite;
+    animation:
+        pulse
+        1.5s
+        infinite;
 }
 
 .heartbeat-connection {
@@ -618,7 +719,7 @@ header {
 
 
 /* ============================================================
-   TERMINAL
+TERMINAL
 ============================================================ */
 
 .terminal {
@@ -697,14 +798,13 @@ header {
 
 
 /* ============================================================
-   STATUS FLOW
+STATUS FLOW
 ============================================================ */
 
 .status-flow {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     gap: 20px;
@@ -740,14 +840,13 @@ header {
 
 
 /* ============================================================
-   QUEUE
+QUEUE
 ============================================================ */
 
 .queue-visual {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     gap: 25px;
@@ -765,7 +864,6 @@ header {
 .queue-master,
 .queue-player {
     width: 230px;
-
     min-height: 180px;
 
     padding: 30px;
@@ -880,7 +978,7 @@ header {
 
 
 /* ============================================================
-   BENEFITS
+BENEFITS
 ============================================================ */
 
 .benefits-grid {
@@ -926,7 +1024,7 @@ header {
 
 
 /* ============================================================
-   DATA
+DATA
 ============================================================ */
 
 .data-grid {
@@ -968,14 +1066,11 @@ header {
 
 
 /* ============================================================
-   SECURITY
+SECURITY
 ============================================================ */
 
 .security-section {
     max-width: none;
-
-    padding-left: max(40px, calc((100vw - 1200px) / 2));
-    padding-right: max(40px, calc((100vw - 1200px) / 2));
 }
 
 .security-grid {
@@ -1013,15 +1108,20 @@ header {
 
 
 /* ============================================================
-   FINAL
+FINAL
 ============================================================ */
 
 .log-final {
-    max-width: 1200px;
+    width: 100%;
+    max-width: none;
 
-    margin: 0 auto;
+    margin: 0;
 
-    padding: 150px 40px;
+    box-sizing: border-box;
+
+    padding:
+        150px
+        max(40px, calc((100vw - 1200px) / 2));
 }
 
 .log-final h2 {
@@ -1043,9 +1143,13 @@ header {
 }
 
 .final-statement {
+    max-width: 1200px;
+
     margin: 80px 0;
 
     padding: 60px;
+
+    box-sizing: border-box;
 
     background: #0b0b0b;
 
@@ -1080,7 +1184,16 @@ header {
 
 
 /* ============================================================
-   ANIMATIONS
+FOOTER
+============================================================ */
+
+footer {
+    background: #000;
+}
+
+
+/* ============================================================
+ANIMATIONS
 ============================================================ */
 
 @keyframes logHeroZoom {
@@ -1092,31 +1205,29 @@ header {
     to {
         transform: scale(1.08);
     }
-
 }
 
 @keyframes pulse {
 
     0% {
         box-shadow:
-            0 0 0 0 rgba(255,59,59,0.7);
+            0 0 0 0 rgba(255, 59, 59, 0.7);
     }
 
     70% {
         box-shadow:
-            0 0 0 15px rgba(255,59,59,0);
+            0 0 0 15px rgba(255, 59, 59, 0);
     }
 
     100% {
         box-shadow:
-            0 0 0 0 rgba(255,59,59,0);
+            0 0 0 0 rgba(255, 59, 59, 0);
     }
-
 }
 
 
 /* ============================================================
-   MOBILE
+MOBILE
 ============================================================ */
 
 @media (max-width: 800px) {
@@ -1150,6 +1261,10 @@ header {
     }
 
 
+    /* ========================================================
+    SECTIONS
+    ======================================================== */
+
     .log-section {
         padding: 80px 8%;
     }
@@ -1167,7 +1282,9 @@ header {
     }
 
 
-    /* FEATURE */
+    /* ========================================================
+    FEATURE
+    ======================================================== */
 
     .feature-grid {
         grid-template-columns:
@@ -1175,7 +1292,9 @@ header {
     }
 
 
-    /* ARCHITECTURE */
+    /* ========================================================
+    ARCHITECTURE
+    ======================================================== */
 
     .architecture {
         flex-direction: column;
@@ -1202,7 +1321,9 @@ header {
     }
 
 
-    /* DISCLAIMER */
+    /* ========================================================
+    DISCLAIMER
+    ======================================================== */
 
     .disclaimer {
         margin: 0 8% 40px;
@@ -1211,7 +1332,9 @@ header {
     }
 
 
-    /* HEARTBEAT */
+    /* ========================================================
+    HEARTBEAT
+    ======================================================== */
 
     .heartbeat-section,
     .security-section {
@@ -1235,7 +1358,9 @@ header {
     }
 
 
-    /* QUEUE */
+    /* ========================================================
+    QUEUE
+    ======================================================== */
 
     .queue-visual {
         flex-direction: column;
@@ -1257,7 +1382,9 @@ header {
     }
 
 
-    /* BENEFITS */
+    /* ========================================================
+    BENEFITS
+    ======================================================== */
 
     .benefits-grid {
         grid-template-columns:
@@ -1265,7 +1392,9 @@ header {
     }
 
 
-    /* DATA */
+    /* ========================================================
+    DATA
+    ======================================================== */
 
     .data-grid {
         grid-template-columns:
@@ -1273,7 +1402,9 @@ header {
     }
 
 
-    /* SECURITY */
+    /* ========================================================
+    SECURITY
+    ======================================================== */
 
     .security-grid {
         grid-template-columns:
@@ -1281,7 +1412,9 @@ header {
     }
 
 
-    /* FINAL */
+    /* ========================================================
+    FINAL
+    ======================================================== */
 
     .log-final {
         padding: 90px 8%;
@@ -1294,12 +1427,11 @@ header {
     .final-statement strong {
         font-size: 24px;
     }
-
 }
 
 
 /* ============================================================
-   SMALL MOBILE
+SMALL MOBILE
 ============================================================ */
 
 @media (max-width: 500px) {
@@ -1331,12 +1463,11 @@ header {
     .log-section h2 {
         font-size: 34px;
     }
-
 }
 
 
 /* ============================================================
-   BACK TO TOP
+BACK TO TOP
 ============================================================ */
 
 .back-to-top {
@@ -1349,6 +1480,7 @@ header {
     height: 50px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -1359,6 +1491,7 @@ header {
     color: #aaa;
 
     font-size: 24px;
+
     line-height: 1;
 
     cursor: pointer;
@@ -1403,5 +1536,4 @@ header {
 
         font-size: 22px;
     }
-
 }
