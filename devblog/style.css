@@ -244,7 +244,7 @@
    MOBILE
    ============================================================ */
 
-@media(max-width: 800px) {
+@media(max-width:800px) {
 
     .devblog-hero::before {
         background-position: 30% center;
@@ -252,24 +252,14 @@
 
     .devblog-hero-content {
         width: 100%;
-
         padding-right: 8%;
-
-        margin-left: 0;
-        margin-right: 0;
-
         text-align: right;
     }
 
     .devblog-hero-content p {
         max-width: 100%;
-
         margin-left: auto;
         margin-right: 0;
-
-        font-size: 36px;
-
-        color: #aaa;
     }
 
     .devblog-item {
