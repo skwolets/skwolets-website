@@ -3,8 +3,9 @@
     padding-top:80px;
 
 }
-
 .devblog-item {
+
+    width:100%;
 
     padding:100px 10%;
 
@@ -15,12 +16,6 @@
 .devblog-item:nth-child(even) {
 
     background:#0b0b0b;
-
-}
-
-.devblog-item > * {
-
-    max-width:900px;
 
 }
 
