@@ -54,3 +54,26 @@ header.style.background =
 
 
 });
+
+const languageMenu = document.querySelector(".language-menu");
+const languageButton = document.querySelector(".language-button");
+
+if (languageMenu && languageButton) {
+
+    languageButton.addEventListener("click", () => {
+
+        languageMenu.classList.toggle("open");
+
+    });
+
+    document.addEventListener("click", (event) => {
+
+        if (!languageMenu.contains(event.target)) {
+
+            languageMenu.classList.remove("open");
+
+        }
+
+    });
+
+}
