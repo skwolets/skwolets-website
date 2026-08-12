@@ -470,3 +470,66 @@ display:none;
 
 
 }
+
+.marquee {
+
+    width:100%;
+
+    overflow:hidden;
+
+    border-top:1px solid #222;
+    border-bottom:1px solid #222;
+
+    background:#050505;
+
+    white-space:nowrap;
+
+}
+
+.marquee-track {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:60px;
+
+    padding:14px 0;
+
+    animation:marquee 25s linear infinite;
+
+}
+
+.marquee-track span {
+
+    font-size:13px;
+
+    font-weight:700;
+
+    letter-spacing:3px;
+
+    color:#666;
+
+}
+
+.marquee-track span::after {
+
+    content:"◆";
+
+    margin-left:60px;
+
+    color:#333;
+
+}
+
+@keyframes marquee {
+
+    from {
+        transform:translateX(0);
+    }
+
+    to {
+        transform:translateX(-50%);
+    }
+
+}
