@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Создание мастер-сервера — SKWOLETS</title>
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        SKWOLETS
+    </div>
+
+    <nav>
+        <a href="/ru/">На главную</a>
+    </nav>
+
+</header>
+
+
+<!-- ============================================================
+MARQUEE
+============================================================ -->
+
+<div class="marquee">
+
+    <div class="marquee-track">
+
+        <span>проверяю heartbeat</span>
+        <span>проверяю очередь</span>
+        <span>ищу race condition</span>
+        <span>читаю Redis</span>
+        <span>чиню API</span>
+        <span>перезапускаю сервер</span>
+        <span>тестирую reconnect</span>
+        <span>проверяю тикеты</span>
+        <span>жду свободный слот</span>
+        <span>оптимизирую запросы</span>
+        <span>смотрю логи</span>
+        <span>ломаю то, что работало</span>
+        <span>чиню старый баг</span>
+        <span>создаю новый баг</span>
+        <span>жду компиляцию</span>
+        <span>пью остывший кофе</span>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+ARTICLE HERO
+============================================================ -->
+
+<section class="log-hero">
+
+    <div class="log-hero-content">
+
+        <div class="log-label">
+            SKWOLETS / DEV LOG / 001
+        </div>
+
+        <h1>
+            БОЛЬШЕ, ЧЕМ<br>
+            СПИСОК СЕРВЕРОВ
+        </h1>
+
+        <p>
+            Создание собственного мастер-сервера
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================
+ARTICLE
+============================================================ -->
+
+<main class="devlog-article">
+
+
+    <!-- INTRO -->
+
+    <section class="log-section">
+
+        <div class="section-number">
+            01
+        </div>
+
+        <h2>
+            ЧТО ЗА МАСТЕР-СЕРВЕР?
+        </h2>
+
+        <p class="lead">
+            Мастер-сервер — это диспетчер игровой инфраструктуры.
+            Он знает, какие серверы работают, кто на них играет
+            и какие из них доступны для подключения.
+        </p>
+
+        <p>
+            Каждый игровой сервер при запуске сообщает мастер-серверу:
+        </p>
+
+
+        <div class="feature-grid">
+
+            <div class="feature-card">
+                <span class="feature-icon">01</span>
+                <strong>СОСТОЯНИЕ</strong>
+                <p>Сервер запущен и отвечает.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">02</span>
+                <strong>ИМЯ</strong>
+                <p>Название и идентификатор сервера.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">03</span>
+                <strong>ИГРОКИ</strong>
+                <p>Текущее количество игроков.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">04</span>
+                <strong>СЛОТЫ</strong>
+                <p>Есть ли свободное место.</p>
+            </div>
+
+        </div>
+
+
+        <!-- ARCHITECTURE -->
+
+        <div class="architecture">
+
+            <div class="architecture-node">
+
+                <span class="node-type">
+                    GAME SERVER
+                </span>
+
+                <strong>
+                    Игровой сервер
+                </strong>
+
+                <small>
+                    30 / 60 игроков
+                </small>
+
+            </div>
+
+
+            <div class="architecture-line">
+
+                <span>
+                    HEARTBEAT
+                </span>
+
+                <div class="line"></div>
+
+                <span>
+                    STATUS
+                </span>
+
+            </div>
+
+
+            <div class="architecture-node master">
+
+                <span class="node-type">
+                    MASTER
+                </span>
+
+                <strong>
+                    Мастер-сервер
+                </strong>
+
+                <small>
+                    актуальное состояние
+                </small>
+
+            </div>
+
+
+            <div class="architecture-line">
+
+                <span>
+                    SERVER LIST
+                </span>
+
+                <div class="line"></div>
+
+            </div>
+
+
+            <div class="architecture-node player">
+
+                <span class="node-type">
+                    CLIENT
+                </span>
+
+                <strong>
+                    Игрок
+                </strong>
+
+                <small>
+                    выбирает сервер
+                </small>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DISCLAIMER -->
+
+    <section class="disclaimer">
+
+        <div class="disclaimer-label">
+            PRE-ALPHA
+        </div>
+
+        <p>
+            Все показанные материалы находятся на ранней стадии разработки.
+            Визуальные элементы, интерфейс, механики и игровые системы
+            могут измениться в процессе.
+        </p>
+
+        <p>
+            Представленные серверы являются тестовыми данными,
+            сгенерированными исключительно для демонстрации работы браузера.
+        </p>
+
+    </section>
+
+
+    <!-- VIDEO -->
+
+    <section class="log-section">
+
+        <div class="section-number">
+            02
+        </div>
+
+        <h2>
+            ПЕРВАЯ ВЕРСИЯ
+        </h2>
+
+        <p>
+            Вот как система выглядит со стороны игрока.
+            Мастер-сервер собирает информацию от игровых серверов
+            и формирует актуальный список доступных подключений.
+        </p>
+
+
+        <div class="video-wrapper">
+
+            <div class="video-container">
+
+                <iframe
+                    src="https://vkvideo.ru/video_ext.php?oid=-240461333&id=456239019&hash=e421f2139b155d3b&hd=4"
+                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock"
+                    allowfullscreen
+                    frameborder="0">
+                </iframe>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- WHY OWN SYSTEM -->
+
+    <section class="log-section">
+
+        <div class="section-number">
+            03
+        </div>
+
+        <h2>
+            ПОЧЕМУ СОБСТВЕННАЯ СИСТЕМА?
+        </h2>
+
+        <p class="lead">
+            Потому что чужие решения — это чужие ограничения.
+        </p>
+
+        <p>
+            Поэтому я создаю ключевую инфраструктуру с нуля.
+            Без зависимости от сторонних решений.
+            Без скрытых ограничений.
+            С полным контролем над тем, как игроки получают доступ
+            к игровому миру.
+        </p>
+
+
+        <div class="control-list">
+
+            <div>
+                <span>01</span>
+                Какие серверы отображаются в списке.
+            </div>
+
+            <div>
+                <span>02</span>
+                Насколько быстро обновляется информация.
+            </div>
+
+            <div>
+                <span>03</span>
+                Как работает поиск, фильтры и сортировка.
+            </div>
+
+            <div>
+                <span>04</span>
+                Как происходит подключение.
+            </div>
+
+        </div>
+
+
+        <div class="quote-block">
+
+            <span>
+                NO EXTRA NODES.
+            </span>
+
+            <strong>
+                Это не просто техническое решение —
+                это фундамент для честной и прозрачной игры.
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- HEARTBEAT -->
+
+    <section class="log-section heartbeat-section">
+
+        <div class="section-number">
+            04
+        </div>
+
+        <h2>
+            HEARTBEAT-СИСТЕМА
+        </h2>
+
+        <p class="lead">
+            Как мастер-сервер понимает, что игровой сервер всё ещё работает?
+        </p>
+
+        <p>
+            Игровые серверы регулярно отправляют специальные сигналы —
+            <strong>Heartbeat</strong>.
+        </p>
+
+
+        <div class="heartbeat-visual">
+
+            <div class="heartbeat-server">
+
+                <span class="pulse"></span>
+
+                <small>
+                    GAME SERVER
+                </small>
+
+                <strong>
+                    Я работаю
+                </strong>
+
+            </div>
+
+
+            <div class="heartbeat-connection">
+
+                <div class="heartbeat-packet">
+                    HEARTBEAT
+                </div>
+
+                <div class="heartbeat-line"></div>
+
+            </div>
+
+
+            <div class="heartbeat-master">
+
+                <small>
+                    MASTER SERVER
+                </small>
+
+                <strong>
+                    Сервер отвечает
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="terminal">
+
+            <div class="terminal-header">
+                <span></span>
+                <span></span>
+                <span></span>
+
+                <label>
+                    master-server.log
+                </label>
+            </div>
+
+            <div class="terminal-body">
+
+                <p>
+                    <i>[10:42:01]</i>
+                    HEARTBEAT received
+                </p>
+
+                <p>
+                    <i>[10:42:01]</i>
+                    server: ru-hardcore-01
+                </p>
+
+                <p>
+                    <i>[10:42:01]</i>
+                    players: 30 / 60
+                </p>
+
+                <p>
+                    <i>[10:42:01]</i>
+                    status: <b>ONLINE</b>
+                </p>
+
+                <p class="success">
+                    [10:42:01] server is healthy
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <p>
+            Если сервер перестаёт отправлять Heartbeat,
+            система понимает, что он больше недоступен,
+            и автоматически убирает его из списка.
+        </p>
+
+        <div class="status-flow">
+
+            <span>SERVER ONLINE</span>
+            <b>→</b>
+            <span>HEARTBEAT</span>
+            <b>→</b>
+            <span>MASTER</span>
+            <b>→</b>
+            <span>VISIBLE</span>
+
+        </div>
+
+    </section>
+
+
+    <!-- QUEUE -->
+
+    <section class="log-section queue-section">
+
+        <div class="section-number">
+            05
+        </div>
+
+        <h2>
+            ОЧЕРЕДИ ПОДКЛЮЧЕНИЯ
+        </h2>
+
+        <p class="lead">
+            Заполненный сервер — это не конец.
+        </p>
+
+        <p>
+            Если сервер заполнен, игрок не получает просто ошибку подключения.
+            Он может занять место в очереди.
+        </p>
+
+
+        <div class="queue-visual">
+
+            <div class="queue-server">
+
+                <small>
+                    GAME SERVER
+                </small>
+
+                <strong>
+                    60 / 60
+                </strong>
+
+                <span>
+                    FULL
+                </span>
+
+            </div>
+
+
+            <div class="queue-arrow">
+                →
+            </div>
+
+
+            <div class="queue-master">
+
+                <small>
+                    MASTER SERVER
+                </small>
+
+                <strong>
+                    QUEUE
+                </strong>
+
+                <div class="queue-players">
+
+                    <span>01</span>
+                    <span>02</span>
+                    <span class="current">03</span>
+                    <span>04</span>
+                    <span>05</span>
+
+                </div>
+
+            </div>
+
+
+            <div class="queue-arrow">
+                →
+            </div>
+
+
+            <div class="queue-player">
+
+                <small>
+                    PLAYER
+                </small>
+
+                <strong>
+                    #03
+                </strong>
+
+                <span>
+                    WAITING
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="queue-rules">
+
+            <div>
+                <span>01</span>
+                Доступность свободного места
+            </div>
+
+            <div>
+                <span>02</span>
+                Момент входа в очередь
+            </div>
+
+            <div>
+                <span>03</span>
+                Позиция игрока
+            </div>
+
+            <div>
+                <span>04</span>
+                Приоритет
+            </div>
+
+            <div>
+                <span>05</span>
+                Процесс подключения
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PLAYER -->
+
+    <section class="log-section">
+
+        <div class="section-number">
+            06
+        </div>
+
+        <h2>
+            ЧТО ЭТО ДАЁТ ИГРОКУ?
+        </h2>
+
+        <div class="benefits-grid">
+
+            <article>
+
+                <div class="benefit-icon">
+                    📶
+                </div>
+
+                <h3>
+                    АКТУАЛЬНЫЙ СПИСОК
+                </h3>
+
+                <p>
+                    Игрок видит реальные серверы и их актуальное состояние.
+                    Выключенные и недоступные серверы автоматически исчезают.
+                </p>
+
+            </article>
+
+
+            <article>
+
+                <div class="benefit-icon">
+                    🔗
+                </div>
+
+                <h3>
+                    НАДЁЖНОЕ ПОДКЛЮЧЕНИЕ
+                </h3>
+
+                <p>
+                    Контролируется весь путь — от обнаружения сервера
+                    до проверки доступности и свободного места.
+                </p>
+
+            </article>
+
+
+            <article>
+
+                <div class="benefit-icon">
+                    ⚙
+                </div>
+
+                <h3>
+                    БОЛЬШЕ ВОЗМОЖНОСТЕЙ
+                </h3>
+
+                <p>
+                    Собственная архитектура позволяет создавать
+                    приоритеты, фильтры, рейтинги, избранное
+                    и специальные режимы доступа.
+                </p>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- DYNAMIC DATA -->
+
+    <section class="log-section">
+
+        <div class="section-number">
+            07
+        </div>
+
+        <h2>
+            БОЛЬШЕ, ЧЕМ СПИСОК
+        </h2>
+
+        <p>
+            В будущем список серверов может показывать намного больше,
+            чем просто название и количество игроков.
+        </p>
+
+
+        <div class="data-grid">
+
+            <div>
+                <span>CAMERA</span>
+                <strong>AVAILABLE</strong>
+            </div>
+
+            <div>
+                <span>VOICE CHAT</span>
+                <strong>ENABLED</strong>
+            </div>
+
+            <div>
+                <span>GAME MODE</span>
+                <strong>HARDCORE</strong>
+            </div>
+
+            <div>
+                <span>WORLD STATE</span>
+                <strong>DAY</strong>
+            </div>
+
+            <div>
+                <span>WEATHER</span>
+                <strong>RAIN</strong>
+            </div>
+
+            <div>
+                <span>EVENT</span>
+                <strong>ACTIVE</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SECURITY -->
+
+    <section class="log-section security-section">
+
+        <div class="section-number">
+            08
+        </div>
+
+        <h2>
+            КОНТРОЛЬ И ДОСТУП
+        </h2>
+
+        <p class="lead">
+            Собственная инфраструктура даёт полный контроль
+            над взаимодействием серверов и игроков.
+        </p>
+
+
+        <div class="security-grid">
+
+            <div>
+                <span>WHITELIST</span>
+                <p>
+                    Управление разрешёнными пользователями.
+                </p>
+            </div>
+
+            <div>
+                <span>BLACKLIST</span>
+                <p>
+                    Ограничение доступа для нарушителей.
+                </p>
+            </div>
+
+            <div>
+                <span>PRIORITY</span>
+                <p>
+                    Приоритеты подключения.
+                </p>
+            </div>
+
+            <div>
+                <span>QUEUE</span>
+                <p>
+                    Управление очередями.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FINAL -->
+
+    <section class="log-final">
+
+        <div class="section-number">
+            09
+        </div>
+
+        <h2>
+            ИТОГ
+        </h2>
+
+        <p class="lead">
+            Это только первый этап развития системы.
+        </p>
+
+        <p>
+            Сейчас мастер-сервер уже умеет находить игровые серверы,
+            отслеживать их состояние, управлять подключениями
+            и приоритетами игроков.
+        </p>
+
+        <p>
+            В будущем система будет постепенно развиваться вместе
+            с SKWOLETS — добавляя новые возможности для поиска серверов,
+            работы с очередями, управления доступом
+            и взаимодействия с сообществом.
+        </p>
+
+        <div class="final-statement">
+
+            <span>
+                SKWOLETS
+            </span>
+
+            <strong>
+                Не просто список серверов.<br>
+                Полноценная инфраструктура вокруг игры.
+            </strong>
+
+        </div>
+
+        <p class="ps">
+            P.S. Пока всё работает локально.
+            На продакшене — посмотрим.
+            Но я оптимист. 😄
+        </p>
+
+    </section>
+
+
+</main>
+
+
+<footer>
+    NVXIII
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
