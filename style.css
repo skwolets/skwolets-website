@@ -548,12 +548,12 @@ footer {
    RESPONSIVE
    ============================================================ */
 
+
 @media(max-width:800px) {
 
     .hero h1 {
         font-size: 50px;
     }
-
 
     .cards,
     .images,
@@ -562,26 +562,49 @@ footer {
         flex-direction: column;
     }
 
-
     nav {
         display: none;
     }
-
 
     .language-section {
         padding: 30px 8% 0;
     }
 
-
     .language-button {
         min-width: 130px;
-
         height: 55px;
     }
 
-
     .language-options {
         width: 130px;
+    }
+
+    /* BOTTOM INFO */
+
+    .bottom-info {
+        gap: 60px;
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+
+    .bottom-info > div {
+        width: 100%;
+        text-align: left;
+    }
+
+    .engine,
+    .blog,
+    .contact {
+        text-align: left;
+    }
+
+    .bottom-info h2 {
+        font-size: 32px;
+        margin-bottom: 15px;
+    }
+
+    .bottom-info p {
+        font-size: 17px;
     }
 
 }
