@@ -937,7 +937,7 @@ header {
     display: grid;
 
     grid-template-columns:
-        repeat(3, 1fr);
+        repeat(4, 1fr);
 
     gap: 2px;
 
