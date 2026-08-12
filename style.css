@@ -121,11 +121,6 @@ opacity:1;
     inset:0;
 
     background:
-    radial-gradient(
-        circle at center,
-        rgba(50,50,50,0.3),
-        rgba(0,0,0,0.8) 70%
-    ),
     linear-gradient(
         rgba(0,0,0,0.4),
         rgba(0,0,0,0.8)
