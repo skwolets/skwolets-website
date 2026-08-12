@@ -4,6 +4,28 @@
 
 }
 
+.devblog-hero {
+
+    height: 500px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,0.35),
+            rgba(0,0,0,0.75)
+        ),
+        url("../images/hero-04.png");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+}
+
 .devblog-item {
 
     width:100%;
