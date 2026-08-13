@@ -485,9 +485,9 @@ footer {
 
 .language-switcher {
     position: absolute;
-
     top: 25px;
-    right: 40px;
+    
+    right: 8%;
 
     z-index: 9999;
 }
@@ -500,26 +500,29 @@ footer {
     align-items: center;
     gap: 8px;
 
-    padding: 8px 0;
+    padding: 10px 20px;
 
-    background: none;
-    border: 0;
+    background: transparent;
+    border: 1px solid #333;
 
-    color: #888;
+    color: #aaa;
 
     font-family: inherit;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
 
     letter-spacing: 2px;
 
     cursor: pointer;
 
-    transition: color 0.2s ease;
+    transition:
+        color 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .language-button:hover {
     color: #fff;
+    border-color: #666;
 }
 
 
@@ -549,15 +552,12 @@ footer {
     top: calc(100% + 5px);
     right: 0;
 
-    z-index: 10000;
+    min-width: 100%;
 
-    min-width: 100px;
-
-    padding: 6px 0;
+    padding: 5px 0;
 
     background: #080808;
-
-    border: 1px solid #222;
+    border: 1px solid #333;
 
     opacity: 0;
     visibility: hidden;
@@ -571,12 +571,12 @@ footer {
 }
 
 
+
 /* OPEN */
 
 .language-switcher.open .language-menu {
     opacity: 1;
     visibility: visible;
-
     transform: translateY(0);
 }
 
@@ -586,9 +586,9 @@ footer {
 .language-menu a {
     display: block;
 
-    padding: 12px 18px;
+    padding: 10px 20px;
 
-    color: #777;
+    color: #888;
 
     text-decoration: none;
 
@@ -597,6 +597,8 @@ footer {
 
     letter-spacing: 2px;
 
+    white-space: nowrap;
+
     transition:
         color 0.2s ease,
         background 0.2s ease;
@@ -604,7 +606,6 @@ footer {
 
 .language-menu a:hover {
     color: #fff;
-
     background: #111;
 }
 
