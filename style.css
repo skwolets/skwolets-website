@@ -489,7 +489,7 @@ footer {
     top: 25px;
     right: 40px;
 
-    z-index: 1000;
+    z-index: 9999;
 }
 
 
@@ -548,6 +548,8 @@ footer {
 
     top: calc(100% + 5px);
     right: 0;
+
+    z-index: 10000;
 
     min-width: 100px;
 
