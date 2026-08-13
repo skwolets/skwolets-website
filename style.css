@@ -205,18 +205,21 @@ nav a:hover {
 
 .buttons {
     margin-top: 40px;
+    display: flex;
+    gap: 20px;
 }
 
-
 .button {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
+
+    width: 150px;
+    height: 52px;
+
     box-sizing: border-box;
 
-    min-width: 150px;
-
-    padding: 16px 35px;
+    padding: 0;
 
     background: #222;
     color: white;
@@ -224,16 +227,14 @@ nav a:hover {
     text-decoration: none;
     font-weight: bold;
 
-    margin-right: 20px;
+    margin-right: 0;
 
     transition: .3s;
 }
 
-
 .button:hover {
     transform: translateY(-3px);
 }
-
 
 .steam {
     background: #222;
@@ -591,11 +592,13 @@ footer {
 
     .buttons {
         margin-top: 40px;
-        text-align: right;
+        justify-content: flex-end;
+        gap: 10px;
     }
 
     .button {
-        margin-right: 0;
+        width: 150px;
+        height: 52px;
     }
 
     .cards,
