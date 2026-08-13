@@ -610,10 +610,6 @@ footer {
         flex-direction: column;
     }
 
-    nav {
-        display: none;
-    }
-
     .language-section {
         padding: 30px 8% 0;
     }
