@@ -194,11 +194,6 @@ nav a:hover {
     color: #aaa;
 }
 
-.buttons {
-    margin-top: 40px;
-    text-align: right;
-}
-
 /* ============================================================
    BUTTONS
    ============================================================ */
@@ -206,6 +201,7 @@ nav a:hover {
 .buttons {
     margin-top: 40px;
     display: flex;
+    justify-content: flex-end;
     gap: 20px;
 }
 
