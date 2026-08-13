@@ -199,23 +199,6 @@ nav a:hover {
     text-align: right;
 }
 
-.button {
-    display: inline-block;
-
-    padding: 16px 35px;
-
-    background: #222;
-    color: white;
-
-    text-decoration: none;
-    font-weight: bold;
-
-    margin-right: 0;
-
-    transition: .3s;
-}
-
-
 /* ============================================================
    BUTTONS
    ============================================================ */
@@ -226,16 +209,19 @@ nav a:hover {
 
 
 .button {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+
+    min-width: 140px;
 
     padding: 16px 35px;
 
     background: #222;
-
     color: white;
 
     text-decoration: none;
-
     font-weight: bold;
 
     margin-right: 20px;
@@ -251,6 +237,15 @@ nav a:hover {
 
 .steam {
     background: #222;
+}
+
+.button.dtf {
+    background: transparent;
+    border: 1px solid #333;
+}
+
+.button.dtf:hover {
+    border-color: #666;
 }
 
 
@@ -651,13 +646,4 @@ footer {
         font-size: 17px;
     }
 
-}
-
-.button.dtf {
-    background: transparent;
-    border: 1px solid #333;
-}
-
-.button.dtf:hover {
-    border-color: #666;
 }
