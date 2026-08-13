@@ -485,8 +485,8 @@ footer {
 
 .language-switcher {
     position: absolute;
+
     top: 25px;
-    
     right: 8%;
 
     z-index: 9999;
@@ -500,12 +500,12 @@ footer {
     align-items: center;
     gap: 8px;
 
-    padding: 10px 20px;
+    padding: 10px 0;
 
     background: transparent;
-    border: 1px solid #333;
+    border: 0;
 
-    color: #aaa;
+    color: #888;
 
     font-family: inherit;
     font-size: 12px;
@@ -515,14 +515,11 @@ footer {
 
     cursor: pointer;
 
-    transition:
-        color 0.2s ease,
-        border-color 0.2s ease;
+    transition: color 0.2s ease;
 }
 
 .language-button:hover {
     color: #fff;
-    border-color: #666;
 }
 
 
@@ -531,9 +528,7 @@ footer {
 .language-arrow {
     font-size: 8px;
 
-    transition:
-        transform 0.2s ease,
-        color 0.2s ease;
+    transition: transform 0.2s ease;
 }
 
 
