@@ -449,19 +449,6 @@ footer {
         flex-direction: column;
     }
 
-    .language-section {
-        padding: 30px 8% 0;
-    }
-
-    .language-button {
-        min-width: 130px;
-        height: 55px;
-    }
-
-    .language-options {
-        width: 130px;
-    }
-
     /* BOTTOM INFO */
 
     .bottom-info {
