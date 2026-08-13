@@ -42,7 +42,7 @@ body {
    ============================================================ */
 
 header {
-    position: static;
+    position: relative;
     top: 0;
 
     width: 100%;
@@ -58,7 +58,7 @@ header {
 
     backdrop-filter: blur(10px);
 
-    z-index: 10;
+    z-index: 1000;
 }
 
 
