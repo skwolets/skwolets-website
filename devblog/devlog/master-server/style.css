@@ -437,7 +437,7 @@ header {
 
     border: 0;
 
-    object-fit: contain;
+    object-fit: cover;
     background: #000;
 }
 
