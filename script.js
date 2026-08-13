@@ -77,3 +77,23 @@ if (languageMenu && languageButton) {
     });
 
 }
+
+<script>
+const languageSwitcher = document.querySelector(".language-switcher");
+const languageButton = document.querySelector(".language-button");
+
+languageButton.addEventListener("click", function (event) {
+
+    event.stopPropagation();
+
+    languageSwitcher.classList.toggle("open");
+
+});
+
+
+document.addEventListener("click", function () {
+
+    languageSwitcher.classList.remove("open");
+
+});
+</script>
