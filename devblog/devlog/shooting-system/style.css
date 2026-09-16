@@ -1033,7 +1033,7 @@ header {
 @keyframes ballisticTrajectory {
 
     from {
-        stroke-dashoffset: 100%;
+        stroke-dashoffset: var(--trajectory-length);
     }
 
     to {
