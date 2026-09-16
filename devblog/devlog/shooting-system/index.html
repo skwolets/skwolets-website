@@ -3,6 +3,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -22,9 +23,12 @@
     <link rel="stylesheet" href="/devblog/devlog/shooting-system/style.css">
 
     <link rel="icon" href="/favicon.ico">
+
 </head>
 
+
 <body>
+
 
     <header>
 
@@ -33,14 +37,16 @@
         </div>
 
         <nav>
-            <a href="/">Home</a>
+            <a href="/">
+                Home
+            </a>
         </nav>
 
     </header>
 
 
     <!-- ============================================================
-    ARTICLE HERO
+         ARTICLE HERO
     ============================================================ -->
 
     <section class="log-hero">
@@ -66,14 +72,14 @@
 
 
     <!-- ============================================================
-    ARTICLE
+         ARTICLE
     ============================================================ -->
 
     <main class="devlog-article">
 
 
         <!-- ========================================================
-        01 — INTRO
+             01 — INTRO
         ======================================================== -->
 
         <section class="log-section">
@@ -124,7 +130,7 @@
 
 
         <!-- ========================================================
-        02 — ARCHITECTURE
+             02 — ARCHITECTURE
         ======================================================== -->
 
         <section class="log-section">
@@ -228,23 +234,43 @@
             <div class="data-grid">
 
                 <div>
-                    <span>SIMULATION</span>
-                    <strong>CENTRALIZED</strong>
+                    <span>
+                        SIMULATION
+                    </span>
+
+                    <strong>
+                        CENTRALIZED
+                    </strong>
                 </div>
 
                 <div>
-                    <span>RUNTIME DATA</span>
-                    <strong>ARRAY</strong>
+                    <span>
+                        RUNTIME DATA
+                    </span>
+
+                    <strong>
+                        ARRAY
+                    </strong>
                 </div>
 
                 <div>
-                    <span>PROJECTILE ACTORS</span>
-                    <strong>NONE REQUIRED</strong>
+                    <span>
+                        PROJECTILE ACTORS
+                    </span>
+
+                    <strong>
+                        NONE REQUIRED
+                    </strong>
                 </div>
 
                 <div>
-                    <span>ACTIVE BULLETS</span>
-                    <strong>∞</strong>
+                    <span>
+                        ACTIVE BULLETS
+                    </span>
+
+                    <strong>
+                        SCALABLE
+                    </strong>
                 </div>
 
             </div>
@@ -259,7 +285,7 @@
 
 
         <!-- ========================================================
-        03 — BALLISTICS
+             03 — BALLISTICS
         ======================================================== -->
 
         <section class="log-section">
@@ -281,6 +307,7 @@
                 calculating its next position.
             </p>
 
+
             <div class="ballistic-trajectory">
 
                 <button
@@ -292,28 +319,48 @@
                     ▶
                 </button>
 
+
                 <div class="ballistic-distance">
                     300 M
                 </div>
 
+
                 <svg
                     class="ballistic-path"
                     viewBox="0 0 1000 300"
-                    preserveAspectRatio="None"
+                    preserveAspectRatio="none"
                     aria-hidden="true"
                 >
 
-                    <!-- Ideal straight trajectory -->
+                    <defs>
+
+                        <clipPath id="wind-progress">
+
+                            <rect
+                                id="wind-progress-rect"
+                                x="0"
+                                y="0"
+                                width="0"
+                                height="300"
+                            />
+
+                        </clipPath>
+
+                    </defs>
+
+
+                    <!-- Ideal reference trajectory -->
 
                     <path
                         class="trajectory-reference"
                         d="
-                            M 70 210 
+                            M 70 210
                             C 300 175, 520 150, 930 235
                         "
                     />
 
-                    <!-- Main trajectory -->
+
+                    <!-- Main ballistic trajectory -->
 
                     <path
                         class="trajectory-main"
@@ -324,37 +371,44 @@
                         "
                     />
 
+
                     <!-- Wind affected trajectory -->
-
-                    <defs>
-
-                        <clipPath id="wind-progress">
-                            <rect
-                                id="wind-progress-rect"
-                                x="0"
-                                y="0"
-                                width="0"
-                                height="300"
-                            />
-                        </clipPath>
-
-                    </defs>
 
                     <path
                         class="trajectory-wind"
                         clip-path="url(#wind-progress)"
                         d="
                             M 500 150
-                            C 640 145, 790 190, 930 270
+                            C 650 155, 790 195, 930 270
                         "
                     />
 
+
+                    <!-- Muzzle -->
+
+                    <circle
+                        class="trajectory-start"
+                        cx="70"
+                        cy="210"
+                        r="4"
+                    />
+
+                    <text
+                        class="trajectory-muzzle-label"
+                        x="70"
+                        y="235"
+                    >
+                        MUZZLE
+                    </text>
+
+
                     <!-- Impact -->
-                    
+
                     <g
                         id="trajectory-impact"
                         class="trajectory-impact"
                     >
+
                         <circle
                             cx="0"
                             cy="0"
@@ -367,44 +421,39 @@
                         >
                             IMPACT
                         </text>
+
                     </g>
 
                 </svg>
 
-                <circle
-                    class="trajectory-start"
-                    cx="70"
-                    cy="210"
-                    r="4"
-                />
-
-                <text
-                    class="trajectory-muzzle-label"
-                    x="70"
-                    y="235"
-                >
-                    MUZZLE
-                </text>
 
                 <div class="ballistic-factor gravity">
 
-                    <span>↓</span>
+                    <span>
+                        ↓
+                    </span>
 
                     GRAVITY
 
                 </div>
 
+
                 <div class="ballistic-factor drag">
 
-                    <span>←</span>
+                    <span>
+                        ←
+                    </span>
 
                     DRAG
 
                 </div>
 
+
                 <div class="ballistic-factor wind">
 
-                    <span>↘</span>
+                    <span>
+                        ↘
+                    </span>
 
                     WIND
 
@@ -414,17 +463,22 @@
 
 
             <p>
-                The physics are intentionally lightweight and implemented directly in native C++.
-                At each simulation step, the projectile's velocity is calculated from its current velocity, gravity, drag and wind. That velocity is then used to calculate the projectile's new position.
+                The physics are intentionally lightweight and implemented directly
+                in native C++. At each simulation step, the projectile's velocity
+                is calculated from its current velocity, gravity, drag and wind.
+                That velocity is then used to calculate the projectile's new position.
+            </p>
 
-                <br><br>
-
+            <p>
                 In simple terms:
-                <strong>velocity + gravity + drag + wind → new velocity → new position</strong>
+                <strong>
+                    velocity + gravity + drag + wind → new velocity → new position
+                </strong>
+            </p>
 
-                <br><br>
-
-                The projectile does not need a heavyweight physics Actor or Movement Component just to calculate its trajectory.
+            <p>
+                The projectile does not need a heavyweight physics Actor or Movement
+                Component just to calculate its trajectory.
             </p>
 
 
@@ -446,6 +500,7 @@
 
                 </div>
 
+
                 <div class="feature-card">
 
                     <span class="feature-icon">
@@ -463,6 +518,7 @@
 
                 </div>
 
+
                 <div class="feature-card">
 
                     <span class="feature-icon">
@@ -479,6 +535,7 @@
                     </p>
 
                 </div>
+
 
                 <div class="feature-card">
 
@@ -510,8 +567,11 @@
             <p>
                 This also makes the system moddable. New ammunition types can be added
                 by defining their parameters in the
-                <a href="#ammunition-configuration" class="inline-config-link">
-                configuration
+                <a
+                    href="#ammunition-configuration"
+                    class="inline-config-link"
+                >
+                    configuration
                 </a>
                 instead of changing the underlying projectile simulation.
             </p>
@@ -565,7 +625,7 @@
 
 
         <!-- ========================================================
-        04 — PREDICTION
+             04 — PREDICTION
         ======================================================== -->
 
         <section class="log-section">
@@ -587,6 +647,7 @@
                 as soon as the shot is created.
             </p>
 
+
             <div class="architecture">
 
                 <div class="architecture-node player">
@@ -605,6 +666,7 @@
 
                 </div>
 
+
                 <div class="architecture-line">
 
                     <span>
@@ -614,6 +676,7 @@
                     <div class="line"></div>
 
                 </div>
+
 
                 <div class="architecture-node master">
 
@@ -631,6 +694,7 @@
 
                 </div>
 
+
                 <div class="architecture-line">
 
                     <span>
@@ -640,6 +704,7 @@
                     <div class="line"></div>
 
                 </div>
+
 
                 <div class="architecture-node">
 
@@ -659,19 +724,31 @@
 
             </div>
 
+
             <p>
                 The important part is that these are not three independent gameplay
                 bullets. They are three executions of the same deterministic
                 projectile simulation in different contexts.
             </p>
 
+
             <div class="status-flow">
 
-                <span>PREDICTED</span>
+                <span>
+                    PREDICTED
+                </span>
+
                 <b>→</b>
-                <span>SERVER</span>
+
+                <span>
+                    SERVER
+                </span>
+
                 <b>→</b>
-                <span>REPLICATED</span>
+
+                <span>
+                    REPLICATED
+                </span>
 
             </div>
 
@@ -679,7 +756,7 @@
 
 
         <!-- ========================================================
-        05 — VALIDATION
+             05 — VALIDATION
         ======================================================== -->
 
         <section class="log-section security-section">
@@ -701,43 +778,69 @@
                 the server validates the shot.
             </p>
 
+
             <div class="security-grid">
 
                 <div>
-                    <span>TIMESTAMP</span>
+
+                    <span>
+                        TIMESTAMP
+                    </span>
+
                     <p>
                         Prevents the same shot from being processed more than once.
                     </p>
+
                 </div>
 
+
                 <div>
-                    <span>MUZZLE POSITION</span>
+
+                    <span>
+                        MUZZLE POSITION
+                    </span>
+
                     <p>
                         The server reconstructs the expected world-space position.
                     </p>
+
                 </div>
 
+
                 <div>
-                    <span>CAMERA</span>
+
+                    <span>
+                        CAMERA
+                    </span>
+
                     <p>
                         The shot can be checked against the synchronized camera direction.
                     </p>
+
                 </div>
 
+
                 <div>
-                    <span>ANGLE</span>
+
+                    <span>
+                        ANGLE
+                    </span>
+
                     <p>
                         Impossible deviations from the camera can be rejected.
                     </p>
+
                 </div>
 
             </div>
+
 
             <p>
                 The movement system already sends predictive camera state to the server.
                 This means the server has the information necessary to compare the
                 requested shot against the player's current predicted view.
             </p>
+
 
             <div class="terminal">
 
@@ -752,6 +855,7 @@
                     </label>
 
                 </div>
+
 
                 <div class="terminal-body">
 
@@ -787,7 +891,7 @@
 
 
         <!-- ========================================================
-        06 — TIMESTAMP
+             06 — TIMESTAMP
         ======================================================== -->
 
         <section class="log-section">
@@ -810,6 +914,7 @@
                 ring buffer and can reject a shot that has already been processed.
             </p>
 
+
             <div class="timestamp-visual">
 
                 <div class="timestamp-node">
@@ -828,9 +933,11 @@
 
                 </div>
 
+
                 <div class="timestamp-arrow">
                     →
                 </div>
+
 
                 <div class="timestamp-buffer">
 
@@ -844,19 +951,35 @@
 
                     <div class="timestamp-values">
 
-                        <span>1838</span>
-                        <span>1839</span>
-                        <span>1840</span>
-                        <span>1841</span>
-                        <span class="current">1842</span>
+                        <span>
+                            1838
+                        </span>
+
+                        <span>
+                            1839
+                        </span>
+
+                        <span>
+                            1840
+                        </span>
+
+                        <span>
+                            1841
+                        </span>
+
+                        <span class="current">
+                            1842
+                        </span>
 
                     </div>
 
                 </div>
 
+
                 <div class="timestamp-arrow">
                     →
                 </div>
+
 
                 <div class="timestamp-node result">
 
@@ -876,6 +999,7 @@
 
             </div>
 
+
             <p>
                 This keeps the network command compact while giving the authoritative
                 simulation a simple mechanism for detecting duplicate shot commands.
@@ -885,7 +1009,7 @@
 
 
         <!-- ========================================================
-        07 — SPATIAL GRID
+             07 — SPATIAL GRID
         ======================================================== -->
 
         <section class="log-section">
@@ -908,6 +1032,7 @@
                 projectile segment.
             </p>
 
+
             <div class="architecture">
 
                 <div class="architecture-node">
@@ -926,6 +1051,7 @@
 
                 </div>
 
+
                 <div class="architecture-line">
 
                     <span>
@@ -935,6 +1061,7 @@
                     <div class="line"></div>
 
                 </div>
+
 
                 <div class="architecture-node master">
 
@@ -952,6 +1079,7 @@
 
                 </div>
 
+
                 <div class="architecture-line">
 
                     <span>
@@ -961,6 +1089,7 @@
                     <div class="line"></div>
 
                 </div>
+
 
                 <div class="architecture-node player">
 
@@ -980,6 +1109,7 @@
 
             </div>
 
+
             <p>
                 The Spatial Grid is therefore used as a broad-phase candidate system.
                 The expensive part of the process only runs against objects that can
@@ -990,7 +1120,7 @@
 
 
         <!-- ========================================================
-        08 — REWIND
+             08 — REWIND
         ======================================================== -->
 
         <section class="log-section heartbeat-section">
@@ -1018,6 +1148,7 @@
                 the component transform at a specific point in time.
             </p>
 
+
             <div class="heartbeat-visual">
 
                 <div class="heartbeat-server">
@@ -1034,6 +1165,7 @@
 
                 </div>
 
+
                 <div class="heartbeat-connection">
 
                     <div class="heartbeat-packet">
@@ -1043,6 +1175,7 @@
                     <div class="heartbeat-line"></div>
 
                 </div>
+
 
                 <div class="heartbeat-master">
 
@@ -1058,11 +1191,13 @@
 
             </div>
 
+
             <p>
                 During server-side hit registration, the relevant hitbox proxies are
                 temporarily moved to their historical state. The collision query is
                 then performed against that historical pose.
             </p>
+
 
             <div class="quote-block">
 
@@ -1081,7 +1216,7 @@
 
 
         <!-- ========================================================
-        09 — REWIND COMPONENT
+             09 — REWIND COMPONENT
         ======================================================== -->
 
         <section class="log-section">
@@ -1106,6 +1241,7 @@
                 pose directly to the runtime skeletal transform buffers.
             </p>
 
+
             <div class="feature-grid">
 
                 <div class="feature-card">
@@ -1124,6 +1260,7 @@
 
                 </div>
 
+
                 <div class="feature-card">
 
                     <span class="feature-icon">
@@ -1140,6 +1277,7 @@
 
                 </div>
 
+
                 <div class="feature-card">
 
                     <span class="feature-icon">
@@ -1155,6 +1293,7 @@
                     </p>
 
                 </div>
+
 
                 <div class="feature-card">
 
@@ -1174,11 +1313,13 @@
 
             </div>
 
+
             <p>
                 The rewind operation is scoped using RAII. A temporary rewind object
                 applies the historical state and restores the original state when
                 the scope ends.
             </p>
+
 
             <div class="terminal">
 
@@ -1193,6 +1334,7 @@
                     </label>
 
                 </div>
+
 
                 <div class="terminal-body">
 
@@ -1229,7 +1371,7 @@
 
 
         <!-- ========================================================
-        10 — PERFORMANCE
+             10 — PERFORMANCE
         ======================================================== -->
 
         <section class="log-section">
@@ -1252,29 +1394,62 @@
                 process the entire batch efficiently.
             </p>
 
+
             <div class="data-grid">
 
                 <div>
-                    <span>ACTIVE PROJECTILES</span>
-                    <strong>~300</strong>
+
+                    <span>
+                        ACTIVE PROJECTILES
+                    </span>
+
+                    <strong>
+                        ~300
+                    </strong>
+
                 </div>
 
-                <div>
-                    <span>SIMULATION</span>
-                    <strong>1 WORLD TICK</strong>
-                </div>
 
                 <div>
-                    <span>PROJECTILE DATA</span>
-                    <strong>NATIVE ARRAY</strong>
+
+                    <span>
+                        SIMULATION
+                    </span>
+
+                    <strong>
+                        1 WORLD TICK
+                    </strong>
+
                 </div>
 
+
                 <div>
-                    <span>REWIND AVG.</span>
-                    <strong>~0.65 μs</strong>
+
+                    <span>
+                        PROJECTILE DATA
+                    </span>
+
+                    <strong>
+                        NATIVE ARRAY
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        REWIND AVG.
+                    </span>
+
+                    <strong>
+                        ~0.65 μs
+                    </strong>
+
                 </div>
 
             </div>
+
 
             <p>
                 A benchmark of a complete rewind-and-restore scope averaged roughly
@@ -1292,7 +1467,7 @@
 
 
         <!-- ========================================================
-        11 — LINE TRACE
+             11 — LINE TRACE
         ======================================================== -->
 
         <section class="log-section">
@@ -1313,6 +1488,7 @@
                 Where was the projectile at the beginning of the simulation step?
                 Where is it now?
             </p>
+
 
             <div class="status-flow">
 
@@ -1340,6 +1516,7 @@
 
             </div>
 
+
             <p>
                 The projectile therefore does not require a full Unreal
                 <strong>ProjectileMovementComponent</strong>.
@@ -1351,6 +1528,7 @@
                 A line trace over that segment provides the collision test while
                 keeping the projectile itself as lightweight runtime data.
             </p>
+
 
             <div class="quote-block">
 
@@ -1369,7 +1547,7 @@
 
 
         <!-- ========================================================
-        12 — DAMAGE
+             12 — DAMAGE
         ======================================================== -->
 
         <section class="log-section security-section">
@@ -1396,38 +1574,58 @@
                 processing path.
             </p>
 
+
             <div class="security-grid">
 
                 <div>
-                    <span>CLIENT</span>
+
+                    <span>
+                        CLIENT
+                    </span>
 
                     <p>
                         Predicts the projectile and provides immediate feedback.
                     </p>
+
                 </div>
 
+
                 <div>
-                    <span>SERVER</span>
+
+                    <span>
+                        SERVER
+                    </span>
 
                     <p>
                         Validates the shot and runs the authoritative simulation.
                     </p>
+
                 </div>
 
+
                 <div>
-                    <span>REWIND</span>
+
+                    <span>
+                        REWIND
+                    </span>
 
                     <p>
                         Restores the target's historical state for hit registration.
                     </p>
+
                 </div>
 
+
                 <div>
-                    <span>DAMAGE</span>
+
+                    <span>
+                        DAMAGE
+                    </span>
 
                     <p>
                         Applied only by the authoritative server simulation.
                     </p>
+
                 </div>
 
             </div>
@@ -1436,7 +1634,7 @@
 
 
         <!-- ========================================================
-        13 — COMPLETE PIPELINE
+             13 — COMPLETE PIPELINE
         ======================================================== -->
 
         <section class="log-section">
@@ -1452,6 +1650,7 @@
             <p class="lead">
                 Every part of the system has one job.
             </p>
+
 
             <div class="architecture">
 
@@ -1471,6 +1670,7 @@
 
                 </div>
 
+
                 <div class="architecture-line">
 
                     <span>
@@ -1480,6 +1680,7 @@
                     <div class="line"></div>
 
                 </div>
+
 
                 <div class="architecture-node master">
 
@@ -1497,6 +1698,7 @@
 
                 </div>
 
+
                 <div class="architecture-line">
 
                     <span>
@@ -1506,6 +1708,7 @@
                     <div class="line"></div>
 
                 </div>
+
 
                 <div class="architecture-node">
 
@@ -1523,6 +1726,7 @@
 
                 </div>
 
+
                 <div class="architecture-line">
 
                     <span>
@@ -1532,6 +1736,7 @@
                     <div class="line"></div>
 
                 </div>
+
 
                 <div class="architecture-node master">
 
@@ -1549,6 +1754,7 @@
 
                 </div>
 
+
                 <div class="architecture-line">
 
                     <span>
@@ -1558,6 +1764,7 @@
                     <div class="line"></div>
 
                 </div>
+
 
                 <div class="architecture-node">
 
@@ -1575,6 +1782,7 @@
 
                 </div>
 
+
                 <div class="architecture-line">
 
                     <span>
@@ -1584,6 +1792,7 @@
                     <div class="line"></div>
 
                 </div>
+
 
                 <div class="architecture-node player">
 
@@ -1607,7 +1816,7 @@
 
 
         <!-- ========================================================
-        14 — WHY
+             14 — WHY
         ======================================================== -->
 
         <section class="log-section">
@@ -1624,75 +1833,79 @@
                 Because every system solves a different problem.
             </p>
 
-            <div class="benefits-grid">
 
-                <article>
+            <div class="feature-grid">
 
-                    <div class="benefit-icon">
+                <div class="feature-card">
+
+                    <span class="feature-icon">
                         ⚡
-                    </div>
+                    </span>
 
-                    <h3>
+                    <strong>
                         RESPONSIVE
-                    </h3>
+                    </strong>
 
                     <p>
                         Client prediction makes shooting respond immediately
                         instead of waiting for a server round trip.
                     </p>
 
-                </article>
+                </div>
 
-                <article>
 
-                    <div class="benefit-icon">
+                <div class="feature-card">
+
+                    <span class="feature-icon">
                         🛡
-                    </div>
+                    </span>
 
-                    <h3>
+                    <strong>
                         AUTHORITATIVE
-                    </h3>
+                    </strong>
 
                     <p>
                         The server validates the shot, simulates the authoritative
                         projectile and controls damage.
                     </p>
 
-                </article>
+                </div>
 
-                <article>
 
-                    <div class="benefit-icon">
+                <div class="feature-card">
+
+                    <span class="feature-icon">
                         🎯
-                    </div>
+                    </span>
 
-                    <h3>
+                    <strong>
                         ACCURATE
-                    </h3>
+                    </strong>
 
                     <p>
                         Historical target poses allow hit registration to account
                         for network latency and moving targets.
                     </p>
 
-                </article>
+                </div>
 
-                <article>
 
-                    <div class="benefit-icon">
+                <div class="feature-card">
+
+                    <span class="feature-icon">
                         ⚙
-                    </div>
+                    </span>
 
-                    <h3>
+                    <strong>
                         LIGHTWEIGHT
-                    </h3>
+                    </strong>
 
                     <p>
                         Centralized simulation, native runtime data and spatial
                         candidate filtering avoid unnecessary per-projectile overhead.
                     </p>
 
-                </article>
+                </div>
 
             </div>
 
@@ -1700,7 +1913,7 @@
 
 
         <!-- ========================================================
-        15 — FINAL
+             15 — FINAL
         ======================================================== -->
 
         <section class="log-final">
@@ -1737,6 +1950,7 @@
                 And the final damage decision always comes from the server.
             </p>
 
+
             <div class="final-statement">
 
                 <span>
@@ -1750,6 +1964,7 @@
                 </strong>
 
             </div>
+
 
             <p class="ps">
                 P.S. There are no 300 Projectile Actors flying around the world.
@@ -1775,344 +1990,363 @@
     </button>
 
 
-<script>
+    <script>
 
-    /* ========================================================
-       BACK TO TOP
-    ======================================================== */
+        /* ========================================================
+           BACK TO TOP
+        ======================================================== */
 
-    const backToTop =
-        document.getElementById("backToTop");
+        const backToTop =
+            document.getElementById("backToTop");
 
-    window.addEventListener("scroll", () => {
+        window.addEventListener("scroll", () => {
 
-        if (window.scrollY > 500) {
-            backToTop.classList.add("visible");
-        } else {
-            backToTop.classList.remove("visible");
-        }
+            if (window.scrollY > 500) {
 
-    });
+                backToTop.classList.add("visible");
 
-    backToTop.addEventListener("click", () => {
+            } else {
 
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+                backToTop.classList.remove("visible");
 
-    });
-
-
-    /* ========================================================
-       CONFIG LINK
-    ======================================================== */
-    
-    document.querySelectorAll(".inline-config-link").forEach(link => {
-
-        link.addEventListener("click", (event) => {
-
-            event.preventDefault();
-
-            const target = document.querySelector(
-                link.getAttribute("href")
-            );
-
-            if (!(target instanceof HTMLDetailsElement)) {
-                return;
             }
 
-            target.open = true;
+        });
 
-            target.scrollIntoView({
-                behavior: "smooth",
-                block: "center"
+
+        backToTop.addEventListener("click", () => {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
             });
 
         });
 
-    });
+
+        /* ========================================================
+           CONFIG LINK
+        ======================================================== */
+
+        document
+            .querySelectorAll(".inline-config-link")
+            .forEach(link => {
+
+                link.addEventListener("click", (event) => {
+
+                    event.preventDefault();
+
+                    const target =
+                        document.querySelector(
+                            link.getAttribute("href")
+                        );
+
+                    if (!(target instanceof HTMLDetailsElement)) {
+                        return;
+                    }
+
+                    target.open = true;
+
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+
+                });
+
+            });
 
 
-    /* ========================================================
-       BALLISTIC TRAJECTORY
-    ======================================================== */
+        /* ========================================================
+           BALLISTIC TRAJECTORY
+        ======================================================== */
 
-    document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", () => {
 
-        const svg =
-            document.querySelector(".ballistic-path");
+            const svg =
+                document.querySelector(".ballistic-path");
 
-        const path =
-            svg?.querySelector(".trajectory-main");
+            const path =
+                svg?.querySelector(".trajectory-main");
 
-        const windPath =
-            svg?.querySelector(".trajectory-wind");
+            const impact =
+                svg?.querySelector("#trajectory-impact");
 
-        const impact =
-            svg?.querySelector("#trajectory-impact");
+            const windProgress =
+                svg?.querySelector("#wind-progress-rect");
 
-        const windProgress =
-            svg?.querySelector("#wind-progress-rect");
+            const playButton =
+                document.getElementById("ballisticPlay");
 
-        const playButton =
-            document.getElementById("ballisticPlay");
+            const gravity =
+                document.querySelector(
+                    ".ballistic-factor.gravity"
+                );
 
-        const gravity =
-            document.querySelector(
-                ".ballistic-factor.gravity"
+            const drag =
+                document.querySelector(
+                    ".ballistic-factor.drag"
+                );
+
+            const wind =
+                document.querySelector(
+                    ".ballistic-factor.wind"
+                );
+
+
+            if (
+                !svg ||
+                !path ||
+                !impact ||
+                !windProgress ||
+                !playButton ||
+                !gravity ||
+                !drag ||
+                !wind
+            ) {
+                return;
+            }
+
+
+            /* ----------------------------------------------------
+               PATH LENGTH
+            ---------------------------------------------------- */
+
+            const pathLength =
+                path.getTotalLength();
+
+
+            /* ----------------------------------------------------
+               IMPACT POSITION
+            ---------------------------------------------------- */
+
+            const endPoint =
+                path.getPointAtLength(pathLength);
+
+            impact.setAttribute(
+                "transform",
+                `translate(${endPoint.x} ${endPoint.y})`
             );
 
-        const drag =
-            document.querySelector(
-                ".ballistic-factor.drag"
-            );
 
-        const wind =
-            document.querySelector(
-                ".ballistic-factor.wind"
-            );
-
-
-        if (
-            !svg ||
-            !path ||
-            !windPath ||
-            !impact ||
-            !windProgress ||
-            !playButton ||
-            !gravity ||
-            !drag ||
-            !wind
-        ) {
-            return;
-        }
-
-
-        /* ----------------------------------------------------
-           PATH LENGTH
-        ---------------------------------------------------- */
-
-        const pathLength =
-            path.getTotalLength();
-
-
-        /* ----------------------------------------------------
-           IMPACT POSITION
-        ---------------------------------------------------- */
-
-        const endPoint =
-            path.getPointAtLength(pathLength);
-
-        impact.setAttribute(
-            "transform",
-            `translate(${endPoint.x} ${endPoint.y})`
-        );
-
-
-        /* ----------------------------------------------------
-           WIND REGION
-        ---------------------------------------------------- */
-
-        const windStart =
-            500 / 1000;
-
-
-        /* ----------------------------------------------------
-           INITIAL STATE
-           Show complete simulation
-        ---------------------------------------------------- */
-
-        path.style.strokeDasharray =
-            pathLength;
-
-        path.style.strokeDashoffset =
-            0;
-
-        windProgress.setAttribute(
-            "x",
-            "0"
-        );
-
-        windProgress.setAttribute(
-            "width",
-            "1000"
-        );
-
-        gravity.classList.add("visible");
-        drag.classList.add("visible");
-        wind.classList.add("visible");
-
-        impact.style.display =
-            "block";
-
-        playButton.textContent =
-            "▶";
-
-
-        /* ----------------------------------------------------
-           PLAY / REPLAY
-        ---------------------------------------------------- */
-
-        playButton.addEventListener("click", () => {
-
-            /* ------------------------------------------------
-               RESET FACTORS
-            ------------------------------------------------ */
-
-            gravity.classList.remove("visible");
-            drag.classList.remove("visible");
-            wind.classList.remove("visible");
-
-
-            /* ------------------------------------------------
-               HIDE IMPACT
-            ------------------------------------------------ */
-
-            impact.style.display =
-                "none";
-
-
-            /* ------------------------------------------------
-               RESET MAIN TRAJECTORY
-            ------------------------------------------------ */
-
-            path.style.animation =
-                "none";
+            /* ----------------------------------------------------
+               INITIAL STATE
+               Show complete simulation
+            ---------------------------------------------------- */
 
             path.style.strokeDasharray =
                 pathLength;
 
             path.style.strokeDashoffset =
-                pathLength;
-
-
-            /* ------------------------------------------------
-               RESET WIND CLIP
-            ------------------------------------------------ */
+                0;
 
             windProgress.setAttribute(
                 "x",
-                "500"
+                "0"
             );
 
             windProgress.setAttribute(
                 "width",
-                "0"
+                "1000"
             );
 
+            gravity.classList.add("visible");
+            drag.classList.add("visible");
+            wind.classList.add("visible");
 
-            /* ------------------------------------------------
-               FORCE REFLOW
-            ------------------------------------------------ */
+            impact.style.display =
+                "block";
 
-            path.getBoundingClientRect();
-            windProgress.getBoundingClientRect();
-
-
-            /* ------------------------------------------------
-               START MAIN TRAJECTORY
-            ------------------------------------------------ */
-
-            path.style.animation =
-                "ballisticTrajectory 2.8s linear forwards";
+            playButton.textContent =
+                "▶";
 
 
-            /* ------------------------------------------------
-               GRAVITY
-            ------------------------------------------------ */
+            /* ----------------------------------------------------
+               PLAY / REPLAY
+            ---------------------------------------------------- */
 
-            setTimeout(() => {
+            playButton.addEventListener("click", () => {
 
-                gravity.classList.add("visible");
+                /* ------------------------------------------------
+                   RESET FACTORS
+                ------------------------------------------------ */
 
-            }, 650);
-
-
-            /* ------------------------------------------------
-               DRAG
-            ------------------------------------------------ */
-
-            setTimeout(() => {
-
-                drag.classList.add("visible");
-
-                const startTime = performance.now();
-                const duration = 1300;
-
-                const startX = 500;
-                const endX = 930;
-
-                const animateWind = (currentTime) => {
-
-                    const progress =
-                        Math.min(
-                            (currentTime - startTime) / duration,
-                            1
-                        );
-
-                    const width =
-                        (endX - startX) * progress;
-                            windProgress.setAttribute(
-                            "x",
-                            startX
-                    );
-
-                    windProgress.setAttribute(
-                        "width",
-                        width
-                    );
-
-                    if (progress < 1) {
-                        requestAnimationFrame(animateWind);
-                    }
-
-                };
-
-                requestAnimationFrame(animateWind);
-
-            }, 1500);
+                gravity.classList.remove("visible");
+                drag.classList.remove("visible");
+                wind.classList.remove("visible");
 
 
-            /* ------------------------------------------------
-               WIND
-            ------------------------------------------------ */
-
-            setTimeout(() => {
-
-                wind.classList.add("visible");
-
-            }, 2100);
-
-
-            /* ------------------------------------------------
-               IMPACT
-            ------------------------------------------------ */
-
-            setTimeout(() => {
+                /* ------------------------------------------------
+                   HIDE IMPACT
+                ------------------------------------------------ */
 
                 impact.style.display =
-                    "block";
-
-            }, 2800);
+                    "none";
 
 
-            /* ------------------------------------------------
-               PLAY → REPLAY
-            ------------------------------------------------ */
+                /* ------------------------------------------------
+                   RESET MAIN TRAJECTORY
+                ------------------------------------------------ */
 
-            setTimeout(() => {
+                path.style.animation =
+                    "none";
 
-                playButton.textContent =
-                    "↻";
+                path.style.strokeDasharray =
+                    pathLength;
 
-            }, 2800);
+                path.style.strokeDashoffset =
+                    pathLength;
+
+
+                /* ------------------------------------------------
+                   RESET WIND CLIP
+                ------------------------------------------------ */
+
+                windProgress.setAttribute(
+                    "x",
+                    "500"
+                );
+
+                windProgress.setAttribute(
+                    "width",
+                    "0"
+                );
+
+
+                /* ------------------------------------------------
+                   FORCE REFLOW
+                ------------------------------------------------ */
+
+                path.getBoundingClientRect();
+
+                windProgress.getBoundingClientRect();
+
+
+                /* ------------------------------------------------
+                   START MAIN TRAJECTORY
+                ------------------------------------------------ */
+
+                path.style.animation =
+                    "ballisticTrajectory 2.8s linear forwards";
+
+
+                /* ------------------------------------------------
+                   GRAVITY
+                ------------------------------------------------ */
+
+                setTimeout(() => {
+
+                    gravity.classList.add("visible");
+
+                }, 650);
+
+
+                /* ------------------------------------------------
+                   DRAG + WIND REVEAL
+                ------------------------------------------------ */
+
+                setTimeout(() => {
+
+                    drag.classList.add("visible");
+
+                    const startTime =
+                        performance.now();
+
+                    const duration =
+                        1300;
+
+                    const startX =
+                        500;
+
+                    const endX =
+                        930;
+
+
+                    const animateWind =
+                        (currentTime) => {
+
+                            const progress =
+                                Math.min(
+                                    (currentTime - startTime) /
+                                    duration,
+                                    1
+                                );
+
+                            const width =
+                                (endX - startX) *
+                                progress;
+
+
+                            windProgress.setAttribute(
+                                "x",
+                                startX
+                            );
+
+                            windProgress.setAttribute(
+                                "width",
+                                width
+                            );
+
+
+                            if (progress < 1) {
+
+                                requestAnimationFrame(
+                                    animateWind
+                                );
+
+                            }
+
+                        };
+
+
+                    requestAnimationFrame(
+                        animateWind
+                    );
+
+                }, 1500);
+
+
+                /* ------------------------------------------------
+                   WIND LABEL
+                ------------------------------------------------ */
+
+                setTimeout(() => {
+
+                    wind.classList.add("visible");
+
+                }, 2100);
+
+
+                /* ------------------------------------------------
+                   IMPACT
+                ------------------------------------------------ */
+
+                setTimeout(() => {
+
+                    impact.style.display =
+                        "block";
+
+                }, 2800);
+
+
+                /* ------------------------------------------------
+                   PLAY → REPLAY
+                ------------------------------------------------ */
+
+                setTimeout(() => {
+
+                    playButton.textContent =
+                        "↻";
+
+                }, 2800);
+
+            });
 
         });
 
-    });
+    </script>
 
-</script>
 
 </body>
+
 </html>
