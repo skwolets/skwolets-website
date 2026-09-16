@@ -1752,7 +1752,8 @@
        BACK TO TOP
     ======================================================== */
 
-    const backToTop = document.getElementById("backToTop");
+    const backToTop =
+        document.getElementById("backToTop");
 
     window.addEventListener("scroll", () => {
 
@@ -1796,13 +1797,19 @@
             document.getElementById("ballisticPlay");
 
         const gravity =
-            document.querySelector(".ballistic-factor.gravity");
+            document.querySelector(
+                ".ballistic-factor.gravity"
+            );
 
         const drag =
-            document.querySelector(".ballistic-factor.drag");
+            document.querySelector(
+                ".ballistic-factor.drag"
+            );
 
         const wind =
-            document.querySelector(".ballistic-factor.wind");
+            document.querySelector(
+                ".ballistic-factor.wind"
+            );
 
 
         if (
@@ -1826,13 +1833,9 @@
         const pathLength =
             path.getTotalLength();
 
-        const windLength =
-            windPath.getTotalLength();
-
-
-        windPath.style.setProperty(
-            "--wind-length",
-            windLength
+        windPath.setAttribute(
+            "pathLength",
+            "100"
         );
 
 
@@ -1860,21 +1863,18 @@
         path.style.strokeDashoffset =
             0;
 
-
-        windPath.style.strokeDasharray =
-            windLength;
-
         windPath.style.strokeDashoffset =
             0;
-
 
         gravity.classList.add("visible");
         drag.classList.add("visible");
         wind.classList.add("visible");
 
-        impact.style.display = "block";
+        impact.style.display =
+            "block";
 
-        playButton.textContent = "▶";
+        playButton.textContent =
+            "▶";
 
 
         /* ----------------------------------------------------
@@ -1896,14 +1896,16 @@
                HIDE IMPACT
             ------------------------------------------------ */
 
-            impact.style.display = "none";
+            impact.style.display =
+                "none";
 
 
             /* ------------------------------------------------
                RESET MAIN TRAJECTORY
             ------------------------------------------------ */
 
-            path.style.animation = "none";
+            path.style.animation =
+                "none";
 
             path.style.strokeDasharray =
                 pathLength;
@@ -1916,19 +1918,16 @@
                RESET WIND TRAJECTORY
             ------------------------------------------------ */
 
-            windPath.style.animation = "none";
-
-            windPath.style.strokeDasharray =
-                windLength;
+            windPath.style.animation =
+                "none";
 
             windPath.style.strokeDashoffset =
-                windLength;
+                100;
 
 
-            /*
-             * Force browser reflow so the animations
-             * restart correctly on replay.
-             */
+            /* ------------------------------------------------
+               FORCE BROWSER REFLOW
+            ------------------------------------------------ */
 
             path.getBoundingClientRect();
             windPath.getBoundingClientRect();
@@ -1984,7 +1983,8 @@
 
             setTimeout(() => {
 
-                impact.style.display = "block";
+                impact.style.display =
+                    "block";
 
             }, 2800);
 
@@ -1995,7 +1995,8 @@
 
             setTimeout(() => {
 
-                playButton.textContent = "↻";
+                playButton.textContent =
+                    "↻";
 
             }, 2800);
 
