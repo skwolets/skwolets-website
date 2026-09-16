@@ -317,9 +317,9 @@
             <div class="ballistic-trajectory">
 
                 <button
-                    class="ballistic-play"
-                    id="ballisticPlay"
                     type="button"
+                    class="rewind-play"
+                    id="ballisticPlay"
                 >
                     ▶ SIMULATION
                 </button>
@@ -1890,10 +1890,6 @@
             impact.style.display =
                 "block";
 
-            playButton.textContent =
-                "▶ SIMULATION";
-
-
             /* ----------------------------------------------------
                PLAY
             ---------------------------------------------------- */
@@ -1906,6 +1902,10 @@
 
                 playButton.disabled =
                     true;
+
+                playButton.textContent =
+                    "SIMULATION";
+
 
                 /* ------------------------------------------------
                    RESET FACTORS
