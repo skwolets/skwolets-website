@@ -438,7 +438,7 @@ ARTICLE
 
     </div>
 
-    <p class="config-description">
+    <p>
         Ammunition is data-driven rather than hardcoded into the projectile
         simulation. Each ammunition type can define its own ballistic
         characteristics, lifetime, and visual behaviour through external
@@ -451,7 +451,7 @@ ARTICLE
         the underlying projectile simulation.
     </p>
 
-    <div class="ballistic-config">
+<div class="ballistic-config">
 
     <div class="ballistic-config-header">
 
@@ -466,14 +466,49 @@ ARTICLE
     </div>
 
 
-    <pre><code>{
-    "Type": "Ammo_762x39",
-    "Velocity": 71800,
-    "BulletWeight": 7.9,
-    "BallisticCoefficient": 0.294,
-    "Lifetime": 3.0
-}</code></pre>
+    <pre><code>[
+    {
+        "Type": "Ammo_762x39",
+        "Velocity": 71800,
+        "BulletWeight": 7.9,
+        "BallisticCoefficient": 0.294,
+        "Lifetime": 3.0
+    },
+    {
+        "Type": "Ammo_762x39Tracer",
+        "Parent": "Ammo_762x39",
+        "Particle": {
+            "ParticleSystem": "Tracer",
+            "SpawnDelayDistance": 100
+        }
+    },
+    {
+        "Type": "Ammo_762x39Subsonic",
+        "Parent": "Ammo_762x39"
+        "Velocity": 28500,
+        "BulletWeight": 12.5,
+        "Lifetime": 4.0
+    }
+]</code></pre>
 
+
+    <div class="ballistic-config-footer">
+
+        <span>
+            DATA-DRIVEN
+        </span>
+
+        <span>
+            MODDABLE
+        </span>
+
+        <span>
+            CONFIGURABLE
+        </span>
+
+    </div>
+
+</div>
 
     <div class="ballistic-config-footer">
 
