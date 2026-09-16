@@ -278,16 +278,64 @@ ARTICLE
 
     <div class="ballistic-trajectory">
 
-    <div class="ballistic-point start"></div>
+    <svg
+        class="ballistic-path"
+        viewBox="0 0 1000 300"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+    >
 
-    <div class="ballistic-point end"></div>
+        <!-- Reference / ideal trajectory -->
+        <path
+            class="trajectory-reference"
+            d="M 70 210 C 300 175, 520 150, 930 235"
+        />
+
+        <!-- Actual ballistic trajectory -->
+        <path
+            class="trajectory-main"
+            d="M 70 210
+               C 230 178, 390 155, 540 165
+               C 680 175, 800 205, 930 235"
+        />
+
+        <!-- Wind influence -->
+        <path
+            class="trajectory-wind"
+            d="M 540 165
+               C 670 160, 790 185, 930 235"
+        />
+
+    </svg>
+
+
+        <div class="ballistic-point start"></div>
+
+        <div class="ballistic-point end"></div>
+
 
         <div class="ballistic-label start">
             MUZZLE
         </div>
 
         <div class="ballistic-label end">
-            TRAJECTORY
+            IMPACT
+        </div>
+
+
+        <div class="ballistic-factor gravity">
+            <span>↓</span>
+            GRAVITY
+        </div>
+
+        <div class="ballistic-factor drag">
+            <span>←</span>
+            DRAG
+        </div>
+
+        <div class="ballistic-factor wind">
+            <span>→</span>
+            WIND
         </div>
 
     </div>
