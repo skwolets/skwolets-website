@@ -1894,6 +1894,8 @@
                PLAY
             ---------------------------------------------------- */
 
+            playButton.disabled = false;
+
             playButton.addEventListener("click", () => {
 
                 /* ------------------------------------------------
@@ -1902,10 +1904,6 @@
 
                 playButton.disabled =
                     true;
-
-                playButton.textContent =
-                    "SIMULATION";
-
 
                 /* ------------------------------------------------
                    RESET FACTORS
