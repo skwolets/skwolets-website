@@ -2210,7 +2210,7 @@
                     "none";
 
                 path.style.strokeDasharray =
-                    pathLength;
+                   pathLength;
 
                 path.style.strokeDashoffset =
                     pathLength;
@@ -2244,8 +2244,21 @@
                    START MAIN TRAJECTORY
                 ------------------------------------------------ */
 
-                path.style.animation =
-                    "ballisticTrajectory 2.8s linear forwards";
+                path.animate(
+                    [
+                        {
+                            strokeDashoffset: pathLength
+                        },
+                        {
+                            strokeDashoffset: 0
+                        }
+                    ],
+                    {
+                        duration: 2800,
+                        easing: "linear",
+                        fill: "forwards"
+                    }
+                );
 
 
                 /* ------------------------------------------------
