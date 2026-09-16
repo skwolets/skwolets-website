@@ -1763,6 +1763,27 @@
 
     </script>
 
+        <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const svg = document.querySelector(".ballistic-path");
+            const path = svg.querySelector(".trajectory-main");
+            const impact = svg.querySelector(".trajectory-impact");
+
+            function updateImpactPoint() {
+
+                const length = path.getTotalLength();
+                const point = path.getPointAtLength(length);
+
+                impact.setAttribute("cx", point.x);
+                impact.setAttribute("cy", point.y);
+            }
+
+            updateImpactPoint();
+
+        });
+    </script>
+
 </body>
 
 </html>
