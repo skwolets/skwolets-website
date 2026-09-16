@@ -2227,22 +2227,47 @@ footer {
 ======================================================== */
 
 .rewind-header {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
+   
+    position: relative;
+   
+    height: 18px;
+   
     margin-bottom: 25px;
-
+   
     font-family: monospace;
-
+   
     font-size: 10px;
-
+   
     letter-spacing: 3px;
-
+   
     color: #555;
+}
+
+.rewind-header > span {
+   
+    position: absolute;
+   
+    left: 0;
+}
+
+.rewind-state {
+   
+    position: absolute;
+   
+    left: 50%;
+   
+    transform: translateX(-50%);
+   
+    white-space: nowrap;
+}
+
+.rewind-snapshot {
+   
+    position: absolute;
+   
+    left: calc(100% + 25px);
+   
+    white-space: nowrap;
 }
 
 .rewind-header strong {
