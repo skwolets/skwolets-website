@@ -929,7 +929,7 @@ header {
 /* Impact */
 
 #trajectory-impact {
-    display: hidden;
+    display: none;
 }
 
 #trajectory-impact circle {
