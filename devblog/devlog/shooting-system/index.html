@@ -2286,11 +2286,8 @@
                     const duration =
                         1300;
 
-                    const startX =
-                        500;
-
-                    const endX =
-                        930;
+                    const startProgress =
+                        1500 / 2800;
 
 
                     const animateWind =
@@ -2303,9 +2300,39 @@
                                     1
                                 );
 
+
+                            /* ------------------------------------
+                               Follow bullet trajectory speed
+                            ------------------------------------ */
+
+                            const bulletProgress =
+                                startProgress +
+                                (
+                                    (1 - startProgress) *
+                                    progress
+                                );
+
+
+                            const bulletPoint =
+                                path.getPointAtLength(
+                                    pathLength *
+                                    bulletProgress
+                                );
+
+
+                            const startX =
+                                500;
+
+                            const currentX =
+                                Math.max(
+                                    startX,
+                                    bulletPoint.x
+                                );
+
+
                             const width =
-                                (endX - startX) *
-                                progress;
+                                currentX -
+                                startX;
 
 
                             windProgress.setAttribute(
