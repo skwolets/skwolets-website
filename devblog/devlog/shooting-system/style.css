@@ -960,13 +960,15 @@ header {
 
 .trajectory-wind {
     fill: none;
-
+   
     stroke: #ff3b3b;
-
+   
     stroke-width: 2;
-
+   
     stroke-dasharray: 3 6;
-
+   
+    stroke-linecap: round;
+   
     opacity: 0.45;
 }
 
@@ -1039,7 +1041,7 @@ header {
 @keyframes ballisticWind {
 
     from {
-        stroke-dashoffset: var(--wind-length);
+        stroke-dashoffset: 100;
     }
 
     to {
