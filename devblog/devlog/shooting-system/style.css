@@ -2625,40 +2625,36 @@ footer {
 
 .rewind-timeline
 input[type="range"]::-webkit-slider-thumb {
-
+   
     appearance: none;
 
     width: 10px;
-
     height: 10px;
 
-    border: 1px solid #ff3b3b;
-
+    border: none;
     border-radius: 50%;
 
-    background: #080808;
+    background: #777;
 
-    box-shadow:
-        0 0 8px
-        rgba(255, 59, 59, 0.35);
+    box-shadow: none;
+
+    cursor: pointer;
 }
 
 .rewind-timeline
 input[type="range"]::-moz-range-thumb {
-
+   
     width: 10px;
-
     height: 10px;
 
-    border: 1px solid #ff3b3b;
-
+    border: none;
     border-radius: 50%;
 
-    background: #080808;
+    background: #777;
 
-    box-shadow:
-        0 0 8px
-        rgba(255, 59, 59, 0.35);
+    box-shadow: none;
+
+    cursor: pointer;
 }
 
 
