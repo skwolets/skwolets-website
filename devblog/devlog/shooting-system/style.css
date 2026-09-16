@@ -1458,9 +1458,9 @@ footer {
    GLOBAL LINKS
 ============================================================ */
 
-a,
-a:visited,
-a:hover {
+.inline-config-link,
+.inline-config-link:visited,
+.inline-config-link:hover {
     color: #551A8B;
 }
 
