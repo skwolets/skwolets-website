@@ -1047,106 +1047,98 @@ header {
 
 .ballistic-config {
     margin: 60px 0 30px;
-
     border: 1px solid #252525;
-
     background: #080808;
 }
 
 
 .ballistic-config-header {
     display: flex;
-
     align-items: center;
     justify-content: space-between;
 
     padding: 14px 20px;
 
     border-bottom: 1px solid #222;
-
     background: #0d0d0d;
+
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
 }
 
+.ballistic-config-header::-webkit-details-marker {
+    display: none;
+}
+
+.ballistic-config-header::after {
+    content: "＋";
+
+    color: #ff3b3b;
+    font-family: monospace;
+    font-size: 16px;
+}
+
+.ballistic-config[open] .ballistic-config-header::after {
+    content: "−";
+}
 
 .ballistic-config-header span {
     color: #777;
-
     font-family: monospace;
-
     font-size: 10px;
-
     letter-spacing: 2px;
 }
 
 
 .ballistic-config-header strong {
+    margin-left: auto;
+    margin-right: 20px;
+
     color: #ff3b3b;
-
     font-family: monospace;
-
     font-size: 10px;
-
     letter-spacing: 2px;
 }
 
 
 .ballistic-config pre {
     margin: 0;
-
     padding: 28px;
-
     overflow-x: auto;
-
     background: #050505;
 }
 
 
 .ballistic-config code {
     color: #b8b8b8;
-
     font-family: monospace;
-
     font-size: 13px;
-
     line-height: 1.8;
 }
 
 
 .ballistic-config-footer {
     display: flex;
-
     gap: 25px;
-
     padding: 14px 20px;
-
     border-top: 1px solid #222;
-
     flex-wrap: wrap;
 }
 
 
 .ballistic-config-footer span {
     color: #555;
-
     font-family: monospace;
-
     font-size: 9px;
-
     letter-spacing: 1.5px;
 }
 
 
 .ballistic-config-footer span::before {
     content: "●";
-
     margin-right: 7px;
-
     color: #ff3b3b;
-}
-
-
-.config-description {
-    margin-top: 35px;
 }
 
 
