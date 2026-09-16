@@ -2163,6 +2163,7 @@
                     const value =
                         Number(slider.value);
 
+                    const REWIND_START = 75;
 
                     /*
                      * 100 = current state
@@ -2170,9 +2171,9 @@
                      */
 
                     const progress =
-                        value >= 90
+                        value >= REWIND_START
                             ? 0
-                            : (90 - value) / 90;
+                            : (REWIND_START - value) / REWIND_START;
 
 
                     /*
@@ -2196,7 +2197,7 @@
                        TIMELINE LABEL
                     ------------------------------------------------ */
 
-                    if (value > 90) {
+                    if (value > REWIND_START) {
 
                         time.textContent =
                             "NOW";
@@ -2223,7 +2224,7 @@
                         );
 
                         const rewindProgress =
-                            (90 - value) / 90;
+                            (REWIND_START - value) / REWIND_START;
 
                         const snapshotTime =
                             Math.round(
