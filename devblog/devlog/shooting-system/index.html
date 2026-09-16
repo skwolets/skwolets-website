@@ -1747,49 +1747,47 @@
     </button>
 
 
-    <script>
+<script>
 
-        const backToTop = document.getElementById("backToTop");
+    const backToTop = document.getElementById("backToTop");
 
-        window.addEventListener("scroll", () => {
+    window.addEventListener("scroll", () => {
 
-            if (window.scrollY > 500) {
-                backToTop.classList.add("visible");
-            } else {
-                backToTop.classList.remove("visible");
-            }
+        if (window.scrollY > 500) {
+            backToTop.classList.add("visible");
+        } else {
+            backToTop.classList.remove("visible");
+        }
 
+    });
+
+    backToTop.addEventListener("click", () => {
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
         });
 
-        backToTop.addEventListener("click", () => {
+    });
 
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
 
-        });
+    document.addEventListener("DOMContentLoaded", () => {
 
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
+        const svg = document.querySelector(".ballistic-path");
+        const path = svg.querySelector(".trajectory-main");
+        const impact = svg.querySelector(".trajectory-impact");
 
-                const svg = document.querySelector(".ballistic-path");
-                const path = svg.querySelector(".trajectory-main");
-                const impact = svg.querySelector(".trajectory-impact");
+        const length = path.getTotalLength();
+        const point = path.getPointAtLength(length);
 
-                const length = path.getTotalLength();
-                const point = path.getPointAtLength(length);
+        impact.setAttribute(
+            "transform",
+            `translate(${point.x} ${point.y})`
+        );
 
-                impact.setAttribute(
-                    "transform",
-                    `translate(${point.x} ${point.y})`
-                );
+    });
 
-            });
-        </script>
-
-    </script>
+</script>
 
 </body>
-
 </html>
