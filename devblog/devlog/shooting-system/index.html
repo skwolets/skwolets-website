@@ -2140,6 +2140,9 @@
             const hit =
                 document.getElementById("rewindHit");
 
+            const shot =
+                document.querySelector(".rewind-shot");
+
             const time =
                 document.getElementById("rewindTime");
 
@@ -2204,7 +2207,7 @@
                         time.textContent =
                             "NOW";
 
-                        hit.classList.remove(
+                        shot.classList.remove(
                             "visible"
                         );
 
