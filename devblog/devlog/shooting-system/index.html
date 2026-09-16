@@ -1827,16 +1827,14 @@
 
 
         /* ----------------------------------------------------
-           PATH LENGTHS
+           PATH LENGTH
         ---------------------------------------------------- */
 
         const pathLength =
             path.getTotalLength();
 
-        windPath.setAttribute(
-            "pathLength",
-            "100"
-        );
+        const windLength =
+            windPath.getTotalLength();
 
 
         /* ----------------------------------------------------
@@ -1921,12 +1919,15 @@
             windPath.style.animation =
                 "none";
 
+            windPath.style.opacity =
+                "0";
+
             windPath.style.strokeDashoffset =
-                100;
+                windLength;
 
 
             /* ------------------------------------------------
-               FORCE BROWSER REFLOW
+               FORCE REFLOW
             ------------------------------------------------ */
 
             path.getBoundingClientRect();
@@ -1969,10 +1970,13 @@
 
             setTimeout(() => {
 
+                wind.classList.add("visible");
+
+                windPath.style.opacity =
+                    "0.45";
+
                 windPath.style.animation =
                     "ballisticWind 0.7s linear forwards";
-
-                wind.classList.add("visible");
 
             }, 2100);
 
