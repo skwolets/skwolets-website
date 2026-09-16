@@ -501,60 +501,14 @@
 
             </div>
 
-
-            <div class="status-flow">
-
-                <span>
-                    VELOCITY
-                </span>
-
-                <b>
-                    +
-                </b>
-
-                <span>
-                    GRAVITY
-                </span>
-
-                <b>
-                    +
-                </b>
-
-                <span>
-                    DRAG
-                </span>
-
-                <b>
-                    +
-                </b>
-
-                <span>
-                    WIND
-                </span>
-
-                <b>
-                    →
-                </b>
-
-                <span>
-                    NEW VELOCITY
-                </span>
-
-                <b>
-                    →
-                </b>
-
-                <span>
-                    NEW POSITION
-                </span>
-
-            </div>
-
-
             <p>
-                The physics are intentionally lightweight and implemented directly
-                in native C++. The projectile does not need a heavyweight physics
-                Actor or Movement Component just to calculate its trajectory.
+                The physics are intentionally lightweight and implemented directly in native C++.
+                At each simulation step, the projectile's velocity is calculated from its current velocity, gravity, drag and wind. That velocity is then used to calculate the projectile's new position.
+
+                In simple terms:
+                <strong>velocity + gravity + drag + wind → new velocity → new position</strong>
+
+                The projectile does not need a heavyweight physics Actor or Movement Component just to calculate its trajectory.
             </p>
 
         </section>
