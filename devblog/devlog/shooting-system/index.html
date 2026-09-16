@@ -358,6 +358,21 @@
             </div>
 
 
+            <p>
+                The physics are intentionally lightweight and implemented directly in native C++.
+                At each simulation step, the projectile's velocity is calculated from its current velocity, gravity, drag and wind. That velocity is then used to calculate the projectile's new position.
+
+                <br><br>
+
+                In simple terms:
+                <strong>velocity + gravity + drag + wind → new velocity → new position</strong>
+
+                <br><br>
+
+                The projectile does not need a heavyweight physics Actor or Movement Component just to calculate its trajectory.
+            </p>
+
+
             <div class="feature-grid">
 
                 <div class="feature-card">
@@ -500,16 +515,6 @@
                 </div>
 
             </div>
-
-            <p>
-                The physics are intentionally lightweight and implemented directly in native C++.
-                At each simulation step, the projectile's velocity is calculated from its current velocity, gravity, drag and wind. That velocity is then used to calculate the projectile's new position.
-
-                In simple terms:
-                <strong>velocity + gravity + drag + wind → new velocity → new position</strong>
-
-                The projectile does not need a heavyweight physics Actor or Movement Component just to calculate its trajectory.
-            </p>
 
         </section>
 
