@@ -148,12 +148,13 @@
             </p>
 
             <p>
-                The system does not create a separate game object for every bullet flying through the world.<br>
-                
+                The system does not create a separate game object for every bullet flying through the world.
+                <br>
                 Instead, active projectiles are processed together as part of a centralized simulation.
+                <br>
                 Each projectile keeps only the state required for its ballistic calculation, while the
-                simulation advances them in a single pass.<br>
-
+                simulation advances them in a single pass.
+                <br>
                 This significantly reduces the amount of per-projectile overhead and makes it possible
                 to handle a large number of airborne projectiles without turning every bullet into an
                 independent gameplay object.
