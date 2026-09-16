@@ -2591,11 +2591,11 @@ footer {
 
 .rewind-timeline-labels {
 
-    display: flex;
-
-    justify-content: space-between;
+    position: relative;
 
     margin-bottom: 10px;
+
+    height: 12px;
 
     font-family: monospace;
 
@@ -2606,6 +2606,22 @@ footer {
     color: #444;
 }
 
+.rewind-timeline-labels span {
+    position: absolute;
+}
+
+.rewind-timeline-labels span:nth-child(1) {
+    left: 0;
+}
+
+.rewind-timeline-labels span:nth-child(2) {
+    left: 75%;
+    transform: translateX(-50%);
+}
+
+.rewind-timeline-labels span:nth-child(3) {
+    right: 0;
+}
 
 /* ========================================================
    RANGE
