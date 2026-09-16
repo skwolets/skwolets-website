@@ -1826,6 +1826,23 @@
 
 
         /* ----------------------------------------------------
+           INITIAL STATE
+           Show complete simulation
+        ---------------------------------------------------- */
+
+        path.style.strokeDasharray = pathLength;
+        path.style.strokeDashoffset = 0;
+
+        gravity.classList.add("visible");
+        drag.classList.add("visible");
+        wind.classList.add("visible");
+
+        impact.style.display = "block";
+
+        playButton.textContent = "▶";
+
+
+        /* ----------------------------------------------------
            PLAY / REPLAY
         ---------------------------------------------------- */
 
@@ -1838,7 +1855,7 @@
             wind.classList.remove("visible");
 
 
-            /* Reset impact */
+            /* Hide impact */
 
             impact.style.display = "none";
 
@@ -1846,6 +1863,9 @@
             /* Reset trajectory */
 
             path.style.animation = "none";
+
+            path.style.strokeDasharray = pathLength;
+            path.style.strokeDashoffset = pathLength;
 
             path.getBoundingClientRect();
 
