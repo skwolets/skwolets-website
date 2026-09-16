@@ -1271,7 +1271,7 @@
 
 
         <!-- ========================================================
-             09 — COMPLETE PIPELINE
+             09 — FROM SHOT TO RESULT
         ======================================================== -->
 
         <section class="log-section">
@@ -1281,19 +1281,23 @@
             </div>
 
             <h2>
-                THE COMPLETE PIPELINE
+                FROM SHOT TO RESULT
             </h2>
 
             <p class="lead">
-                Every part of the system has one job.
+                One shot passes through several stages, but the server remains the authority.
             </p>
 
 
-            <div class="architecture">
+            <div class="pipeline">
 
-                <div class="architecture-node player">
+                <div class="pipeline-stage">
 
-                    <span class="node-type">
+                    <span class="pipeline-number">
+                        01
+                    </span>
+
+                    <span class="pipeline-type">
                         CLIENT
                     </span>
 
@@ -1301,55 +1305,51 @@
                         SHOT
                     </strong>
 
-                    <small>
-                        compact command
+                   <small>
+                        predicted locally
                     </small>
 
                 </div>
 
 
-                <div class="architecture-line">
-
-                    <span>
-                        RPC
-                    </span>
-
-                    <div class="line"></div>
-
+                <div class="pipeline-arrow">
+                    →
                 </div>
 
 
-                <div class="architecture-node master">
+                <div class="pipeline-stage">
 
-                    <span class="node-type">
+                    <span class="pipeline-number">
+                        02
+                    </span>
+
+                    <span class="pipeline-type">
                         SERVER
                     </span>
 
                     <strong>
-                        VALIDATION
+                        VALIDATE
                     </strong>
 
                     <small>
-                        timestamp / camera / muzzle
+                        command / timestamp
                     </small>
 
                 </div>
 
 
-                <div class="architecture-line">
-
-                    <span>
-                        ACCEPT
-                    </span>
-
-                    <div class="line"></div>
-
+                <div class="pipeline-arrow">
+                    →
                 </div>
 
 
-                <div class="architecture-node">
+                <div class="pipeline-stage">
 
-                    <span class="node-type">
+                    <span class="pipeline-number">
+                        03
+                    </span>
+        
+                    <span class="pipeline-type">
                         SIMULATION
                     </span>
 
@@ -1364,76 +1364,70 @@
                 </div>
 
 
-                <div class="architecture-line">
-
-                    <span>
-                        CANDIDATES
-                    </span>
-
-                    <div class="line"></div>
-
+                <div class="pipeline-arrow">
+                    →
                 </div>
 
 
-                <div class="architecture-node master">
+                <div class="pipeline-stage">
 
-                    <span class="node-type">
-                        SPATIAL
+                    <span class="pipeline-number">
+                        04
+                    </span>
+        
+                    <span class="pipeline-type">
+                        WORLD
                     </span>
 
                     <strong>
-                        GRID
-                    </strong>
-
-                    <small>
-                        broad-phase filtering
-                    </small>
-
-                </div>
-
-
-                <div class="architecture-line">
-
-                    <span>
-                        HISTORICAL STATE
-                    </span>
-
-                    <div class="line"></div>
-
-                </div>
-
-
-                <div class="architecture-node">
-
-                    <span class="node-type">
                         REWIND
-                    </span>
-
-                    <strong>
-                        TARGET POSE
                     </strong>
 
                     <small>
-                        historical hitboxes
+                        historical target pose
                     </small>
 
                 </div>
 
 
-                <div class="architecture-line">
-
-                    <span>
-                        TRACE
-                    </span>
-
-                    <div class="line"></div>
-
+                <div class="pipeline-arrow">
+                    →
                 </div>
 
 
-                <div class="architecture-node player">
+                <div class="pipeline-stage">
 
-                    <span class="node-type">
+                    <span class="pipeline-number">
+                        05
+                    </span>
+
+                    <span class="pipeline-type">
+                        SERVER
+                    </span>
+
+                    <strong>
+                        TRACE
+                    </strong>
+
+                    <small>
+                        hit / miss
+                    </small>
+        
+                </div>
+
+
+                <div class="pipeline-arrow">
+                    →
+                </div>
+
+
+                <div class="pipeline-stage result">
+
+                    <span class="pipeline-number">
+                        06
+                    </span>
+
+                    <span class="pipeline-type">
                         RESULT
                     </span>
 
@@ -1446,7 +1440,7 @@
                     </small>
 
                 </div>
-
+        
             </div>
 
         </section>
