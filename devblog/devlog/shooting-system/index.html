@@ -1034,8 +1034,15 @@
                     </span>
 
                     <strong id="rewindTime">
-                        NOW
+                        TARGET POSE −150 ms
                     </strong>
+
+                    <span
+                        id="rewindSnapshot"
+                        class="rewind-snapshot"
+                    >
+                        SNAPSHOT NOW
+                    </span>
 
                 </div>
 
@@ -2146,6 +2153,9 @@
             const time =
                 document.getElementById("rewindTime");
 
+            const snapshot =
+                document.getElementById("rewindSnapshot");
+
             const play =
                 document.getElementById("rewindPlay");
 
@@ -2202,7 +2212,7 @@
                        TIMELINE LABEL
                     ------------------------------------------------ */
 
-                    if (value > 95) {
+                    if (value > 90) {
 
                         time.textContent =
                             "NOW";
@@ -2226,15 +2236,18 @@
                         );
 
                         const rewindProgress =
-                            (95 - value) / 95;
+                            (90 - value) / 90;
 
-                        const rewindTime =
+                        const snapshotTime =
                             Math.round(
                                 rewindProgress * 150
                             );
 
                         time.textContent =
-                            `TARGET POSE −${rewindTime} ms`;
+                            `TARGET POSE −150 ms`;
+
+                        snapshot.textContent =
+                            `SNAPSHOT −${snapshotTime} ms`;
 
                     } else {
                         
@@ -2244,6 +2257,9 @@
 
                         time.textContent =
                             "TARGET POSE −150 ms";
+
+                        snapshot.textContent =
+                            "SNAPSHOT −150 ms";
 
                         hit.classList.add(
                             "visible"
