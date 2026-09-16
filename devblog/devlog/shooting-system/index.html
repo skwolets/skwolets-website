@@ -2202,7 +2202,7 @@
                        TIMELINE LABEL
                     ------------------------------------------------ */
 
-                    if (value > 60) {
+                    if (value > 95) {
 
                         time.textContent =
                             "NOW";
@@ -2215,10 +2215,7 @@
                             "visible"
                         );
 
-                    } else if (value > 25) {
-
-                        time.textContent =
-                            "−100 ms";
+                    } else if (value > 0) {
 
                         shot.classList.add(
                             "visible"
@@ -2228,21 +2225,30 @@
                             "visible"
                         );
 
-                    } else {
+                        const rewindProgress =
+                            (95 - value) / 95;
+
+                        const rewindTime =
+                            Math.round(
+                                rewindProgress * 150
+                            );
 
                         time.textContent =
-                            "SHOT TIME";
+                            `TARGET POSE −${rewindTime} ms`;
 
+                    } else {
+                        
                         shot.classList.add(
                             "visible"
                         );
 
+                        time.textContent =
+                            "TARGET POSE −150 ms";
+
                         hit.classList.add(
                             "visible"
                         );
-
                     }
-
                 };
 
 
