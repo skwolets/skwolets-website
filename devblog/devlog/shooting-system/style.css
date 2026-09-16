@@ -2500,6 +2500,8 @@ footer {
 
     width: 60%;
 
+    opacity: 0;
+
     color: #ff3b3b;
 
     font-family: monospace;
@@ -2507,6 +2509,8 @@ footer {
     font-size: 9px;
 
     letter-spacing: 3px;
+
+    transition: opacity 0.25s ease;
 }
 
 .rewind-shot-line {
@@ -2527,6 +2531,10 @@ footer {
     box-shadow:
         0 0 8px
         rgba(255, 59, 59, 0.25);
+}
+
+.rewind-shot.visible {
+    opacity: 1;
 }
 
 
