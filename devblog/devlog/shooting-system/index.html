@@ -276,6 +276,12 @@ ARTICLE
         calculating its next position.
     </p>
 
+    <p>
+        The physics are intentionally lightweight and implemented directly
+        in native C++. The projectile does not need a heavyweight physics
+        Actor or Movement Component just to calculate its trajectory.
+    </p>
+
 
     <div class="ballistic-trajectory">
 
@@ -434,6 +440,19 @@ ARTICLE
 
     <div class="ballistic-config">
 
+        <p class="config-description">
+            Ammunition is data-driven rather than hardcoded into the projectile
+            simulation. Each ammunition type can define its own ballistic
+            characteristics, lifetime, and visual behaviour through external
+            configuration.
+        </p>
+
+        <p>
+            This also makes the system moddable. New ammunition types can be added
+            by defining their parameters in the configuration instead of changing
+            the underlying projectile simulation.
+        </p>
+
     <div class="ballistic-config-header">
 
         <span>
@@ -473,20 +492,6 @@ ARTICLE
     </div>
 
 </div>
-
-
-<p class="config-description">
-    Ammunition is data-driven rather than hardcoded into the projectile
-    simulation. Each ammunition type can define its own ballistic
-    characteristics, lifetime, and visual behaviour through external
-    configuration.
-</p>
-
-<p>
-    This also makes the system moddable. New ammunition types can be added
-    by defining their parameters in the configuration instead of changing
-    the underlying projectile simulation.
-</p>
 
 
     <div class="status-flow">
@@ -536,13 +541,6 @@ ARTICLE
         </span>
 
     </div>
-
-
-    <p>
-        The physics are intentionally lightweight and implemented directly
-        in native C++. The projectile does not need a heavyweight physics
-        Actor or Movement Component just to calculate its trajectory.
-    </p>
 
 </section>
 
