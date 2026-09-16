@@ -820,31 +820,6 @@ header {
    BALLISTIC TRAJECTORY
 ============================================================ */
 
-.ballistic-play {
-    position: absolute;
-    top: 18px;
-    right: 18px;
-
-    width: 36px;
-    height: 36px;
-
-    border: 1px solid #333;
-    background: #0b0b0b;
-
-    color: #ff3b3b;
-
-    font-family: monospace;
-    font-size: 14px;
-
-    cursor: pointer;
-
-    z-index: 10;
-}
-
-.ballistic-play:hover {
-    border-color: #ff3b3b;
-}
-
 .ballistic-trajectory {
     position: relative;
 
@@ -866,7 +841,48 @@ header {
 }
 
 
-/* Ground / reference line */
+/* ============================================================
+   PLAY BUTTON
+============================================================ */
+
+.ballistic-play {
+    position: absolute;
+
+    top: 18px;
+    right: 18px;
+
+    width: 36px;
+    height: 36px;
+
+    padding: 0;
+
+    border: 1px solid #333;
+
+    background: #0b0b0b;
+
+    color: #ff3b3b;
+
+    font-family: monospace;
+    font-size: 14px;
+
+    cursor: pointer;
+
+    z-index: 10;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.ballistic-play:hover {
+    border-color: #ff3b3b;
+    background: #111;
+}
+
+
+/* ============================================================
+   GROUND / REFERENCE LINE
+============================================================ */
 
 .ballistic-trajectory::before {
     content: "";
@@ -930,6 +946,9 @@ header {
 
     stroke-linecap: round;
 
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+
     filter:
         drop-shadow(
             0 0 5px rgba(255,59,59,0.25)
@@ -951,7 +970,10 @@ header {
     opacity: 0.45;
 }
 
-/* Impact */
+
+/* ============================================================
+   IMPACT
+============================================================ */
 
 #trajectory-impact {
     display: none;
@@ -964,6 +986,8 @@ header {
         drop-shadow(
             0 0 8px rgba(255, 59, 59, 0.6)
         );
+
+    animation: impactPulse 0.8s ease-out;
 }
 
 #trajectory-impact text {
@@ -974,6 +998,42 @@ header {
     letter-spacing: 2px;
 
     text-anchor: middle;
+}
+
+@keyframes impactPulse {
+
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.5);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+
+/* ============================================================
+   TRAJECTORY ANIMATION
+============================================================ */
+
+@keyframes ballisticTrajectory {
+
+    from {
+        stroke-dashoffset: 1000;
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
+
 }
 
 
@@ -1000,11 +1060,6 @@ header {
 .ballistic-point.start {
     left: 6.8%;
     top: 69%;
-}
-
-.ballistic-point.end {
-    right: 6.5%;
-    top: 76%;
 }
 
 
@@ -1052,6 +1107,20 @@ header {
     letter-spacing: 2px;
 
     z-index: 4;
+
+    opacity: 0;
+
+    transform: translateY(4px);
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+.ballistic-factor.visible {
+    opacity: 1;
+
+    transform: translateY(0);
 }
 
 .ballistic-factor span {
@@ -1086,81 +1155,10 @@ header {
     top: 45%;
 }
 
+
 /* ============================================================
-   BALLISTIC CONFIGURATION
+   DISTANCE
 ============================================================ */
-
-.ballistic-config {
-    margin: 60px 0 30px;
-    border: 1px solid #252525;
-    background: #080808;
-}
-
-
-.ballistic-config-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 14px 20px;
-
-    border-bottom: 1px solid #222;
-    background: #0d0d0d;
-
-    cursor: pointer;
-    list-style: none;
-    user-select: none;
-}
-
-.ballistic-config-header::-webkit-details-marker {
-    display: none;
-}
-
-.ballistic-config-header::after {
-    content: "＋";
-
-    color: #ff3b3b;
-    font-family: monospace;
-    font-size: 16px;
-}
-
-.ballistic-config[open] .ballistic-config-header::after {
-    content: "−";
-}
-
-.ballistic-config-header span {
-    color: #777;
-    font-family: monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-}
-
-
-.ballistic-config-header strong {
-    margin-left: auto;
-    margin-right: 20px;
-
-    color: #ff3b3b;
-    font-family: monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-}
-
-
-.ballistic-config pre {
-    margin: 0;
-    padding: 28px;
-    overflow-x: auto;
-    background: #050505;
-}
-
-
-.ballistic-config code {
-    color: #b8b8b8;
-    font-family: monospace;
-    font-size: 13px;
-    line-height: 1.8;
-}
 
 .ballistic-distance {
     position: absolute;
@@ -1171,6 +1169,7 @@ header {
     transform: translateX(-50%);
 
     color: #555;
+
     font-family: monospace;
     font-size: 10px;
     letter-spacing: 3px;
@@ -1190,6 +1189,96 @@ header {
     margin: 0 14px 3px;
 
     background: #252525;
+}
+
+
+/* ============================================================
+   BALLISTIC CONFIGURATION
+============================================================ */
+
+.ballistic-config {
+    margin: 60px 0 30px;
+
+    border: 1px solid #252525;
+
+    background: #080808;
+}
+
+
+.ballistic-config-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 14px 20px;
+
+    border-bottom: 1px solid #222;
+
+    background: #0d0d0d;
+
+    cursor: pointer;
+
+    list-style: none;
+
+    user-select: none;
+}
+
+.ballistic-config-header::-webkit-details-marker {
+    display: none;
+}
+
+.ballistic-config-header::after {
+    content: "＋";
+
+    color: #ff3b3b;
+
+    font-family: monospace;
+    font-size: 16px;
+}
+
+.ballistic-config[open] .ballistic-config-header::after {
+    content: "−";
+}
+
+.ballistic-config-header span {
+    color: #777;
+
+    font-family: monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+
+.ballistic-config-header strong {
+    margin-left: auto;
+    margin-right: 20px;
+
+    color: #ff3b3b;
+
+    font-family: monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+
+.ballistic-config pre {
+    margin: 0;
+
+    padding: 28px;
+
+    overflow-x: auto;
+
+    background: #050505;
+}
+
+
+.ballistic-config code {
+    color: #b8b8b8;
+
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.8;
 }
 
 
