@@ -873,34 +873,6 @@ header {
     background: #111;
 }
 
-
-/* ============================================================
-   GROUND / REFERENCE LINE
-============================================================ */
-
-.ballistic-trajectory::before {
-    content: "";
-
-    position: absolute;
-
-    left: 5%;
-    right: 5%;
-
-    bottom: 45px;
-
-    height: 1px;
-
-    background:
-        repeating-linear-gradient(
-            90deg,
-            #222 0,
-            #222 4px,
-            transparent 4px,
-            transparent 10px
-        );
-}
-
-
 /* ============================================================
    SVG
 ============================================================ */
