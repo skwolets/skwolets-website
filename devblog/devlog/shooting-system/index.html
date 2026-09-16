@@ -432,6 +432,62 @@ ARTICLE
 
     </div>
 
+    <div class="ballistic-config">
+
+    <div class="ballistic-config-header">
+
+        <span>
+            AMMUNITION CONFIGURATION
+        </span>
+
+        <strong>
+            JSON
+        </strong>
+
+    </div>
+
+
+    <pre><code>{
+    "Type": "Ammo_762x39",
+    "Velocity": 71800,
+    "BulletWeight": 7.9,
+    "BallisticCoefficient": 0.294,
+    "Lifetime": 3.0
+}</code></pre>
+
+
+    <div class="ballistic-config-footer">
+
+        <span>
+            DATA-DRIVEN
+        </span>
+
+        <span>
+            MODDABLE
+        </span>
+
+        <span>
+            NO CODE CHANGES REQUIRED
+        </span>
+
+    </div>
+
+</div>
+
+
+<p class="config-description">
+    Ammunition is data-driven rather than hardcoded into the projectile
+    simulation. Each ammunition type can define its own ballistic
+    characteristics, lifetime, and visual behaviour through external
+    configuration.
+</p>
+
+<p>
+    This also makes the system moddable. New ammunition types can be added
+    by defining their parameters in the configuration instead of changing
+    the underlying projectile simulation.
+</p>
+
 
     <div class="status-flow">
 
