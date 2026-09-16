@@ -819,7 +819,7 @@ header {
 .ballistic-trajectory {
     position: relative;
 
-    height: 260px;
+    height: 300px;
 
     margin: 70px 0;
 
@@ -836,6 +836,9 @@ header {
     border-bottom: 1px solid #1b1b1b;
 }
 
+
+/* Ground / reference line */
+
 .ballistic-trajectory::before {
     content: "";
 
@@ -843,7 +846,7 @@ header {
 
     left: 5%;
     right: 5%;
-    top: 50%;
+    bottom: 45px;
 
     height: 1px;
 
@@ -857,27 +860,72 @@ header {
         );
 }
 
-.ballistic-trajectory::after {
-    content: "";
 
+/* ============================================================
+   SVG
+============================================================ */
+
+.ballistic-path {
     position: absolute;
 
-    width: 70%;
-    height: 120px;
+    inset: 0;
 
-    left: 15%;
-    top: 30%;
-
-    border-top: 1px solid #ff3b3b;
-
-    border-radius: 50%;
-
-    transform:
-        rotate(8deg)
-        skewX(-15deg);
-
-    opacity: 0.65;
+    width: 100%;
+    height: 100%;
 }
+
+
+/* Ideal straight trajectory */
+
+.trajectory-reference {
+    fill: none;
+
+    stroke: #333;
+
+    stroke-width: 1.2;
+
+    stroke-dasharray: 5 8;
+
+    opacity: 0.7;
+}
+
+
+/* Actual projectile path */
+
+.trajectory-main {
+    fill: none;
+
+    stroke: #ff3b3b;
+
+    stroke-width: 2;
+
+    stroke-linecap: round;
+
+    filter:
+        drop-shadow(
+            0 0 5px rgba(255,59,59,0.25)
+        );
+}
+
+
+/* Wind-affected section */
+
+.trajectory-wind {
+    fill: none;
+
+    stroke: #ff3b3b;
+
+    stroke-width: 2;
+
+    stroke-dasharray: 3 6;
+
+    opacity: 0.45;
+}
+
+
+/* ============================================================
+   POINTS
+============================================================ */
 
 .ballistic-point {
     position: absolute;
@@ -890,18 +938,25 @@ header {
     background: #ff3b3b;
 
     box-shadow:
-        0 0 15px rgba(255,59,59,0.5);
+        0 0 15px rgba(255,59,59,0.55);
+
+    z-index: 3;
 }
 
 .ballistic-point.start {
-    left: 10%;
-    top: 49%;
+    left: 6.8%;
+    top: 69%;
 }
 
 .ballistic-point.end {
-    right: 10%;
-    top: 38%;
+    right: 6.5%;
+    top: 76%;
 }
+
+
+/* ============================================================
+   LABELS
+============================================================ */
 
 .ballistic-label {
     position: absolute;
@@ -911,16 +966,75 @@ header {
     letter-spacing: 3px;
 
     color: #555;
+
+    z-index: 3;
 }
 
 .ballistic-label.start {
-    left: 7%;
-    bottom: 25%;
+    left: 5%;
+    top: 76%;
 }
 
 .ballistic-label.end {
-    right: 7%;
-    top: 25%;
+    right: 5%;
+    top: 82%;
+}
+
+
+/* ============================================================
+   PHYSICS FACTORS
+============================================================ */
+
+.ballistic-factor {
+    position: absolute;
+
+    padding: 7px 10px;
+
+    border: 1px solid #242424;
+
+    background: rgba(5,5,5,0.9);
+
+    color: #777;
+
+    font-family: monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    z-index: 4;
+}
+
+.ballistic-factor span {
+    color: #ff3b3b;
+
+    margin-right: 5px;
+
+    font-size: 13px;
+}
+
+
+/* Gravity */
+
+.ballistic-factor.gravity {
+    left: 42%;
+    top: 48%;
+}
+
+
+/* Drag */
+
+.ballistic-factor.drag {
+    left: 62%;
+    top: 32%;
+}
+
+
+/* Wind */
+
+.ballistic-factor.wind {
+    right: 17%;
+    top: 45%;
 }
 
 
