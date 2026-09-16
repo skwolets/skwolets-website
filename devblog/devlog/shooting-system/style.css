@@ -1760,30 +1760,21 @@ footer {
 
 }
 
+
 /* ========================================================
-   SHOOTING ARCHITECTURE
+   ARCHITECTURE CODE DIAGRAM
 ======================================================== */
 
-.shooting-architecture {
-
-    position: relative;
-
-    display: grid;
-
-    grid-template-columns:
-        minmax(150px, 1fr)
-        100px
-        minmax(280px, 1.5fr)
-        100px
-        minmax(150px, 1fr);
-
-    align-items: start;
+.architecture-code {
 
     width: 100%;
 
-    margin: 70px 0;
+    margin: 60px 0;
 
-    padding: 35px 0;
+    padding:
+        35px 40px;
+
+    overflow-x: auto;
 
     background:
         linear-gradient(
@@ -1795,92 +1786,47 @@ footer {
     border-top: 1px solid #1d1d1d;
     border-bottom: 1px solid #1d1d1d;
 
-    font-family: monospace;
+}
+
+
+.architecture-code pre {
+
+    margin: 0;
+
+    color: #444;
+
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        "Liberation Mono",
+        monospace;
+
+    font-size: 13px;
+
+    line-height: 1.65;
+
+    letter-spacing: 0.5px;
+
+    white-space: pre;
+
+}
+
+
+.architecture-code code {
+
+    font-family: inherit;
 }
 
 
 /* ========================================================
-   COLUMNS
+   DIAGRAM EMPHASIS
 ======================================================== */
 
-.arch-column {
+.architecture-code .code-client,
+.architecture-code .code-server,
+.architecture-code .code-result {
 
-    min-width: 0;
-
-    padding:
-        0 25px;
-}
-
-
-.arch-column-title {
-
-    color: #555;
-
-    font-size: 12px;
-
-    letter-spacing: 3px;
-
-    white-space: nowrap;
-}
-
-
-.arch-rule {
-
-    width: 100%;
-
-    height: 1px;
-
-    margin:
-        17px 0 30px;
-
-    background: #222;
-}
-
-
-/* ========================================================
-   NODES
-======================================================== */
-
-.arch-node {
-
-    position: relative;
-
-    padding:
-        22px 24px 24px;
-
-    border: 1px solid #202020;
-
-    background: #070707;
-}
-
-
-.arch-server .arch-node {
-
-    border-color: #292929;
-}
-
-
-.arch-node-index {
-
-    display: block;
-
-    margin-bottom: 16px;
-
-    color: #ff3b3b;
-
-    font-size: 11px;
-
-    letter-spacing: 2px;
-}
-
-
-.arch-node strong {
-
-    display: block;
-
-    color: #ddd;
-
-    font-size: 17px;
+    color: #666;
 
     font-weight: 400;
 
@@ -1888,144 +1834,17 @@ footer {
 }
 
 
-.arch-node-details {
+.architecture-code .code-server {
 
-    display: flex;
+    color: #ff3b3b;
 
-    flex-direction: column;
-
-    gap: 7px;
-
-    margin-top: 15px;
-
-    color: #555;
-
-    font-size: 11px;
-
-    line-height: 1.5;
-
-    letter-spacing: 1px;
 }
 
 
-/* ========================================================
-   SERVER VERTICAL FLOW
-======================================================== */
+.architecture-code .code-main {
 
-.arch-vertical-flow {
+    color: #ddd;
 
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    height: 55px;
-
-    color: #333;
-
-    font-size: 13px;
-
-    line-height: 15px;
-}
-
-
-.arch-vertical-flow span:last-child {
-
-    color: #444;
-}
-
-
-/* ========================================================
-   HORIZONTAL NETWORK FLOW
-======================================================== */
-
-.arch-flow {
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    min-width: 0;
-
-    padding-top: 57px;
-}
-
-
-.arch-flow-label {
-
-    margin-bottom: 10px;
-
-    color: #444;
-
-    font-size: 10px;
-
-    letter-spacing: 2px;
-
-    white-space: nowrap;
-}
-
-
-.arch-flow-line {
-
-    position: relative;
-
-    display: flex;
-
-    align-items: center;
-
-    width: 100%;
-
-    height: 1px;
-
-    background: #292929;
-}
-
-
-.arch-arrow {
-
-    position: absolute;
-
-    right: -1px;
-
-    top: 50%;
-
-    transform:
-        translateY(-50%);
-
-    color: #555;
-
-    font-size: 16px;
-
-    line-height: 1;
-}
-
-
-/* ========================================================
-   EMPHASIS
-======================================================== */
-
-.arch-client .arch-node {
-
-    border-color: #252525;
-}
-
-
-.arch-result .arch-node {
-
-    border-color: #292929;
-}
-
-
-.arch-result .arch-node strong {
-
-    color: #bbb;
 }
 
 
@@ -2033,54 +1852,25 @@ footer {
    MOBILE
 ======================================================== */
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
 
-    .shooting-architecture {
+    .architecture-code {
 
-        grid-template-columns: 1fr;
-
-        gap: 0;
+        margin: 50px 0;
 
         padding:
-            30px 20px;
+            25px 20px;
     }
 
 
-    .arch-column {
+    .architecture-code pre {
 
-        padding: 0;
-    }
+        font-size: 10px;
 
-
-    .arch-flow {
-
-        padding: 18px 0;
-
-        flex-direction: row;
-
-        gap: 15px;
-    }
-
-
-    .arch-flow-label {
-
-        margin: 0;
-    }
-
-
-    .arch-flow-line {
-
-        flex: 1;
-    }
-
-
-    .arch-vertical-flow {
-
-        height: 40px;
+        line-height: 1.6;
     }
 
 }
-
 
 
 /* ============================================================
