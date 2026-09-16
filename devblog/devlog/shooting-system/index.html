@@ -471,12 +471,18 @@
 
             <p>
                 This also makes the system moddable. New ammunition types can be added
-                by defining their parameters in the configuration instead of changing
-                the underlying projectile simulation.
+                by defining their parameters in the
+                <a href="#ammunition-configuration" class="inline-config-link">
+                configuration
+                </a>
+                instead of changing the underlying projectile simulation.
             </p>
 
 
-            <details class="ballistic-config">
+            <details
+                class="ballistic-config"
+                id="ammunition-configuration"
+            >
 
                 <summary class="ballistic-config-header">
 
@@ -1792,6 +1798,26 @@
         impact.style.display = "block";
 
     });
+
+    const configLink = document.querySelector(".inline-config-link");
+    const config = document.getElementById("ammunition-configuration");
+
+    if (configLink && config) {
+
+        configLink.addEventListener("click", (event) => {
+
+        event.preventDefault();
+
+        config.open = true;
+
+        config.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+    });
+
+}
 
 </script>
 
