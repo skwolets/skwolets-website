@@ -928,7 +928,11 @@ header {
 
 /* Impact */
 
-.trajectory-impact circle {
+#trajectory-impact {
+    display: block;
+}
+
+#trajectory-impact circle {
     fill: #ff3b3b;
 
     filter:
@@ -937,7 +941,7 @@ header {
         );
 }
 
-.trajectory-impact-label {
+#trajectory-impact text {
     fill: #555;
 
     font-family: monospace;
