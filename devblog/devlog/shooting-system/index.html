@@ -276,37 +276,43 @@ ARTICLE
         calculating its next position.
     </p>
 
+
     <div class="ballistic-trajectory">
 
-    <svg
-        class="ballistic-path"
-        viewBox="0 0 1000 300"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-    >
+        <svg
+            class="ballistic-path"
+            viewBox="0 0 1000 300"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+        >
 
-        <!-- Reference / ideal trajectory -->
-        <path
-            class="trajectory-reference"
-            d="M 70 210 C 300 175, 520 150, 930 235"
-        />
+            <!-- Reference / ideal trajectory -->
 
-        <!-- Actual ballistic trajectory -->
-        <path
-            class="trajectory-main"
-            d="M 70 210
-               C 230 178, 390 155, 540 165
-               C 680 175, 800 205, 930 235"
-        />
+            <path
+                class="trajectory-reference"
+                d="M 70 210 C 300 175, 520 150, 930 235"
+            />
 
-        <!-- Wind influence -->
-        <path
-            class="trajectory-wind"
-            d="M 540 165
-               C 670 160, 790 185, 930 235"
-        />
 
-    </svg>
+            <!-- Actual ballistic trajectory -->
+
+            <path
+                class="trajectory-main"
+                d="M 70 210
+                   C 230 178, 390 155, 540 165
+                   C 680 175, 800 205, 930 235"
+            />
+
+
+            <!-- Wind influence -->
+
+            <path
+                class="trajectory-wind"
+                d="M 540 165
+                   C 670 160, 790 185, 930 235"
+            />
+
+        </svg>
 
 
         <div class="ballistic-point start"></div>
@@ -324,18 +330,29 @@ ARTICLE
 
 
         <div class="ballistic-factor gravity">
+
             <span>↓</span>
+
             GRAVITY
+
         </div>
+
 
         <div class="ballistic-factor drag">
-            <span>←</span>
+
+            <span>↘</span>
+
             DRAG
+
         </div>
 
+
         <div class="ballistic-factor wind">
+
             <span>→</span>
+
             WIND
+
         </div>
 
     </div>
@@ -344,35 +361,73 @@ ARTICLE
     <div class="feature-grid">
 
         <div class="feature-card">
-            <span class="feature-icon">01</span>
-            <strong>GRAVITY</strong>
+
+            <span class="feature-icon">
+                01
+            </span>
+
+            <strong>
+                GRAVITY
+            </strong>
+
             <p>
                 The projectile is affected by gravity throughout its flight.
             </p>
+
         </div>
 
-        <div class="feature-card">
-            <span class="feature-icon">02</span>
-            <strong>DRAG</strong>
-            <p>
-                Air resistance changes the projectile's velocity over time.
-            </p>
-        </div>
 
         <div class="feature-card">
-            <span class="feature-icon">03</span>
-            <strong>WIND</strong>
+
+            <span class="feature-icon">
+                02
+            </span>
+
+            <strong>
+                DRAG
+            </strong>
+
             <p>
-                Wind velocity affects the projectile trajectory.
+                Air resistance gradually reduces the projectile's velocity
+                as it travels through the air.
             </p>
+
         </div>
 
+
         <div class="feature-card">
-            <span class="feature-icon">04</span>
-            <strong>VELOCITY</strong>
+
+            <span class="feature-icon">
+                03
+            </span>
+
+            <strong>
+                WIND
+            </strong>
+
             <p>
-                Position is calculated from the simulated projectile velocity.
+                Wind velocity can influence the projectile's trajectory
+                throughout its flight.
             </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <span class="feature-icon">
+                04
+            </span>
+
+            <strong>
+                VELOCITY
+            </strong>
+
+            <p>
+                The projectile's position is continuously calculated from
+                its simulated velocity.
+            </p>
+
         </div>
 
     </div>
@@ -380,23 +435,57 @@ ARTICLE
 
     <div class="status-flow">
 
-        <span>VELOCITY</span>
-        <b>→</b>
-        <span>GRAVITY</span>
-        <b>+</b>
-        <span>DRAG</span>
-        <b>+</b>
-        <span>WIND</span>
-        <b>→</b>
-        <span>NEW POSITION</span>
+        <span>
+            VELOCITY
+        </span>
+
+        <b>
+            +
+        </b>
+
+        <span>
+            GRAVITY
+        </span>
+
+        <b>
+            +
+        </b>
+
+        <span>
+            DRAG
+        </span>
+
+        <b>
+            +
+        </b>
+
+        <span>
+            WIND
+        </span>
+
+        <b>
+            →
+        </b>
+
+        <span>
+            NEW VELOCITY
+        </span>
+
+        <b>
+            →
+        </b>
+
+        <span>
+            NEW POSITION
+        </span>
 
     </div>
 
 
     <p>
         The physics are intentionally lightweight and implemented directly
-        in native C++. There is no need for a full physics Actor just to
-        calculate the trajectory of a small piece of ammunition.
+        in native C++. The projectile does not need a heavyweight physics
+        Actor or Movement Component just to calculate its trajectory.
     </p>
 
 </section>
