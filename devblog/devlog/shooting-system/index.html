@@ -2009,31 +2009,39 @@
 
                 wind.classList.add("visible");
 
+                const startTime = performance.now();
+                const duration = 350;
 
-                /*
-                 * Reveal the wind section.
-                 *
-                 * The dash pattern itself does not move.
-                 * The clip simply grows from left to right.
-                 */
+                const startX = 500;
+                const endX = 930;
 
-                windProgress.animate(
-                    [
-                        {
-                            x: 500,
-                            width: 0
-                        },
-                        {
-                            x: 500,
-                            width: 430
-                        }
-                    ],
-                    {
-                        duration: 350,
-                        easing: "linear",
-                        fill: "forwards"
+                const animateWind = (currentTime) => {
+
+                    const progress =
+                        Math.min(
+                            (currentTime - startTime) / duration,
+                            1
+                        );
+
+                    const width =
+                        (endX - startX) * progress;
+                            windProgress.setAttribute(
+                            "x",
+                            startX
+                    );
+
+                    windProgress.setAttribute(
+                        "width",
+                        width
+                    );
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animateWind);
                     }
-                );
+
+                };
+
+                requestAnimationFrame(animateWind);
 
             }, 2100);
 
