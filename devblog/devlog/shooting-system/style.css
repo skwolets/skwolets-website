@@ -2228,12 +2228,14 @@ footer {
 
 .rewind-header {
    
-    position: relative;
+    display: grid;
    
-    height: 18px;
+    grid-template-columns: 1fr auto 1fr;
    
+    align-items: center;
+
     margin-bottom: 25px;
-   
+
     font-family: monospace;
    
     font-size: 10px;
@@ -2243,20 +2245,16 @@ footer {
     color: #555;
 }
 
-.rewind-header > span:first-child {
+.rewind-header > span {
    
-    position: absolute;
-   
-    left: 0;
+    justify-self: start;
 }
 
 .rewind-state {
    
-    position: absolute;
+    position: relative;
    
-    left: 50%;
-   
-    transform: translateX(-50%);
+    justify-self: center;
    
     white-space: nowrap;
 }
@@ -2264,9 +2262,9 @@ footer {
 .rewind-snapshot {
    
     position: absolute;
-   
+
     left: calc(100% + 25px);
-   
+
     white-space: nowrap;
 }
 
