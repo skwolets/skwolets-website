@@ -1141,6 +1141,36 @@ header {
     color: #ff3b3b;
 }
 
+.ballistic-distance {
+    position: absolute;
+
+    top: 20px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    color: #555;
+    font-family: monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+
+    z-index: 5;
+}
+
+.ballistic-distance::before,
+.ballistic-distance::after {
+    content: "";
+
+    display: inline-block;
+
+    width: 70px;
+    height: 1px;
+
+    margin: 0 14px 3px;
+
+    background: #252525;
+}
+
 
 /* ============================================================
    PERFORMANCE
