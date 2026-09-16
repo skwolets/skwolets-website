@@ -353,103 +353,12 @@ ARTICLE
 
 </section>
 
-
-<!-- SHOT DATA -->
-
-<section class="log-section">
-
-    <div class="section-number">
-        04
-    </div>
-
-    <h2>
-        THE SHOT DATA
-    </h2>
-
-    <p class="lead">
-        The client does not send the server a complete world-space shot.
-    </p>
-
-    <p>
-        Instead, the shot command contains only the information the server
-        actually needs to identify and validate the shot.
-    </p>
-
-
-    <div class="terminal">
-
-        <div class="terminal-header">
-            <span></span>
-            <span></span>
-            <span></span>
-
-            <label>
-                ShotData
-            </label>
-        </div>
-
-        <div class="terminal-body">
-
-            <p>
-                <i>uint16</i>
-                Timestamp
-            </p>
-
-            <p>
-                <i>uint16</i>
-                X
-            </p>
-
-            <p>
-                <i>uint16</i>
-                Y
-            </p>
-
-            <p>
-                <i>uint16</i>
-                Z
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <p>
-        X, Y and Z represent a quantized relative position rather than
-        a full world-space FVector. The server already knows the shooter's
-        position and can reconstruct the world-space muzzle position itself.
-    </p>
-
-    <p>
-        The direction does not need to be trusted from the client either.
-        The server can validate the shot against the camera state that is
-        already synchronized through the movement prediction system.
-    </p>
-
-
-    <div class="quote-block">
-
-        <span>
-            LESS DATA
-        </span>
-
-        <strong>
-            The client describes the shot.<br>
-            The server reconstructs and validates it.
-        </strong>
-
-    </div>
-
-</section>
-
-
 <!-- PREDICTION -->
 
 <section class="log-section">
 
     <div class="section-number">
-        05
+        04
     </div>
 
     <h2>
@@ -568,7 +477,7 @@ ARTICLE
 <section class="log-section security-section">
 
     <div class="section-number">
-        06
+        05
     </div>
 
     <h2>
@@ -675,7 +584,7 @@ ARTICLE
 <section class="log-section">
 
     <div class="section-number">
-        07
+        06
     </div>
 
     <h2>
@@ -777,7 +686,7 @@ ARTICLE
 <section class="log-section">
 
     <div class="section-number">
-        08
+        07
     </div>
 
     <h2>
@@ -886,7 +795,7 @@ ARTICLE
 <section class="log-section heartbeat-section">
 
     <div class="section-number">
-        09
+        08
     </div>
 
     <h2>
@@ -980,7 +889,7 @@ ARTICLE
 <section class="log-section">
 
     <div class="section-number">
-        10
+        09
     </div>
 
     <h2>
@@ -1095,7 +1004,7 @@ ARTICLE
 <section class="log-section">
 
     <div class="section-number">
-        11
+        10
     </div>
 
     <h2>
@@ -1158,7 +1067,7 @@ ARTICLE
 <section class="log-section">
 
     <div class="section-number">
-        12
+        11
     </div>
 
     <h2>
@@ -1222,7 +1131,7 @@ ARTICLE
 <section class="log-section security-section">
 
     <div class="section-number">
-        13
+        12
     </div>
 
     <h2>
@@ -1284,7 +1193,7 @@ ARTICLE
 <section class="log-section">
 
     <div class="section-number">
-        14
+        13
     </div>
 
     <h2>
@@ -1464,7 +1373,7 @@ ARTICLE
 <section class="log-section">
 
     <div class="section-number">
-        15
+        14
     </div>
 
     <h2>
@@ -1559,7 +1468,7 @@ ARTICLE
 <section class="log-final">
 
     <div class="section-number">
-        16
+        15
     </div>
 
     <h2>
