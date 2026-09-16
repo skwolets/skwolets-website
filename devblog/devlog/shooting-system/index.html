@@ -1010,68 +1010,155 @@
             </h2>
 
             <p class="lead">
-                Knowing where the bullet is is only half of the problem.
+                The server does not only need to know where the target is.
+                It needs to know where the target was.
             </p>
 
             <p>
-                The server also needs to know where the target was when the shot
-                should have reached it.
-            </p>
-
-            <p>
-                Every rewindable character stores historical skeletal poses.
-                These snapshots contain the component-space bone transforms and
-                the component transform at a specific point in time.
+                By the time a shot reaches the server, the target may have already
+                moved. Rewind allows the hit test to use the target's historical
+                state from the moment the shot was fired.
             </p>
 
 
-            <div class="heartbeat-visual">
+            <!-- ====================================================
+                 REWIND INTERACTIVE
+            ==================================================== -->
 
-                <div class="heartbeat-server">
+            <div class="rewind-visual">
 
-                    <span class="pulse"></span>
+                <div class="rewind-header">
 
-                    <small>
-                        CURRENT
-                    </small>
+                    <span>
+                        SERVER HIT REGISTRATION
+                    </span>
 
-                    <strong>
-                        TARGET POSE
+                    <strong id="rewindTime">
+                        NOW
                     </strong>
 
                 </div>
 
 
-                <div class="heartbeat-connection">
+                <div class="rewind-scene">
 
-                    <div class="heartbeat-packet">
-                        REWIND
+                    <div class="rewind-target current">
+
+                        <span class="rewind-target-label">
+                            CURRENT
+                        </span>
+
+                        <div class="rewind-character">
+                            <span class="head"></span>
+                            <span class="body"></span>
+                            <span class="arm left"></span>
+                            <span class="arm right"></span>
+                            <span class="leg left"></span>
+                            <span class="leg right"></span>
+                        </div>
+
                     </div>
 
-                    <div class="heartbeat-line"></div>
+
+                    <div class="rewind-shot">
+
+                        <span>
+                            SHOT
+                        </span>
+
+                        <div class="rewind-shot-line"></div>
+
+                    </div>
+
+
+                    <div
+                        class="rewind-target historical"
+                        id="rewindHistorical"
+                    >
+        
+                       <span class="rewind-target-label">
+                            HISTORICAL
+                        </span>
+
+                        <div class="rewind-character">
+                            <span class="head"></span>
+                            <span class="body"></span>
+                            <span class="arm left"></span>
+                            <span class="arm right"></span>
+                            <span class="leg left"></span>
+                            <span class="leg right"></span>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="rewind-hit"
+                        id="rewindHit"
+                    >
+                        HIT
+                    </div>
 
                 </div>
 
 
-                <div class="heartbeat-master">
+                <div class="rewind-timeline">
 
-                    <small>
-                        HISTORICAL
-                    </small>
+                    <div class="rewind-timeline-labels">
 
-                    <strong>
-                        TARGET POSE
-                    </strong>
+                        <span>
+                            PAST
+                        </span>
 
+                        <span>
+                            SHOT
+                        </span>
+
+                        <span>
+                            NOW
+                        </span>
+
+                    </div>
+
+
+                    <input
+                        type="range"
+                        id="rewindSlider"
+                        min="0"
+                        max="100"
+                        value="100"
+                        aria-label="Rewind time"
+                    />
+
+
+                    <div class="rewind-ticks">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+        
                 </div>
+
+
+                <button
+                    type="button"
+                    class="rewind-play"
+                    id="rewindPlay"
+                >
+                    ▶ REWIND
+                </button>
 
             </div>
 
 
             <p>
-                During server-side hit registration, the relevant hitbox proxies are
-                temporarily moved to their historical state. The collision query is
-                then performed against that historical pose.
+                The server keeps a short history of recent target poses.
+                When a shot is evaluated, the relevant historical state is selected
+                and the hit test is performed against it.
             </p>
 
 
@@ -1080,7 +1167,7 @@
                 <span>
                     WHY REWIND?
                 </span>
-
+        
                 <strong>
                     The projectile is simulated in the present.<br>
                     The target is evaluated in the past.
@@ -1090,170 +1177,14 @@
 
         </section>
 
-
         <!-- ========================================================
-             08 — REWIND COMPONENT
+             08 — PERFORMANCE
         ======================================================== -->
 
         <section class="log-section">
 
             <div class="section-number">
                 08
-            </div>
-
-            <h2>
-                REWIND WITHOUT A SECOND MESH
-            </h2>
-
-            <p>
-                The rewind system does not create another skeletal mesh just to
-                represent the historical state.
-            </p>
-
-            <p>
-                The character's existing skeletal mesh is instantiated as a custom
-                <strong>URewindableMeshComponent</strong>.
-                It provides a controlled way to apply a historical component-space
-                pose directly to the runtime skeletal transform buffers.
-            </p>
-
-
-            <div class="feature-grid">
-
-                <div class="feature-card">
-
-                    <span class="feature-icon">
-                        01
-                    </span>
-
-                    <strong>
-                        SNAPSHOT
-                    </strong>
-
-                    <p>
-                        Historical component-space bone transforms are stored.
-                    </p>
-
-                </div>
-
-
-                <div class="feature-card">
-
-                    <span class="feature-icon">
-                        02
-                    </span>
-
-                    <strong>
-                        APPLY
-                    </strong>
-
-                    <p>
-                        The historical pose is applied to the runtime transform buffer.
-                    </p>
-
-                </div>
-
-
-                <div class="feature-card">
-
-                    <span class="feature-icon">
-                        03
-                    </span>
-
-                    <strong>
-                        TRACE
-                    </strong>
-
-                    <p>
-                        Collision is evaluated against the historical pose.
-                    </p>
-
-                </div>
-
-
-                <div class="feature-card">
-
-                    <span class="feature-icon">
-                        04
-                    </span>
-
-                    <strong>
-                        RESTORE
-                    </strong>
-
-                    <p>
-                        The original pose is restored automatically.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <p>
-                The rewind operation is scoped using RAII. A temporary rewind object
-                applies the historical state and restores the original state when
-                the scope ends.
-            </p>
-
-
-            <div class="terminal">
-
-                <div class="terminal-header">
-
-                    <span></span>
-                    <span></span>
-                    <span></span>
-
-                    <label>
-                        rewind-scope
-                    </label>
-
-                </div>
-
-
-                <div class="terminal-body">
-
-                    <p>
-                        <i>01</i>
-                        save current pose
-                    </p>
-
-                    <p>
-                        <i>02</i>
-                        find historical snapshot
-                    </p>
-
-                    <p>
-                        <i>03</i>
-                        apply historical pose
-                    </p>
-
-                    <p>
-                        <i>04</i>
-                        perform trace
-                    </p>
-
-                    <p class="success">
-                        <i>05</i>
-                        restore original pose
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ========================================================
-             9 — PERFORMANCE
-        ======================================================== -->
-
-        <section class="log-section">
-
-            <div class="section-number">
-                09
             </div>
 
             <h2>
@@ -1343,13 +1274,13 @@
         
 
         <!-- ========================================================
-             10 — DAMAGE
+             09 — DAMAGE
         ======================================================== -->
 
         <section class="log-section security-section">
 
             <div class="section-number">
-                10
+                09
             </div>
 
             <h2>
@@ -1430,13 +1361,13 @@
 
 
         <!-- ========================================================
-             11 — COMPLETE PIPELINE
+             10 — COMPLETE PIPELINE
         ======================================================== -->
 
         <section class="log-section">
 
             <div class="section-number">
-                11
+                10
             </div>
 
             <h2>
@@ -1612,13 +1543,13 @@
 
 
         <!-- ========================================================
-             12 — WHY
+             11 — WHY
         ======================================================== -->
 
         <section class="log-section">
 
             <div class="section-number">
-                12
+                11
             </div>
 
             <h2>
@@ -1709,13 +1640,13 @@
 
 
         <!-- ========================================================
-             13 — FINAL
+             12 — FINAL
         ======================================================== -->
 
         <section class="log-final">
 
             <div class="section-number">
-                13
+                12
             </div>
 
             <h2>
