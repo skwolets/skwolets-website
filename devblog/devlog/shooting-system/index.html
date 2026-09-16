@@ -2208,10 +2208,18 @@
                             "visible"
                         );
 
+                        hit.classList.remove(
+                            "visible"
+                        );
+
                     } else if (value > 25) {
 
                         time.textContent =
                             "−100 ms";
+
+                        shot.classList.add(
+                            "visible"
+                        );
 
                         hit.classList.remove(
                             "visible"
@@ -2221,6 +2229,10 @@
 
                         time.textContent =
                             "SHOT TIME";
+
+                        shot.classList.add(
+                            "visible"
+                        );
 
                         hit.classList.add(
                             "visible"
