@@ -1796,6 +1796,27 @@
 
 
     /* ========================================================
+       CONFIG LINK
+    ======================================================== */
+    
+    document.querySelectorAll(".inline-config-link").forEach(link => {
+
+        link.addEventListener("click", () => {
+
+            const target = document.querySelector(
+                link.getAttribute("href")
+            );
+
+            if (target instanceof HTMLDetailsElement) {
+                target.open = true;
+            }
+
+        });
+
+    });
+
+
+    /* ========================================================
        BALLISTIC TRAJECTORY
     ======================================================== */
 
