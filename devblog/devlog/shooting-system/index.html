@@ -1289,158 +1289,215 @@
             </p>
 
 
-            <div class="pipeline">
+            <div class="shooting-architecture">
 
-                <div class="pipeline-stage">
+                <!-- CLIENT -->
 
-                    <span class="pipeline-number">
-                        01
-                    </span>
+                <div class="arch-column arch-client">
 
-                    <span class="pipeline-type">
+                    <div class="arch-column-title">
                         CLIENT
-                    </span>
+                    </div>
 
-                    <strong>
-                        SHOT
-                    </strong>
+                    <div class="arch-rule"></div>
+        
+                    <div class="arch-node">
 
-                   <small>
-                        predicted locally
-                    </small>
+                        <span class="arch-node-index">
+                            01
+                        </span>
+        
+                        <strong>
+                            SHOT
+                        </strong>
+
+                        <div class="arch-node-details">
+
+                            <span>
+                                command
+                            </span>
+
+                            <span>
+                                prediction
+                            </span>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
 
-                <div class="pipeline-arrow">
-                    →
+                <!-- CLIENT → SERVER -->
+
+                <div class="arch-flow arch-flow-in">
+
+                    <span class="arch-flow-label">
+                        RPC
+                    </span>
+
+                    <div class="arch-flow-line">
+                        <span class="arch-arrow">
+                            →
+                        </span>
+                    </div>
+
                 </div>
 
 
-                <div class="pipeline-stage">
+                <!-- SERVER -->
 
-                    <span class="pipeline-number">
-                        02
-                    </span>
+                <div class="arch-column arch-server">
 
-                    <span class="pipeline-type">
+                    <div class="arch-column-title">
                         SERVER
-                    </span>
+                    </div>
 
-                    <strong>
-                        VALIDATE
-                    </strong>
-
-                    <small>
-                        command / timestamp
-                    </small>
-
-                </div>
+                    <div class="arch-rule"></div>
 
 
-                <div class="pipeline-arrow">
-                    →
-                </div>
+                    <div class="arch-node">
+
+                        <span class="arch-node-index">
+                            02
+                        </span>
+
+                        <strong>
+                            VALIDATE
+                        </strong>
+
+                        <div class="arch-node-details">
+
+                            <span>
+                                timestamp
+                            </span>
+
+                            <span>
+                               origin
+                            </span>
+
+                            <span>
+                                direction
+                            </span>
+
+                        </div>
+
+                    </div>
 
 
-                <div class="pipeline-stage">
+                    <div class="arch-vertical-flow">
+                        <span>│</span>
+                        <span>▼</span>
+                    </div>
 
-                    <span class="pipeline-number">
-                        03
-                    </span>
+
+                    <div class="arch-node">
         
-                    <span class="pipeline-type">
-                        SIMULATION
-                    </span>
+                        <span class="arch-node-index">
+                            03
+                        </span>
 
-                    <strong>
-                        BALLISTICS
-                    </strong>
-
-                    <small>
-                        gravity / drag / wind
-                    </small>
-
-                </div>
-
-
-                <div class="pipeline-arrow">
-                    →
-                </div>
-
-
-                <div class="pipeline-stage">
-
-                    <span class="pipeline-number">
-                        04
-                    </span>
+                        <strong>
+                            SIMULATE
+                        </strong>
         
-                    <span class="pipeline-type">
-                        WORLD
-                    </span>
-
-                    <strong>
-                        REWIND
-                    </strong>
-
-                    <small>
-                        historical target pose
-                    </small>
-
-                </div>
-
-
-                <div class="pipeline-arrow">
-                    →
-                </div>
-
-
-                <div class="pipeline-stage">
-
-                    <span class="pipeline-number">
-                        05
-                    </span>
-
-                    <span class="pipeline-type">
-                        SERVER
-                    </span>
-
-                    <strong>
-                        TRACE
-                    </strong>
-
-                    <small>
-                        hit / miss
-                    </small>
+                        <div class="arch-node-details">
         
+                            <span>
+                                ballistics
+                            </span>
+
+                            <span>
+                               spatial grid
+                            </span>
+
+                            <span>
+                                rewind
+                            </span>
+        
+                        </div>
+
+                    </div>
+
+
+                    <div class="arch-vertical-flow">
+                        <span>│</span>
+                        <span>▼</span>
+                    </div>
+        
+
+                    <div class="arch-node">
+
+                        <span class="arch-node-index">
+                            04
+                        </span>
+
+                        <strong>
+                            TRACE
+                        </strong>
+
+                        <div class="arch-node-details">
+        
+                            <span>
+                                hit / miss
+                            </span>
+
+                        </div>
+        
+                    </div>
+
                 </div>
 
 
-                <div class="pipeline-arrow">
-                    →
-                </div>
+                <!-- SERVER → RESULT -->
 
+                <div class="arch-flow arch-flow-out">
 
-                <div class="pipeline-stage result">
-
-                    <span class="pipeline-number">
-                        06
-                    </span>
-
-                    <span class="pipeline-type">
+                    <span class="arch-flow-label">
                         RESULT
                     </span>
 
-                    <strong>
-                        DAMAGE
-                    </strong>
-
-                    <small>
-                        server authoritative
-                    </small>
+                    <div class="arch-flow-line">
+                        <span class="arch-arrow">
+                            →
+                        </span>
+                    </div>
 
                 </div>
+
+
+                <!-- RESULT -->
+
+                <div class="arch-column arch-result">
+
+                    <div class="arch-column-title">
+                        RESULT
+                    </div>
+
+                    <div class="arch-rule"></div>
+
+                    <div class="arch-node">
+
+                        <span class="arch-node-index">
+                            05
+                        </span>
+
+                        <strong>
+                            DAMAGE
+                        </strong>
+
+                        <div class="arch-node-details">
+
+                            <span>
+                                authoritative
+                            </span>
+
+                        </div>
         
+                    </div>
+
+                </div>
+
             </div>
 
         </section>
