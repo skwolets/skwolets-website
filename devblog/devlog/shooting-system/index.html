@@ -1765,27 +1765,24 @@
 
         });
 
-    </script>
-
         <script>
-        document.addEventListener("DOMContentLoaded", () => {
+            document.addEventListener("DOMContentLoaded", () => {
 
-            const svg = document.querySelector(".ballistic-path");
-            const path = svg.querySelector(".trajectory-main");
-            const impact = svg.querySelector(".trajectory-impact");
-
-            function updateImpactPoint() {
+                const svg = document.querySelector(".ballistic-path");
+                const path = svg.querySelector(".trajectory-main");
+                const impact = svg.querySelector(".trajectory-impact");
 
                 const length = path.getTotalLength();
                 const point = path.getPointAtLength(length);
 
-                impact.setAttribute("cx", point.x);
-                impact.setAttribute("cy", point.y);
-            }
+                impact.setAttribute(
+                    "transform",
+                    `translate(${point.x} ${point.y})`
+                );
 
-            updateImpactPoint();
+            });
+        </script>
 
-        });
     </script>
 
 </body>
