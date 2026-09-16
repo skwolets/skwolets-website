@@ -1036,6 +1036,18 @@ header {
 
 }
 
+@keyframes ballisticWind {
+
+    from {
+        stroke-dashoffset: var(--wind-length);
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
+
+}
+
 
 /* ============================================================
    POINTS
