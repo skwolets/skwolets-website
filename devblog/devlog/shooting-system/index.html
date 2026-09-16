@@ -1777,6 +1777,10 @@
         const path = svg.querySelector(".trajectory-main");
         const impact = svg.querySelector(".trajectory-impact");
 
+        if (!svg || !path || !impact) {
+            return;
+        }
+
         const length = path.getTotalLength();
         const point = path.getPointAtLength(length);
 
