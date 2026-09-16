@@ -1813,6 +1813,9 @@
         const impact =
             svg?.querySelector("#trajectory-impact");
 
+        const windProgress =
+            svg?.querySelector("#wind-progress-rect");
+
         const playButton =
             document.getElementById("ballisticPlay");
 
@@ -1837,6 +1840,7 @@
             !path ||
             !windPath ||
             !impact ||
+            !windProgress ||
             !playButton ||
             !gravity ||
             !drag ||
@@ -1853,14 +1857,6 @@
         const pathLength =
             path.getTotalLength();
 
-        const windLength =
-            windPath.getTotalLength();
-
-        windPath.style.setProperty(
-            "--wind-length",
-            windLength
-         );
-
 
         /* ----------------------------------------------------
            IMPACT POSITION
@@ -1876,6 +1872,14 @@
 
 
         /* ----------------------------------------------------
+           WIND REGION
+        ---------------------------------------------------- */
+
+        const windStart =
+            500 / 1000;
+
+
+        /* ----------------------------------------------------
            INITIAL STATE
            Show complete simulation
         ---------------------------------------------------- */
@@ -1886,8 +1890,15 @@
         path.style.strokeDashoffset =
             0;
 
-        windPath.style.strokeDashoffset =
-            0;
+        windProgress.setAttribute(
+            "x",
+            "0"
+        );
+
+        windProgress.setAttribute(
+            "width",
+            "1000"
+        );
 
         gravity.classList.add("visible");
         drag.classList.add("visible");
@@ -1938,17 +1949,18 @@
 
 
             /* ------------------------------------------------
-               RESET WIND TRAJECTORY
+               RESET WIND CLIP
             ------------------------------------------------ */
 
-            windPath.style.animation =
-                "none";
+            windProgress.setAttribute(
+                "x",
+                "500"
+            );
 
-            windPath.style.opacity =
-                "0";
-
-            windPath.style.strokeDashoffset =
-                windLength;
+            windProgress.setAttribute(
+                "width",
+                "0"
+            );
 
 
             /* ------------------------------------------------
@@ -1956,7 +1968,7 @@
             ------------------------------------------------ */
 
             path.getBoundingClientRect();
-            windPath.getBoundingClientRect();
+            windProgress.getBoundingClientRect();
 
 
             /* ------------------------------------------------
@@ -1997,11 +2009,31 @@
 
                 wind.classList.add("visible");
 
-                windPath.style.opacity =
-                    "0.45";
 
-                windPath.style.animation =
-                    "ballisticWind 0.3s linear forwards";
+                /*
+                 * Reveal the wind section.
+                 *
+                 * The dash pattern itself does not move.
+                 * The clip simply grows from left to right.
+                 */
+
+                windProgress.animate(
+                    [
+                        {
+                            x: 500,
+                            width: 0
+                        },
+                        {
+                            x: 500,
+                            width: 430
+                        }
+                    ],
+                    {
+                        duration: 350,
+                        easing: "linear",
+                        fill: "forwards"
+                    }
+                );
 
             }, 2100);
 
