@@ -1927,7 +1927,7 @@
                     "none";
 
                 path.style.strokeDasharray =
-                   pathLength;
+                    pathLength;
 
                 path.style.strokeDashoffset =
                     pathLength;
@@ -1964,10 +1964,12 @@
                 path.animate(
                     [
                         {
-                            strokeDashoffset: pathLength
+                            strokeDashoffset:
+                                pathLength
                         },
                         {
-                            strokeDashoffset: 0
+                            strokeDashoffset:
+                                0
                         }
                     ],
                     {
@@ -2119,6 +2121,205 @@
                 }, 2800);
 
             });
+
+        });
+
+
+        /* ========================================================
+           REWIND INTERACTIVE
+        ======================================================== */
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const slider =
+                document.getElementById("rewindSlider");
+
+            const historical =
+                document.getElementById("rewindHistorical");
+
+            const hit =
+                document.getElementById("rewindHit");
+
+            const time =
+                document.getElementById("rewindTime");
+
+            const play =
+                document.getElementById("rewindPlay");
+
+
+            if (
+                !slider ||
+                !historical ||
+                !hit ||
+                !time ||
+                !play
+            ) {
+                return;
+            }
+
+
+            /* ----------------------------------------------------
+               UPDATE REWIND STATE
+            ---------------------------------------------------- */
+
+            const updateRewind =
+                () => {
+
+                    const value =
+                        Number(slider.value);
+
+
+                    /*
+                     * 100 = current state
+                     * 0   = historical shot state
+                     */
+
+                    const progress =
+                        1 - value / 100;
+
+
+                    /*
+                     * Move historical target backwards
+                     */
+
+                    const x =
+                        progress * -180;
+
+                    const y =
+                        Math.sin(
+                            progress * Math.PI
+                        ) * -8;
+
+
+                    historical.style.transform =
+                        `translate(${x}px, ${y}px)`;
+
+
+                    /* ------------------------------------------------
+                       TIMELINE LABEL
+                    ------------------------------------------------ */
+
+                    if (value > 60) {
+
+                        time.textContent =
+                            "NOW";
+
+                        hit.classList.remove(
+                            "visible"
+                        );
+
+                    } else if (value > 25) {
+
+                        time.textContent =
+                            "−100 ms";
+
+                        hit.classList.remove(
+                            "visible"
+                        );
+
+                    } else {
+
+                        time.textContent =
+                            "SHOT TIME";
+
+                        hit.classList.add(
+                            "visible"
+                        );
+
+                    }
+
+                };
+
+
+            /* ----------------------------------------------------
+               MANUAL SCRUB
+            ---------------------------------------------------- */
+
+            slider.addEventListener(
+                "input",
+                updateRewind
+            );
+
+
+            /* ----------------------------------------------------
+               PLAY REWIND
+            ---------------------------------------------------- */
+
+            play.addEventListener(
+                "click",
+                () => {
+
+                    play.disabled =
+                        true;
+
+                    hit.classList.remove(
+                        "visible"
+                    );
+
+
+                    slider.value =
+                        100;
+
+                    updateRewind();
+
+
+                    const start =
+                        performance.now();
+
+                    const duration =
+                        1800;
+
+
+                    const animate =
+                        (currentTime) => {
+
+                            const progress =
+                                Math.min(
+                                    (
+                                        currentTime -
+                                        start
+                                    ) / duration,
+                                    1
+                                );
+
+
+                            slider.value =
+                                100 -
+                                progress * 100;
+
+
+                            updateRewind();
+
+
+                            if (progress < 1) {
+
+                                requestAnimationFrame(
+                                    animate
+                                );
+
+                            } else {
+
+                                play.disabled =
+                                    false;
+
+                            }
+
+                        };
+
+
+                    requestAnimationFrame(
+                        animate
+                    );
+
+                }
+            );
+
+
+            /* ----------------------------------------------------
+               INITIAL STATE
+            ---------------------------------------------------- */
+
+            updateRewind();
 
         });
 
