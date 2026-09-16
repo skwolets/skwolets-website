@@ -1748,6 +1748,10 @@
 
 <script>
 
+    /* ========================================================
+       BACK TO TOP
+    ======================================================== */
+
     const backToTop = document.getElementById("backToTop");
 
     window.addEventListener("scroll", () => {
@@ -1770,47 +1774,145 @@
     });
 
 
+    /* ========================================================
+       BALLISTIC TRAJECTORY
+    ======================================================== */
+
     document.addEventListener("DOMContentLoaded", () => {
 
         const svg = document.querySelector(".ballistic-path");
-        const path = svg.querySelector(".trajectory-main");
-        const impact = svg.querySelector(".trajectory-impact");
+        const path = svg?.querySelector(".trajectory-main");
+        const impact = svg?.querySelector("#trajectory-impact");
 
-        if (!svg || !path || !impact) {
+        const playButton =
+            document.getElementById("ballisticPlay");
+
+        const gravity =
+            document.querySelector(".ballistic-factor.gravity");
+
+        const drag =
+            document.querySelector(".ballistic-factor.drag");
+
+        const wind =
+            document.querySelector(".ballistic-factor.wind");
+
+
+        if (
+            !svg ||
+            !path ||
+            !impact ||
+            !playButton ||
+            !gravity ||
+            !drag ||
+            !wind
+        ) {
             return;
         }
 
-        const length = path.getTotalLength();
-        const point = path.getPointAtLength(length);
+
+        /* ----------------------------------------------------
+           IMPACT POSITION
+        ---------------------------------------------------- */
+
+        const pathLength = path.getTotalLength();
+
+        const endPoint =
+            path.getPointAtLength(pathLength);
 
         impact.setAttribute(
             "transform",
-            `translate(${point.x} ${point.y})`
+            `translate(${endPoint.x} ${endPoint.y})`
         );
 
-        impact.style.display = "block";
 
-    });
+        /* ----------------------------------------------------
+           PLAY / REPLAY
+        ---------------------------------------------------- */
 
-    const configLink = document.querySelector(".inline-config-link");
-    const config = document.getElementById("ammunition-configuration");
+        playButton.addEventListener("click", () => {
 
-    if (configLink && config) {
+            /* Reset factors */
 
-        configLink.addEventListener("click", (event) => {
+            gravity.classList.remove("visible");
+            drag.classList.remove("visible");
+            wind.classList.remove("visible");
 
-        event.preventDefault();
 
-        config.open = true;
+            /* Reset impact */
 
-        config.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
+            impact.style.display = "none";
+
+
+            /* Reset trajectory */
+
+            path.style.animation = "none";
+
+            path.getBoundingClientRect();
+
+
+            /* Start trajectory */
+
+            path.style.animation =
+                "ballisticTrajectory 2.8s linear forwards";
+
+
+            /* ------------------------------------------------
+               GRAVITY
+            ------------------------------------------------ */
+
+            setTimeout(() => {
+
+                gravity.classList.add("visible");
+
+            }, 650);
+
+
+            /* ------------------------------------------------
+               DRAG
+            ------------------------------------------------ */
+
+            setTimeout(() => {
+
+                drag.classList.add("visible");
+
+            }, 1500);
+
+
+            /* ------------------------------------------------
+               WIND
+            ------------------------------------------------ */
+
+            setTimeout(() => {
+
+                wind.classList.add("visible");
+
+            }, 2100);
+
+
+            /* ------------------------------------------------
+               IMPACT
+            ------------------------------------------------ */
+
+            setTimeout(() => {
+
+                impact.style.display = "block";
+
+            }, 2800);
+
+
+            /* ------------------------------------------------
+               PLAY → REPLAY
+            ------------------------------------------------ */
+
+            setTimeout(() => {
+
+                playButton.textContent = "↻";
+
+            }, 2800);
+
         });
 
     });
-
-}
 
 </script>
 
