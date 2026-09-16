@@ -1,1120 +1,1638 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>
-        Building a Ballistic Shooting System — SKWOLETS
-    </title>
+    <title>Building a Ballistic Shooting System — SKWOLETS</title>
 
     <!-- Main website style -->
-    <link
-        rel="stylesheet"
-        href="/style.css"
-    >
-
+    <link rel="stylesheet" href="/style.css">
+    
     <!-- DevBlog style -->
-    <link
-        rel="stylesheet"
-        href="/devblog/style.css"
-    >
+    <link rel="stylesheet" href="/devblog/style.css">
 
     <!-- Shooting System DevLog style -->
-    <link
-        rel="stylesheet"
-        href="/devblog/devlog/shooting-system/style.css"
-    >
-
-    <link
-        rel="icon"
-        href="/favicon.ico"
-    >
+    <link rel="stylesheet" href="/devblog/devlog/shooting-system/style.css">
+    <link rel="icon" href="/favicon.ico">
 
 </head>
 
 <body>
 
-<!-- =========================================
-     HERO
-     ========================================= -->
+<header>
 
-<header class="log-hero">
-
-    <div class="log-hero-content">
-
-        <div class="log-hero-tag">
-            DEVELOPMENT LOG / 002
-        </div>
-
-        <h1>
-            BUILDING A HIGH-PERFORMANCE
-            MULTIPLAYER SHOOTING SYSTEM
-        </h1>
-
-        <p>
-            Designing server-authoritative shooting with client prediction,
-            deterministic ballistics, lag compensation, rewind,
-            and a lightweight projectile simulation.
-        </p>
-
+    <div class="logo">
+        SKWOLETS
     </div>
+
+    <nav>
+        <a href="/">Home</a>
+    </nav>
 
 </header>
 
+<!-- ============================================================
+ARTICLE HERO
+============================================================ -->
 
-<main class="log-content">
+<section class="log-hero">
+
+<div class="log-hero-content">
+
+    <div class="log-label">
+        SKWOLETS / DEV LOG / 002
+    </div>
+
+    <h1>
+        BUILDING A<br>
+        BALLISTIC SYSTEM
+    </h1>
+
+    <p>
+        Server-authoritative shooting with prediction, rewind and realistic projectile simulation
+    </p>
+
+</div>
+
+</section>
+
+<!-- ============================================================
+ARTICLE
+============================================================ -->
+
+<main class="devlog-article">
+
+<!-- INTRO -->
+
+<section class="log-section">
+
+    <div class="section-number">
+        01
+    </div>
+
+    <h2>
+        A BULLET IS MORE THAN A HIT
+    </h2>
+
+    <p class="lead">
+        Shooting looks simple from the outside.
+        Pull the trigger, send a bullet forward, check if it hits something.
+    </p>
+
+    <p>
+        In a networked multiplayer game, it becomes much more complicated.
+        The client needs an immediate response, while the server must remain
+        authoritative. Players have different latency, targets are constantly
+        moving, and projectiles need to behave consistently across the network.
+    </p>
+
+    <p>
+        For SKWOLETS, the goal is not to create a traditional projectile Actor
+        for every bullet. The goal is to build a centralized ballistic system
+        where simulation, validation and hit registration are separate systems
+        working together.
+    </p>
 
 
-    <!-- =========================================
-         01 — INTRODUCTION
-         ========================================= -->
+    <div class="quote-block">
 
-    <section class="log-section">
+        <span>
+            THE PRINCIPLE
+        </span>
 
-        <div class="section-number">
-            01
-        </div>
+        <strong>
+            Simulate the bullet.<br>
+            Validate the shot.<br>
+            Rewind the target.<br>
+            Let the server decide the damage.
+        </strong>
 
-        <h2>
-            SHOOTING IS MORE THAN A BULLET TRACE
-        </h2>
+    </div>
 
-        <p class="lead">
-            In a multiplayer game, a shot is not simply a line trace
-            executed on the client.
-        </p>
+</section>
 
-        <p>
-            The system has to answer several different questions at the
-            same time: what did the player intend to shoot, where was the
-            projectile at a specific moment, where was the target at that
-            moment, and which machine is allowed to decide whether damage
-            actually happened?
-        </p>
 
-        <p>
-            The shooting architecture was therefore designed around a
-            simple principle:
+<!-- ARCHITECTURE -->
+
+<section class="log-section">
+
+    <div class="section-number">
+        02
+    </div>
+
+    <h2>
+        ONE SYSTEM FOR EVERY BULLET
+    </h2>
+
+    <p class="lead">
+        Bullets are not individual Actors.
+    </p>
+
+    <p>
+        The projectile simulation is handled by a
+        <strong>Tickable World Subsystem</strong>.
+        Every active projectile is stored in a runtime array and processed
+        during a single simulation tick.
+    </p>
+
+    <p>
+        There is no need to create a separate Actor, Movement Component
+        and Tick function for every bullet currently flying through the world.
+    </p>
+
+
+    <div class="architecture">
+
+        <div class="architecture-node">
+
+            <span class="node-type">
+                WORLD
+            </span>
+
             <strong>
-                the client predicts, but the server decides.
+                Projectile Subsystem
             </strong>
-        </p>
 
-        <div class="architecture">
+            <small>
+                One simulation tick
+            </small>
 
-            <div class="architecture-item">
-
-                <small>
-                    CLIENT
-                </small>
-
-                <h3>
-                    Prediction
-                </h3>
-
-                <p>
-                    The local player receives immediate visual feedback
-                    without waiting for a server round trip.
-                </p>
-
-            </div>
+        </div>
 
 
-            <div class="architecture-item">
+        <div class="architecture-line">
 
-                <small>
-                    SERVER
-                </small>
+            <span>
+                BATCH
+            </span>
 
-                <h3>
-                    Authority
-                </h3>
+            <div class="line"></div>
 
-                <p>
-                    The server validates the shot and is the only authority
-                    capable of applying damage.
-                </p>
-
-            </div>
+        </div>
 
 
-            <div class="architecture-item">
+        <div class="architecture-node master">
 
-                <small>
-                    WORLD
-                </small>
+            <span class="node-type">
+                RUNTIME
+            </span>
 
-                <h3>
-                    Simulation
-                </h3>
+            <strong>
+                Projectile Array
+            </strong>
 
-                <p>
-                    Projectile motion, collision and historical hit
-                    registration are handled by the authoritative world.
-                </p>
+            <small>
+                active projectiles
+            </small>
+
+        </div>
+
+
+        <div class="architecture-line">
+
+            <span>
+                SIMULATION
+            </span>
+
+            <div class="line"></div>
+
+        </div>
+
+
+        <div class="architecture-node player">
+
+            <span class="node-type">
+                RESULT
+            </span>
+
+            <strong>
+                Trajectory
+            </strong>
+
+            <small>
+                Start → End
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="data-grid">
+
+        <div>
+            <span>SIMULATION</span>
+            <strong>CENTRALIZED</strong>
+        </div>
+
+        <div>
+            <span>RUNTIME DATA</span>
+            <strong>ARRAY</strong>
+        </div>
+
+        <div>
+            <span>PROJECTILE ACTORS</span>
+            <strong>NONE REQUIRED</strong>
+        </div>
+
+        <div>
+            <span>ACTIVE BULLETS</span>
+            <strong>~300 MAX</strong>
+        </div>
+
+    </div>
+
+
+    <p>
+        With a few hundred active projectiles, iterating through a native
+        array is extremely inexpensive compared with maintaining hundreds
+        of independent gameplay Actors.
+    </p>
+
+</section>
+
+
+<!-- BALLISTICS -->
+
+<section class="log-section">
+
+    <div class="section-number">
+        03
+    </div>
+
+    <h2>
+        REALISTIC BALLISTICS
+    </h2>
+
+    <p class="lead">
+        The bullet does not simply move from A to B.
+    </p>
+
+    <p>
+        Every simulation step updates the projectile's velocity before
+        calculating its next position.
+    </p>
+
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+            <span class="feature-icon">01</span>
+            <strong>GRAVITY</strong>
+            <p>
+                The projectile is affected by gravity throughout its flight.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <span class="feature-icon">02</span>
+            <strong>DRAG</strong>
+            <p>
+                Air resistance changes the projectile's velocity over time.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <span class="feature-icon">03</span>
+            <strong>WIND</strong>
+            <p>
+                Wind velocity affects the projectile trajectory.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <span class="feature-icon">04</span>
+            <strong>VELOCITY</strong>
+            <p>
+                Position is calculated from the simulated projectile velocity.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="status-flow">
+
+        <span>VELOCITY</span>
+        <b>→</b>
+        <span>GRAVITY</span>
+        <b>+</b>
+        <span>DRAG</span>
+        <b>+</b>
+        <span>WIND</span>
+        <b>→</b>
+        <span>NEW POSITION</span>
+
+    </div>
+
+
+    <p>
+        The physics are intentionally lightweight and implemented directly
+        in native C++. There is no need for a full physics Actor just to
+        calculate the trajectory of a small piece of ammunition.
+    </p>
+
+</section>
+
+
+<!-- SHOT DATA -->
+
+<section class="log-section">
+
+    <div class="section-number">
+        04
+    </div>
+
+    <h2>
+        THE SHOT DATA
+    </h2>
+
+    <p class="lead">
+        The client does not send the server a complete world-space shot.
+    </p>
+
+    <p>
+        Instead, the shot command contains only the information the server
+        actually needs to identify and validate the shot.
+    </p>
+
+
+    <div class="terminal">
+
+        <div class="terminal-header">
+            <span></span>
+            <span></span>
+            <span></span>
+
+            <label>
+                ShotData
+            </label>
+        </div>
+
+        <div class="terminal-body">
+
+            <p>
+                <i>uint16</i>
+                Timestamp
+            </p>
+
+            <p>
+                <i>uint16</i>
+                X
+            </p>
+
+            <p>
+                <i>uint16</i>
+                Y
+            </p>
+
+            <p>
+                <i>uint16</i>
+                Z
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <p>
+        X, Y and Z represent a quantized relative position rather than
+        a full world-space FVector. The server already knows the shooter's
+        position and can reconstruct the world-space muzzle position itself.
+    </p>
+
+    <p>
+        The direction does not need to be trusted from the client either.
+        The server can validate the shot against the camera state that is
+        already synchronized through the movement prediction system.
+    </p>
+
+
+    <div class="quote-block">
+
+        <span>
+            LESS DATA
+        </span>
+
+        <strong>
+            The client describes the shot.<br>
+            The server reconstructs and validates it.
+        </strong>
+
+    </div>
+
+</section>
+
+
+<!-- PREDICTION -->
+
+<section class="log-section">
+
+    <div class="section-number">
+        05
+    </div>
+
+    <h2>
+        CLIENT PREDICTION
+    </h2>
+
+    <p class="lead">
+        Waiting for the server before showing a bullet would make shooting feel slow.
+    </p>
+
+    <p>
+        The firing client therefore runs the same projectile simulation locally
+        as soon as the shot is created.
+    </p>
+
+
+    <div class="architecture">
+
+        <div class="architecture-node player">
+
+            <span class="node-type">
+                CLIENT
+            </span>
+
+            <strong>
+                Predicted Shot
+            </strong>
+
+            <small>
+                immediate feedback
+            </small>
+
+        </div>
+
+
+        <div class="architecture-line">
+
+            <span>
+                SAME SIMULATION
+            </span>
+
+            <div class="line"></div>
+
+        </div>
+
+
+        <div class="architecture-node master">
+
+            <span class="node-type">
+                SERVER
+            </span>
+
+            <strong>
+                Authoritative Shot
+            </strong>
+
+            <small>
+                damage authority
+            </small>
+
+        </div>
+
+
+        <div class="architecture-line">
+
+            <span>
+                REPLICATION
+            </span>
+
+            <div class="line"></div>
+
+        </div>
+
+
+        <div class="architecture-node">
+
+            <span class="node-type">
+                OTHER CLIENTS
+            </span>
+
+            <strong>
+                Visual Shot
+            </strong>
+
+            <small>
+                replicated state
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <p>
+        The important part is that these are not three independent gameplay
+        bullets. They are three executions of the same deterministic
+        projectile simulation in different contexts.
+    </p>
+
+
+    <div class="status-flow">
+
+        <span>PREDICTED</span>
+        <b>→</b>
+        <span>SERVER</span>
+        <b>→</b>
+        <span>REPLICATED</span>
+
+    </div>
+
+</section>
+
+
+<!-- VALIDATION -->
+
+<section class="log-section security-section">
+
+    <div class="section-number">
+        06
+    </div>
+
+    <h2>
+        SERVER VALIDATION
+    </h2>
+
+    <p class="lead">
+        Prediction is for responsiveness. The server remains authoritative.
+    </p>
+
+    <p>
+        Before the authoritative projectile is allowed to produce damage,
+        the server validates the shot.
+    </p>
+
+
+    <div class="security-grid">
+
+        <div>
+            <span>TIMESTAMP</span>
+            <p>
+                Prevents the same shot from being processed more than once.
+            </p>
+        </div>
+
+        <div>
+            <span>MUZZLE POSITION</span>
+            <p>
+                The server reconstructs the expected world-space position.
+            </p>
+        </div>
+
+        <div>
+            <span>CAMERA</span>
+            <p>
+                The shot can be checked against the synchronized camera direction.
+            </p>
+        </div>
+
+        <div>
+            <span>ANGLE</span>
+            <p>
+                Impossible deviations from the camera can be rejected.
+            </p>
+        </div>
+
+    </div>
+
+
+    <p>
+        The movement system already sends predictive camera state to the server.
+        This means the server has the information necessary to compare the
+        requested shot against the player's current predicted view.
+    </p>
+
+
+    <div class="terminal">
+
+        <div class="terminal-header">
+            <span></span>
+            <span></span>
+            <span></span>
+
+            <label>
+                shot-validation.log
+            </label>
+        </div>
+
+        <div class="terminal-body">
+
+            <p>
+                <i>[12:41:08]</i>
+                shot received
+            </p>
+
+            <p>
+                <i>[12:41:08]</i>
+                timestamp accepted
+            </p>
+
+            <p>
+                <i>[12:41:08]</i>
+                muzzle position validated
+            </p>
+
+            <p>
+                <i>[12:41:08]</i>
+                camera angle validated
+            </p>
+
+            <p class="success">
+                [12:41:08] authoritative shot accepted
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- TIMESTAMP -->
+
+<section class="log-section">
+
+    <div class="section-number">
+        07
+    </div>
+
+    <h2>
+        TIMESTAMP &amp; DUPLICATE PROTECTION
+    </h2>
+
+    <p class="lead">
+        The timestamp is not used by the clients for validation.
+    </p>
+
+    <p>
+        It exists primarily on the server side.
+        The server keeps recently processed timestamps in a small
+        ring buffer and can reject a shot that has already been processed.
+    </p>
+
+
+    <div class="timestamp-visual">
+
+        <div class="timestamp-node">
+
+            <small>
+                SHOT
+            </small>
+
+            <strong>
+                1842
+            </strong>
+
+            <span>
+                RECEIVED
+            </span>
+
+        </div>
+
+
+        <div class="timestamp-arrow">
+            →
+        </div>
+
+
+        <div class="timestamp-buffer">
+
+            <small>
+                SERVER
+            </small>
+
+            <strong>
+                RING BUFFER
+            </strong>
+
+            <div class="timestamp-values">
+
+                <span>1838</span>
+                <span>1839</span>
+                <span>1840</span>
+                <span>1841</span>
+                <span class="current">1842</span>
 
             </div>
 
         </div>
 
-    </section>
 
-
-    <!-- =========================================
-         02 — SHOT DATA
-         ========================================= -->
-
-    <section class="log-section">
-
-        <div class="section-number">
-            02
+        <div class="timestamp-arrow">
+            →
         </div>
 
-        <h2>
-            KEEPING THE SHOT COMMAND SMALL
-        </h2>
 
-        <p class="lead">
-            The network command contains only the information the server
-            actually needs.
-        </p>
+        <div class="timestamp-node result">
 
-        <p>
-            A shot does not transmit a complete world-space transform,
-            arbitrary direction vector, or other redundant state.
-            The server already knows the shooter and their current
-            movement and camera state.
-        </p>
+            <small>
+                RESULT
+            </small>
 
-        <div class="shot-data">
+            <strong>
+                ACCEPT
+            </strong>
 
-            <div class="shot-data-item">
-
-                <small>
-                    TIMESTAMP
-                </small>
-
-                <strong>
-                    uint16
-                </strong>
-
-            </div>
-
-
-            <div class="shot-data-item">
-
-                <small>
-                    X
-                </small>
-
-                <strong>
-                    uint16
-                </strong>
-
-            </div>
-
-
-            <div class="shot-data-item">
-
-                <small>
-                    Y
-                </small>
-
-                <strong>
-                    uint16
-                </strong>
-
-            </div>
-
-
-            <div class="shot-data-item">
-
-                <small>
-                    Z
-                </small>
-
-                <strong>
-                    uint16
-                </strong>
-
-            </div>
+            <span>
+                ONCE
+            </span>
 
         </div>
 
-        <p>
-            The coordinates are local/relative values rather than full
-            world-space coordinates. This keeps the command compact while
-            allowing the authoritative simulation to reconstruct the
-            relevant shot origin from known player state.
-        </p>
-
-        <div class="terminal">
-
-            <div class="terminal-header">
-
-                <span class="terminal-dot"></span>
-                <span class="terminal-dot"></span>
-                <span class="terminal-dot"></span>
-
-                <span class="terminal-title">
-                    SHOT DATA
-                </span>
-
-            </div>
-
-<pre>
-Timestamp
-X
-Y
-Z
-</pre>
-
-        </div>
-
-    </section>
+    </div>
 
 
-    <!-- =========================================
-         03 — VALIDATION
-         ========================================= -->
+    <p>
+        This keeps the network command compact while giving the authoritative
+        simulation a simple mechanism for detecting duplicate shot commands.
+    </p>
 
-    <section class="log-section">
-
-        <div class="section-number">
-            03
-        </div>
-
-        <h2>
-            SERVER-SIDE VALIDATION
-        </h2>
-
-        <p class="lead">
-            The client provides a shot command. It does not provide the
-            final result.
-        </p>
-
-        <p>
-            When the server receives a shot, it validates the command
-            against authoritative state already available on the server.
-        </p>
-
-        <p>
-            This includes checking the shot data, its timing, the shooter's
-            state, and whether the requested shot is consistent with the
-            server's view of the player's camera and origin.
-        </p>
-
-        <p>
-            Exact validation thresholds and rejection rules remain internal
-            to the server implementation.
-        </p>
-
-        <div class="status-flow">
-
-            <div class="status-step">
-
-                <small>
-                    CLIENT
-                </small>
-
-                <strong>
-                    SHOT COMMAND
-                </strong>
-
-            </div>
+</section>
 
 
-            <div class="status-arrow">
-                →
-            </div>
+<!-- SPATIAL GRID -->
+
+<section class="log-section">
+
+    <div class="section-number">
+        08
+    </div>
+
+    <h2>
+        FINDING THE TARGETS
+    </h2>
+
+    <p class="lead">
+        A bullet does not need to test every player in the world.
+    </p>
+
+    <p>
+        Before performing the actual collision query, the projectile system
+        asks the Spatial Grid for potential hitbox candidates along the
+        projectile segment.
+    </p>
 
 
-            <div class="status-step">
+    <div class="architecture">
 
-                <small>
-                    SERVER
-                </small>
+        <div class="architecture-node">
 
-                <strong>
-                    VALIDATE
-                </strong>
+            <span class="node-type">
+                PROJECTILE
+            </span>
 
-            </div>
+            <strong>
+                START → END
+            </strong>
 
-
-            <div class="status-arrow">
-                →
-            </div>
-
-
-            <div class="status-step">
-
-                <small>
-                    AUTHORITY
-                </small>
-
-                <strong>
-                    SIMULATE
-                </strong>
-
-            </div>
-
-
-            <div class="status-arrow">
-                →
-            </div>
-
-
-            <div class="status-step">
-
-                <small>
-                    RESULT
-                </small>
-
-                <strong>
-                    DAMAGE
-                </strong>
-
-            </div>
+            <small>
+                trajectory segment
+            </small>
 
         </div>
 
-    </section>
 
+        <div class="architecture-line">
 
-    <!-- =========================================
-         04 — PREDICTION
-         ========================================= -->
+            <span>
+                GRID QUERY
+            </span>
 
-    <section class="log-section">
-
-        <div class="section-number">
-            04
-        </div>
-
-        <h2>
-            CLIENT PREDICTION
-        </h2>
-
-        <p class="lead">
-            Waiting for the server before showing a projectile would make
-            shooting feel unnecessarily delayed.
-        </p>
-
-        <p>
-            The local client therefore executes the same shooting path
-            immediately when the player fires.
-        </p>
-
-        <p>
-            This predicted projectile is visual and responsive. It does
-            not own authority over damage or the final hit result.
-        </p>
-
-        <div class="terminal">
-
-            <div class="terminal-header">
-
-                <span class="terminal-dot"></span>
-                <span class="terminal-dot"></span>
-                <span class="terminal-dot"></span>
-
-                <span class="terminal-title">
-                    SHOOTING PIPELINE
-                </span>
-
-            </div>
-
-<pre>
-Client
-    PredictedShot()
-        ↓
-    ShotInternal()
-        ↓
-    Local predicted projectile
-
-
-Server
-    Server_Shot()
-        ↓
-    Validate
-        ↓
-    ShotInternal()
-        ↓
-    Authoritative projectile
-
-
-Replication
-    OnRep_Shot()
-        ↓
-    ShotInternal()
-        ↓
-    Remote visual projectile
-</pre>
+            <div class="line"></div>
 
         </div>
 
-        <p>
-            These are not three independent gameplay systems.
-            The same deterministic projectile simulation is executed in
-            different contexts: prediction, authority, and remote
-            visualization.
-        </p>
 
-    </section>
+        <div class="architecture-node master">
 
+            <span class="node-type">
+                SPATIAL GRID
+            </span>
 
-    <!-- =========================================
-         05 — PROJECTILE SIMULATION
-         ========================================= -->
+            <strong>
+                CANDIDATES
+            </strong>
 
-    <section class="log-section">
-
-        <div class="section-number">
-            05
-        </div>
-
-        <h2>
-            DETERMINISTIC PROJECTILE SIMULATION
-        </h2>
-
-        <p class="lead">
-            Projectiles are simulated centrally rather than as hundreds of
-            independent movement components.
-        </p>
-
-        <p>
-            The projectile system is implemented as a world subsystem.
-            Active projectiles are stored in a contiguous array and
-            processed together during the simulation tick.
-        </p>
-
-        <div class="architecture">
-
-            <div class="architecture-item">
-
-                <small>
-                    SUBSYSTEM
-                </small>
-
-                <h3>
-                    UProjectileSubsystem
-                </h3>
-
-                <p>
-                    One centralized simulation point for active projectiles
-                    in the world.
-                </p>
-
-            </div>
-
-
-            <div class="architecture-item">
-
-                <small>
-                    RUNTIME
-                </small>
-
-                <h3>
-                    Contiguous Data
-                </h3>
-
-                <p>
-                    Projectile runtime state is processed in a compact
-                    native array.
-                </p>
-
-            </div>
-
-
-            <div class="architecture-item">
-
-                <small>
-                    COLLISION
-                </small>
-
-                <h3>
-                    Segment Trace
-                </h3>
-
-                <p>
-                    Each simulation step tests the segment between the
-                    previous and next projectile positions.
-                </p>
-
-            </div>
+            <small>
+                nearby hitboxes only
+            </small>
 
         </div>
 
-        <p>
-            The ballistic model accounts for gravity, drag and wind while
-            remaining lightweight enough to run hundreds of active
-            projectiles through a single world simulation.
-        </p>
 
-        <div class="ballistic-trajectory">
+        <div class="architecture-line">
 
-            <div class="ballistic-point start"></div>
+            <span>
+                FILTERED
+            </span>
 
-            <div class="ballistic-point end"></div>
-
-            <div class="ballistic-label start">
-                MUZZLE
-            </div>
-
-            <div class="ballistic-label end">
-                TRAJECTORY
-            </div>
+            <div class="line"></div>
 
         </div>
 
-    </section>
 
+        <div class="architecture-node player">
 
-    <!-- =========================================
-         06 — SPATIAL GRID & REWIND
-         ========================================= -->
+            <span class="node-type">
+                COLLISION
+            </span>
 
-    <section class="log-section">
+            <strong>
+                TRACE
+            </strong>
 
-        <div class="section-number">
-            06
-        </div>
-
-        <h2>
-            SPATIAL QUERIES &amp; REWIND
-        </h2>
-
-        <p class="lead">
-            Lag compensation does not require rewinding every player in
-            the world.
-        </p>
-
-        <p>
-            Before performing historical hit detection, the projectile
-            segment is queried against the spatial grid. This produces a
-            small set of possible hitbox candidates.
-        </p>
-
-        <p>
-            Only those candidates are then evaluated against historical
-            snapshots.
-        </p>
-
-        <div class="status-flow">
-
-            <div class="status-step">
-
-                <small>
-                    01
-                </small>
-
-                <strong>
-                    PROJECTILE SEGMENT
-                </strong>
-
-            </div>
-
-
-            <div class="status-arrow">
-                →
-            </div>
-
-
-            <div class="status-step">
-
-                <small>
-                    02
-                </small>
-
-                <strong>
-                    SPATIAL GRID
-                </strong>
-
-            </div>
-
-
-            <div class="status-arrow">
-                →
-            </div>
-
-
-            <div class="status-step">
-
-                <small>
-                    03
-                </small>
-
-                <strong>
-                    CANDIDATES
-                </strong>
-
-            </div>
-
-
-            <div class="status-arrow">
-                →
-            </div>
-
-
-            <div class="status-step">
-
-                <small>
-                    04
-                </small>
-
-                <strong>
-                    REWIND
-                </strong>
-
-            </div>
-
-
-            <div class="status-arrow">
-                →
-            </div>
-
-
-            <div class="status-step">
-
-                <small>
-                    05
-                </small>
-
-                <strong>
-                    TRACE
-                </strong>
-
-            </div>
+            <small>
+                actual intersection
+            </small>
 
         </div>
 
-        <p>
-            This broad-phase filtering prevents the server from performing
-            expensive historical hitbox work against unrelated players.
-        </p>
-
-    </section>
+    </div>
 
 
-    <!-- =========================================
-         07 — TIMESTAMP
-         ========================================= -->
+    <p>
+        The Spatial Grid is therefore used as a broad-phase candidate system.
+        The expensive part of the process only runs against objects that can
+        actually be near the projectile's trajectory.
+    </p>
 
-    <section class="log-section">
-
-        <div class="section-number">
-            07
-        </div>
-
-        <h2>
-            TIMESTAMP &amp; DUPLICATE PROTECTION
-        </h2>
-
-        <p class="lead">
-            The timestamp is not used by the clients for validation.
-        </p>
-
-        <p>
-            It exists primarily on the server side.
-            The server keeps recently processed timestamps in a small
-            ring buffer and can reject a shot that has already been
-            processed.
-        </p>
-
-        <div class="timestamp-visual">
-
-            <div class="timestamp-node">
-
-                <small>
-                    SHOT
-                </small>
-
-                <strong>
-                    1842
-                </strong>
-
-                <span>
-                    RECEIVED
-                </span>
-
-            </div>
+</section>
 
 
-            <div class="timestamp-arrow">
-                →
-            </div>
+<!-- REWIND -->
+
+<section class="log-section heartbeat-section">
+
+    <div class="section-number">
+        09
+    </div>
+
+    <h2>
+        REWIND
+    </h2>
+
+    <p class="lead">
+        Knowing where the bullet is is only half of the problem.
+    </p>
+
+    <p>
+        The server also needs to know where the target was when the shot
+        should have reached it.
+    </p>
+
+    <p>
+        Every rewindable character stores historical skeletal poses.
+        These snapshots contain the component-space bone transforms and
+        the component transform at a specific point in time.
+    </p>
 
 
-            <div class="timestamp-buffer">
+    <div class="heartbeat-visual">
 
-                <small>
-                    SERVER
-                </small>
+        <div class="heartbeat-server">
 
-                <strong>
-                    RING BUFFER
-                </strong>
+            <span class="pulse"></span>
 
-                <div class="timestamp-values">
+            <small>
+                CURRENT
+            </small>
 
-                    <span>1838</span>
-                    <span>1839</span>
-                    <span>1840</span>
-                    <span>1841</span>
-                    <span class="current">1842</span>
-
-                </div>
-
-            </div>
-
-
-            <div class="timestamp-arrow">
-                →
-            </div>
-
-
-            <div class="timestamp-node result">
-
-                <small>
-                    RESULT
-                </small>
-
-                <strong>
-                    ACCEPT
-                </strong>
-
-                <span>
-                    ONCE
-                </span>
-
-            </div>
+            <strong>
+                TARGET POSE
+            </strong>
 
         </div>
 
-        <p>
-            This keeps the network command compact while giving the
-            authoritative simulation a simple mechanism for detecting
-            duplicate shot commands.
-        </p>
 
-    </section>
+        <div class="heartbeat-connection">
 
-
-    <!-- =========================================
-         08 — REWIND
-         ========================================= -->
-
-    <section class="log-section">
-
-        <div class="section-number">
-            08
-        </div>
-
-        <h2>
-            HISTORICAL HIT DETECTION
-        </h2>
-
-        <p class="lead">
-            Projectile simulation and target history are two different
-            problems.
-        </p>
-
-        <p>
-            Deterministic ballistics tells the server where the projectile
-            is now. Rewind tells the server where a target was at the
-            relevant historical moment.
-        </p>
-
-        <p>
-            The server stores historical skeletal poses for hitbox
-            evaluation. When a projectile needs lag compensation, the
-            relevant target is temporarily evaluated at its historical
-            state.
-        </p>
-
-        <p>
-            After the trace completes, the live pose is restored.
-        </p>
-
-        <div class="architecture">
-
-            <div class="architecture-item">
-
-                <small>
-                    HISTORY
-                </small>
-
-                <h3>
-                    Snapshots
-                </h3>
-
-                <p>
-                    Historical component-space skeletal poses are captured
-                    during runtime.
-                </p>
-
+            <div class="heartbeat-packet">
+                REWIND
             </div>
 
-
-            <div class="architecture-item">
-
-                <small>
-                    SCOPED
-                </small>
-
-                <h3>
-                    Rewind
-                </h3>
-
-                <p>
-                    The relevant hitbox is temporarily moved to its
-                    historical state for the authoritative trace.
-                </p>
-
-            </div>
-
-
-            <div class="architecture-item">
-
-                <small>
-                    RESTORE
-                </small>
-
-                <h3>
-                    Live State
-                </h3>
-
-                <p>
-                    The original runtime pose is restored immediately after
-                    the scoped operation completes.
-                </p>
-
-            </div>
+            <div class="heartbeat-line"></div>
 
         </div>
 
-    </section>
 
+        <div class="heartbeat-master">
 
-    <!-- =========================================
-         09 — PERFORMANCE
-         ========================================= -->
+            <small>
+                HISTORICAL
+            </small>
 
-    <section class="log-section">
-
-        <div class="section-number">
-            09
-        </div>
-
-        <h2>
-            PERFORMANCE
-        </h2>
-
-        <p class="lead">
-            The architecture is designed around predictable, measurable
-            costs rather than one actor per projectile.
-        </p>
-
-        <div class="performance-grid">
-
-            <div class="performance-card">
-
-                <span class="value">
-                    ~300
-                </span>
-
-                <span class="label">
-                    Expected maximum airborne projectiles
-                </span>
-
-            </div>
-
-
-            <div class="performance-card">
-
-                <span class="value">
-                    0.651 µs
-                </span>
-
-                <span class="label">
-                    Average single rewind + restore benchmark
-                </span>
-
-            </div>
-
-
-            <div class="performance-card">
-
-                <span class="value accent">
-                    1.1 µs
-                </span>
-
-                <span class="label">
-                    P99 single rewind + restore benchmark
-                </span>
-
-            </div>
+            <strong>
+                TARGET POSE
+            </strong>
 
         </div>
 
-        <p>
-            The rewind benchmark measures one complete scoped rewind
-            operation, including pose application and restoration.
-            Full production cost also includes spatial queries,
-            collision traces and hit processing.
-        </p>
-
-        <p>
-            The important architectural property is that these operations
-            are performed only where they are relevant, rather than across
-            the entire player population for every projectile.
-        </p>
-
-    </section>
+    </div>
 
 
-    <!-- =========================================
-         10 — SECURITY
-         ========================================= -->
+    <p>
+        During server-side hit registration, the relevant hitbox proxies are
+        temporarily moved to their historical state. The collision query is
+        then performed against that historical pose.
+    </p>
 
-    <section class="log-section">
 
-        <div class="section-number">
-            10
+    <div class="quote-block">
+
+        <span>
+            WHY REWIND?
+        </span>
+
+        <strong>
+            The projectile is simulated in the present.<br>
+            The target is evaluated in the past.
+        </strong>
+
+    </div>
+
+</section>
+
+
+<!-- REWIND COMPONENT -->
+
+<section class="log-section">
+
+    <div class="section-number">
+        10
+    </div>
+
+    <h2>
+        REWIND WITHOUT A SECOND MESH
+    </h2>
+
+    <p>
+        The rewind system does not create another skeletal mesh just to
+        represent the historical state.
+    </p>
+
+    <p>
+        The character's existing skeletal mesh is instantiated as a custom
+        <strong>URewindableMeshComponent</strong>.
+        It provides a controlled way to apply a historical component-space
+        pose directly to the runtime skeletal transform buffers.
+    </p>
+
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+            <span class="feature-icon">01</span>
+            <strong>SNAPSHOT</strong>
+            <p>
+                Historical component-space bone transforms are stored.
+            </p>
         </div>
 
-        <h2>
-            AUTHORITY FIRST
-        </h2>
+        <div class="feature-card">
+            <span class="feature-icon">02</span>
+            <strong>APPLY</strong>
+            <p>
+                The historical pose is applied to the runtime transform buffer.
+            </p>
+        </div>
 
-        <p class="lead">
-            Prediction improves responsiveness. It does not grant the
-            client authority.
-        </p>
+        <div class="feature-card">
+            <span class="feature-icon">03</span>
+            <strong>TRACE</strong>
+            <p>
+                Collision is evaluated against the historical pose.
+            </p>
+        </div>
 
-        <div class="security-grid">
+        <div class="feature-card">
+            <span class="feature-icon">04</span>
+            <strong>RESTORE</strong>
+            <p>
+                The original pose is restored automatically.
+            </p>
+        </div>
 
-            <div class="security-item">
-
-                <h3>
-                    Client
-                </h3>
-
-                <p>
-                    Sends the shot command and predicts the immediate visual
-                    result.
-                </p>
-
-            </div>
-
-
-            <div class="security-item">
-
-                <h3>
-                    Server
-                </h3>
-
-                <p>
-                    Validates the command, simulates the projectile and
-                    performs authoritative hit detection.
-                </p>
-
-            </div>
+    </div>
 
 
-            <div class="security-item">
-
-                <h3>
-                    Damage
-                </h3>
-
-                <p>
-                    Damage application exists exclusively on the
-                    authoritative server path.
-                </p>
-
-            </div>
+    <p>
+        The rewind operation is scoped using RAII. A temporary rewind object
+        applies the historical state and restores the original state when
+        the scope ends.
+    </p>
 
 
-            <div class="security-item">
+    <div class="terminal">
 
-                <h3>
-                    Historical State
-                </h3>
+        <div class="terminal-header">
+            <span></span>
+            <span></span>
+            <span></span>
 
-                <p>
-                    Rewind is performed server-side using recorded
-                    historical hitbox state.
-                </p>
+            <label>
+                rewind-scope
+            </label>
+        </div>
 
-            </div>
+        <div class="terminal-body">
+
+            <p>
+                <i>01</i>
+                save current pose
+            </p>
+
+            <p>
+                <i>02</i>
+                find historical snapshot
+            </p>
+
+            <p>
+                <i>03</i>
+                apply historical pose
+            </p>
+
+            <p>
+                <i>04</i>
+                perform trace
+            </p>
+
+            <p class="success">
+                <i>05</i>
+                restore original pose
+            </p>
 
         </div>
 
-        <p>
-            Internal validation thresholds, rejection heuristics and
-            implementation-specific security rules are intentionally not
-            exposed as part of the public architecture.
-        </p>
+    </div>
 
-    </section>
+</section>
 
 
-    <!-- =========================================
-         11 — CONCLUSION
-         ========================================= -->
+<!-- PERFORMANCE -->
 
-    <section class="log-final">
+<section class="log-section">
 
-        <div class="section-number">
-            11
+    <div class="section-number">
+        11
+    </div>
+
+    <h2>
+        LIGHTWEIGHT BY DESIGN
+    </h2>
+
+    <p class="lead">
+        The system is designed around the actual workload.
+    </p>
+
+    <p>
+        There is no reason to introduce complex parallel processing for a
+        few hundred active projectiles when a native sequential loop can
+        process the entire batch efficiently.
+    </p>
+
+
+    <div class="data-grid">
+
+        <div>
+            <span>ACTIVE PROJECTILES</span>
+            <strong>~300</strong>
         </div>
 
-        <h2>
-            BUILT FOR THE NETWORK,
-            NOT JUST THE GUN
-        </h2>
+        <div>
+            <span>SIMULATION</span>
+            <strong>1 WORLD TICK</strong>
+        </div>
 
-        <p>
-            The goal was not simply to make bullets move.
-            The goal was to build a shooting architecture that remains
-            responsive for the player while keeping simulation,
-            hit registration and damage under server authority.
-        </p>
+        <div>
+            <span>PROJECTILE DATA</span>
+            <strong>NATIVE ARRAY</strong>
+        </div>
 
-        <p>
-            Prediction, deterministic ballistics, spatial filtering,
-            historical rewind and centralized projectile simulation form
-            one system — each solving a different part of the multiplayer
-            problem.
-        </p>
+        <div>
+            <span>REWIND AVG.</span>
+            <strong>~0.65 μs</strong>
+        </div>
 
-    </section>
+    </div>
 
+
+    <p>
+        A benchmark of a complete rewind-and-restore scope averaged roughly
+        <strong>0.65 microseconds</strong> per operation in the tested setup,
+        with a P95 around 0.9 microseconds.
+    </p>
+
+    <p>
+        The actual production cost also depends on the number of candidates,
+        traces and hit processing, so the important benchmark is the complete
+        shooting pipeline rather than any single isolated operation.
+    </p>
+
+</section>
+
+
+<!-- LINE TRACE -->
+
+<section class="log-section">
+
+    <div class="section-number">
+        12
+    </div>
+
+    <h2>
+        THE BULLET DOES NOT NEED A MOVEMENT COMPONENT
+    </h2>
+
+    <p class="lead">
+        Once the projectile has been simulated, collision becomes a simple question.
+    </p>
+
+    <p>
+        Where was the projectile at the beginning of the simulation step?
+        Where is it now?
+    </p>
+
+
+    <div class="status-flow">
+
+        <span>PREVIOUS LOCATION</span>
+        <b>→</b>
+        <span>PHYSICS</span>
+        <b>→</b>
+        <span>NEW LOCATION</span>
+        <b>→</b>
+        <span>LINE TRACE</span>
+
+    </div>
+
+
+    <p>
+        The projectile therefore does not require a full Unreal
+        <strong>ProjectileMovementComponent</strong>.
+        The subsystem already knows the exact trajectory segment produced
+        by the ballistic simulation.
+    </p>
+
+    <p>
+        A line trace over that segment provides the collision test while
+        keeping the projectile itself as lightweight runtime data.
+    </p>
+
+
+    <div class="quote-block">
+
+        <span>
+            SIMPLE COLLISION
+        </span>
+
+        <strong>
+            Physics determines where the bullet goes.<br>
+            The trace determines what it hits.
+        </strong>
+
+    </div>
+
+</section>
+
+
+<!-- DAMAGE -->
+
+<section class="log-section security-section">
+
+    <div class="section-number">
+        13
+    </div>
+
+    <h2>
+        SERVER OWNS THE DAMAGE
+    </h2>
+
+    <p class="lead">
+        Prediction can show a bullet. It cannot decide who gets hurt.
+    </p>
+
+    <p>
+        The client-side simulation exists for responsiveness and visual
+        feedback. The authoritative projectile exists on the server.
+    </p>
+
+    <p>
+        Only the server-side hit result is allowed to call the damage
+        processing path.
+    </p>
+
+
+    <div class="security-grid">
+
+        <div>
+            <span>CLIENT</span>
+            <p>
+                Predicts the projectile and provides immediate feedback.
+            </p>
+        </div>
+
+        <div>
+            <span>SERVER</span>
+            <p>
+                Validates the shot and runs the authoritative simulation.
+            </p>
+        </div>
+
+        <div>
+            <span>REWIND</span>
+            <p>
+                Restores the target's historical state for hit registration.
+            </p>
+        </div>
+
+        <div>
+            <span>DAMAGE</span>
+            <p>
+                Applied only by the authoritative server simulation.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- COMPLETE PIPELINE -->
+
+<section class="log-section">
+
+    <div class="section-number">
+        14
+    </div>
+
+    <h2>
+        THE COMPLETE PIPELINE
+    </h2>
+
+    <p class="lead">
+        Every part of the system has one job.
+    </p>
+
+
+    <div class="architecture">
+
+        <div class="architecture-node player">
+
+            <span class="node-type">
+                CLIENT
+            </span>
+
+            <strong>
+                SHOT
+            </strong>
+
+            <small>
+                compact command
+            </small>
+
+        </div>
+
+
+        <div class="architecture-line">
+
+            <span>
+                RPC
+            </span>
+
+            <div class="line"></div>
+
+        </div>
+
+
+        <div class="architecture-node master">
+
+            <span class="node-type">
+                SERVER
+            </span>
+
+            <strong>
+                VALIDATION
+            </strong>
+
+            <small>
+                timestamp / camera / muzzle
+            </small>
+
+        </div>
+
+
+        <div class="architecture-line">
+
+            <span>
+                ACCEPT
+            </span>
+
+            <div class="line"></div>
+
+        </div>
+
+
+        <div class="architecture-node">
+
+            <span class="node-type">
+                SIMULATION
+            </span>
+
+            <strong>
+                BALLISTICS
+            </strong>
+
+            <small>
+                gravity / drag / wind
+            </small>
+
+        </div>
+
+
+        <div class="architecture-line">
+
+            <span>
+                CANDIDATES
+            </span>
+
+            <div class="line"></div>
+
+        </div>
+
+
+        <div class="architecture-node master">
+
+            <span class="node-type">
+                SPATIAL
+            </span>
+
+            <strong>
+                GRID
+            </strong>
+
+            <small>
+                broad-phase filtering
+            </small>
+
+        </div>
+
+
+        <div class="architecture-line">
+
+            <span>
+                HISTORICAL STATE
+            </span>
+
+            <div class="line"></div>
+
+        </div>
+
+
+        <div class="architecture-node">
+
+            <span class="node-type">
+                REWIND
+            </span>
+
+            <strong>
+                TARGET POSE
+            </strong>
+
+            <small>
+                historical hitboxes
+            </small>
+
+        </div>
+
+
+        <div class="architecture-line">
+
+            <span>
+                TRACE
+            </span>
+
+            <div class="line"></div>
+
+        </div>
+
+
+        <div class="architecture-node player">
+
+            <span class="node-type">
+                RESULT
+            </span>
+
+            <strong>
+                DAMAGE
+            </strong>
+
+            <small>
+                server authoritative
+            </small>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- WHY -->
+
+<section class="log-section">
+
+    <div class="section-number">
+        15
+    </div>
+
+    <h2>
+        WHY BUILD IT THIS WAY?
+    </h2>
+
+    <p class="lead">
+        Because every system solves a different problem.
+    </p>
+
+
+    <div class="benefits-grid">
+
+        <article>
+
+            <div class="benefit-icon">
+                ⚡
+            </div>
+
+            <h3>
+                RESPONSIVE
+            </h3>
+
+            <p>
+                Client prediction makes shooting respond immediately
+                instead of waiting for a server round trip.
+            </p>
+
+        </article>
+
+
+        <article>
+
+            <div class="benefit-icon">
+                🛡
+            </div>
+
+            <h3>
+                AUTHORITATIVE
+            </h3>
+
+            <p>
+                The server validates the shot, simulates the authoritative
+                projectile and controls damage.
+            </p>
+
+        </article>
+
+
+        <article>
+
+            <div class="benefit-icon">
+                🎯
+            </div>
+
+            <h3>
+                ACCURATE
+            </h3>
+
+            <p>
+                Historical target poses allow hit registration to account
+                for network latency and moving targets.
+            </p>
+
+        </article>
+
+
+        <article>
+
+            <div class="benefit-icon">
+                ⚙
+            </div>
+
+            <h3>
+                LIGHTWEIGHT
+            </h3>
+
+            <p>
+                Centralized simulation, native runtime data and spatial
+                candidate filtering avoid unnecessary per-projectile overhead.
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- FINAL -->
+
+<section class="log-final">
+
+    <div class="section-number">
+        16
+    </div>
+
+    <h2>
+        CONCLUSION
+    </h2>
+
+    <p class="lead">
+        A shooting system is not just a bullet moving forward.
+    </p>
+
+    <p>
+        It is the combination of prediction, networking, simulation,
+        validation, spatial queries, historical state and authoritative
+        hit registration.
+    </p>
+
+    <p>
+        In SKWOLETS, all of these parts are designed to work together
+        without turning every projectile into a heavyweight gameplay Actor.
+    </p>
+
+    <p>
+        The client gets immediate feedback.
+        The server remains in control.
+        The projectile follows a real simulated trajectory.
+        The Spatial Grid keeps candidate detection efficient.
+        Rewind provides the historical target state.
+        And the final damage decision always comes from the server.
+    </p>
+
+
+    <div class="final-statement">
+
+        <span>
+            SKWOLETS
+        </span>
+
+        <strong>
+            Predict locally.<br>
+            Simulate consistently.<br>
+            Validate on the server.
+        </strong>
+
+    </div>
+
+
+    <p class="ps">
+        P.S. There are no 300 Projectile Actors flying around the world.
+        Just one subsystem, one array, and a lot of math. 😄
+    </p>
+
+</section>
 
 </main>
 
+<footer>
 
-<!-- =========================================
-     BACK TO TOP
-     ========================================= -->
+NVXIII
 
-<a
-    href="#"
-    class="back-to-top"
-    aria-label="Back to top"
->
+</footer>
+
+<button id="backToTop" class="back-to-top" aria-label="Back to top">
     ↑
-</a>
+</button>
+
+<script>
+
+const backToTop = document.getElementById("backToTop");
+
+window.addEventListener("scroll", () => {
+
+    if (window.scrollY > 500) {
+        backToTop.classList.add("visible");
+    } else {
+        backToTop.classList.remove("visible");
+    }
+
+});
+
+backToTop.addEventListener("click", () => {
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+});
+
+</script>
 
 </body>
 
