@@ -2677,56 +2677,6 @@ input[type="range"]::-moz-range-thumb {
     background: #333;
 }
 
-
-/* ========================================================
-   PLAY BUTTON
-======================================================== */
-
-.rewind-play {
-
-    display: block;
-
-    margin: 28px auto 0;
-
-    padding: 10px 20px;
-
-    border: 1px solid #292929;
-
-    background: #090909;
-
-    color: #777;
-
-    font-family: monospace;
-
-    font-size: 10px;
-
-    letter-spacing: 2px;
-
-    cursor: pointer;
-
-    transition:
-        border-color 0.2s ease,
-        color 0.2s ease,
-        background 0.2s ease;
-}
-
-.rewind-play:hover {
-
-    border-color: #ff3b3b;
-
-    color: #ff3b3b;
-
-    background: #0d0d0d;
-}
-
-.rewind-play:disabled {
-
-    opacity: 0.4;
-
-    cursor: default;
-}
-
-
 /* ========================================================
    MOBILE
 ======================================================== */
