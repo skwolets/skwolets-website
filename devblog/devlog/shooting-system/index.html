@@ -303,14 +303,17 @@
                     aria-hidden="true"
                 >
 
-                    <!-- Reference / ideal trajectory -->
+                    <!-- Ideal straight trajectory -->
 
                     <path
                         class="trajectory-reference"
-                        d="M 70 210 C 300 175, 520 150, 930 235"
+                        d="
+                            M 70 210 
+                            C 300 175, 520 150, 930 235
+                        "
                     />
 
-                    <!-- Actual ballistic trajectory -->
+                    <!-- Main trajectory -->
 
                     <path
                         class="trajectory-main"
@@ -321,17 +324,33 @@
                         "
                     />
 
-                    <!-- Wind influence -->
+                    <!-- Wind affected trajectory -->
+
+                    <defs>
+
+                        <clipPath id="wind-progress">
+                            <rect
+                                id="wind-progress-rect"
+                                x="0"
+                                y="0"
+                                width="0"
+                                height="300"
+                            />
+                        </clipPath>
+
+                    </defs>
 
                     <path
                         class="trajectory-wind"
-                        pathLength="100"
+                        clip-path="url(#wind-progress)"
                         d="
                             M 500 150
                             C 640 145, 790 190, 930 270
                         "
                     />
 
+                    <!-- Impact -->
+                    
                     <g
                         id="trajectory-impact"
                         class="trajectory-impact"
