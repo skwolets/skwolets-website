@@ -1270,237 +1270,50 @@
         </section>
 
 
-        <!-- ========================================================
-             09 — FROM SHOT TO RESULT
-        ======================================================== -->
+            <!-- ========================================================
+                 09 — FROM SHOT TO RESULT
+            ======================================================== -->
 
-        <section class="log-section">
+            <section class="log-section">
 
-            <div class="section-number">
-                09
-            </div>
+                <div class="section-number">
+                    09
+                </div>
 
-            <h2>
-                FROM SHOT TO RESULT
-            </h2>
+                <h2>
+                    FROM SHOT TO RESULT
+                </h2>
 
-            <p class="lead">
-                One shot passes through several stages, but the server remains the authority.
-            </p>
+                <p class="lead">
+                    One shot passes through several stages, but the server remains the authority.
+                </p>
 
 
-            <div class="shooting-architecture">
+                <div class="architecture-code">
 
-                <!-- CLIENT -->
+            <pre><code><span class="code-client">CLIENT</span>                    <span class="code-server">SERVER</span>                         <span class="code-result">RESULT</span>
+            ──────────────────────────────────────────────────────────────────────────────
 
-                <div class="arch-column arch-client">
-
-                    <div class="arch-column-title">
-                        CLIENT
-                    </div>
-
-                    <div class="arch-rule"></div>
-        
-                    <div class="arch-node">
-
-                        <span class="arch-node-index">
-                            01
-                        </span>
-        
-                        <strong>
-                            SHOT
-                        </strong>
-
-                        <div class="arch-node-details">
-
-                            <span>
-                                command
-                            </span>
-
-                            <span>
-                                prediction
-                            </span>
-
-                        </div>
-
-                    </div>
+            <span class="code-main">SHOT</span>                      <span class="code-main">VALIDATE</span>                       <span class="code-main">DAMAGE</span>
+             │                          │                              │
+             ├─ command                ├─ timestamp                   └─ authoritative
+             └─ prediction             ├─ origin
+                                        └─ direction
+                                              │
+                                           <span class="code-main">SIMULATE</span>
+                                              │
+                                        ├─ ballistics
+                                        ├─ spatial grid
+                                        └─ rewind
+                                              │
+                                           <span class="code-main">TRACE</span>
+                                              │
+                                          <span class="code-main">HIT / MISS</span>
+            </code></pre>
 
                 </div>
 
-
-                <!-- CLIENT → SERVER -->
-
-                <div class="arch-flow arch-flow-in">
-
-                    <span class="arch-flow-label">
-                        RPC
-                    </span>
-
-                    <div class="arch-flow-line">
-                        <span class="arch-arrow">
-                            →
-                        </span>
-                    </div>
-
-                </div>
-
-
-                <!-- SERVER -->
-
-                <div class="arch-column arch-server">
-
-                    <div class="arch-column-title">
-                        SERVER
-                    </div>
-
-                    <div class="arch-rule"></div>
-
-
-                    <div class="arch-node">
-
-                        <span class="arch-node-index">
-                            02
-                        </span>
-
-                        <strong>
-                            VALIDATE
-                        </strong>
-
-                        <div class="arch-node-details">
-
-                            <span>
-                                timestamp
-                            </span>
-
-                            <span>
-                               origin
-                            </span>
-
-                            <span>
-                                direction
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="arch-vertical-flow">
-                        <span>│</span>
-                        <span>▼</span>
-                    </div>
-
-
-                    <div class="arch-node">
-        
-                        <span class="arch-node-index">
-                            03
-                        </span>
-
-                        <strong>
-                            SIMULATE
-                        </strong>
-        
-                        <div class="arch-node-details">
-        
-                            <span>
-                                ballistics
-                            </span>
-
-                            <span>
-                               spatial grid
-                            </span>
-
-                            <span>
-                                rewind
-                            </span>
-        
-                        </div>
-
-                    </div>
-
-
-                    <div class="arch-vertical-flow">
-                        <span>│</span>
-                        <span>▼</span>
-                    </div>
-        
-
-                    <div class="arch-node">
-
-                        <span class="arch-node-index">
-                            04
-                        </span>
-
-                        <strong>
-                            TRACE
-                        </strong>
-
-                        <div class="arch-node-details">
-        
-                            <span>
-                                hit / miss
-                            </span>
-
-                        </div>
-        
-                    </div>
-
-                </div>
-
-
-                <!-- SERVER → RESULT -->
-
-                <div class="arch-flow arch-flow-out">
-
-                    <span class="arch-flow-label">
-                        RESULT
-                    </span>
-
-                    <div class="arch-flow-line">
-                        <span class="arch-arrow">
-                            →
-                        </span>
-                    </div>
-
-                </div>
-
-
-                <!-- RESULT -->
-
-                <div class="arch-column arch-result">
-
-                    <div class="arch-column-title">
-                        RESULT
-                    </div>
-
-                    <div class="arch-rule"></div>
-
-                    <div class="arch-node">
-
-                        <span class="arch-node-index">
-                            05
-                        </span>
-
-                        <strong>
-                            DAMAGE
-                        </strong>
-
-                        <div class="arch-node-details">
-
-                            <span>
-                                authoritative
-                            </span>
-
-                        </div>
-        
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
+            </section>
 
 
         <!-- ========================================================
