@@ -2183,6 +2183,14 @@ footer {
     overflow: hidden;
 }
 
+.rewind-visual > #rewindPlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    z-index: 10;
+}
+
 
 /* ========================================================
    HEADER
