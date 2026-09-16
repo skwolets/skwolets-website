@@ -2125,6 +2125,11 @@
             const pathLength =
                 path.getTotalLength();
 
+            path.style.setProperty(
+                "--trajectory-length",
+                pathLength
+            );
+
 
             /* ----------------------------------------------------
                IMPACT POSITION
@@ -2198,8 +2203,14 @@
                    RESET MAIN TRAJECTORY
                 ------------------------------------------------ */
 
+                /* Полностью остановить предыдущую animation */
+                path.getAnimations().forEach(animation => {
+                    animation.cancel();
+                });
+
                 path.style.animation =
                     "none";
+
 
                 path.style.strokeDasharray =
                     pathLength;
