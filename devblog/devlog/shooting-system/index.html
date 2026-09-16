@@ -2125,11 +2125,6 @@
             const pathLength =
                 path.getTotalLength();
 
-            path.style.setProperty(
-                "--trajectory-length",
-                pathLength
-            );
-
 
             /* ----------------------------------------------------
                IMPACT POSITION
@@ -2180,10 +2175,15 @@
                PLAY / REPLAY
             ---------------------------------------------------- */
 
-            let animationTimers = [];
-            let windAnimationFrame = null;
-
             playButton.addEventListener("click", () => {
+
+                /* ------------------------------------------------
+                   HIDE PLAY BUTTON
+                ------------------------------------------------ */
+
+                playButton.style.visibility =
+                    "hidden";
+
 
                 /* ------------------------------------------------
                    RESET FACTORS
@@ -2213,7 +2213,6 @@
                 path.style.animation =
                     "none";
 
-
                 path.style.strokeDasharray =
                     pathLength;
 
@@ -2237,7 +2236,7 @@
 
 
                 /* ------------------------------------------------
-                   FORCE REFLOW
+                   FORCE RESET
                 ------------------------------------------------ */
 
                 void path.offsetWidth;
@@ -2257,127 +2256,114 @@
                    GRAVITY
                 ------------------------------------------------ */
 
-                animationTimers.push(
-                    setTimeout(() => {
+                setTimeout(() => {
 
-                        gravity.classList.add("visible");
+                    gravity.classList.add("visible");
 
-                    }, 650)
-                );
+                }, 650);
 
 
                 /* ------------------------------------------------
                    DRAG + WIND REVEAL
                 ------------------------------------------------ */
 
-                animationTimers.push(
-                    setTimeout(() => {
+                setTimeout(() => {
 
-                        drag.classList.add("visible");
-                
-                        const startTime =
-                            performance.now();
+                    drag.classList.add("visible");
 
-                        const duration =
-                            1300;
+                    const startTime =
+                        performance.now();
 
-                        const startX =
-                            500;
+                    const duration =
+                        1300;
 
-                        const endX =
-                            930;
+                    const startX =
+                        500;
 
-
-                        const animateWind =
-                            (currentTime) => {
-                                
-                                const progress =
-                                    Math.min(
-                                        (currentTime - startTime) /
-                                        duration,
-                                        1
-                                    );
-
-                                const width =
-                                    (endX - startX) *
-                                    progress;
+                    const endX =
+                        930;
 
 
-                                windProgress.setAttribute(
-                                    "x",
-                                    startX
+                    const animateWind =
+                        (currentTime) => {
+
+                            const progress =
+                                Math.min(
+                                    (currentTime - startTime) /
+                                    duration,
+                                    1
                                 );
 
-                                windProgress.setAttribute(
-                                    "width",
-                                    width
-                                );
+                            const width =
+                                (endX - startX) *
+                                progress;
 
 
-                                if (progress < 1) {
-
-                                    windAnimationFrame =
-                                        requestAnimationFrame(
-                                            animateWind
-                                        );
-
-                                } else {
-
-                                    windAnimationFrame =
-                                        null;
-                
-                                }
-                            };
-
-
-                        windAnimationFrame =
-                            requestAnimationFrame(
-                                animateWind
+                            windProgress.setAttribute(
+                                "x",
+                                startX
                             );
 
-                    }, 1500)
-                );
+                            windProgress.setAttribute(
+                                "width",
+                                width
+                            );
+
+
+                            if (progress < 1) {
+
+                                requestAnimationFrame(
+                                    animateWind
+                                );
+
+                            }
+
+                        };
+
+
+                    requestAnimationFrame(
+                        animateWind
+                    );
+
+                }, 1500);
 
 
                 /* ------------------------------------------------
                    WIND LABEL
                 ------------------------------------------------ */
 
-                animationTimers.push(
-                    setTimeout(() => {
+                setTimeout(() => {
 
-                        wind.classList.add("visible");
+                    wind.classList.add("visible");
 
-                    }, 2100)
-                );
+                }, 2100);
 
 
                 /* ------------------------------------------------
                    IMPACT
                 ------------------------------------------------ */
 
-                animationTimers.push(
-                    setTimeout(() => {
+                setTimeout(() => {
 
-                        impact.style.display =
-                            "block";
+                    impact.style.display =
+                        "block";
 
-                    }, 2800)
-                );
+                }, 2800);
 
 
                 /* ------------------------------------------------
                    PLAY → REPLAY
                 ------------------------------------------------ */
 
-                animationTimers.push(
-                    setTimeout(() => {
+                setTimeout(() => {
 
-                        playButton.textContent =
-                            "↻";
+                    playButton.textContent =
+                        "↻";
 
-                    }, 2800)
-                );
+                    playButton.style.visibility =
+                        "visible";
+
+                }, 2800);
 
             });
 
