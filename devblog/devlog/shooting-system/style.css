@@ -880,7 +880,6 @@ header {
 .trajectory-ground {
     stroke: #222;
     stroke-width: 1;
-    stroke-dasharray: 4 6;
     vector-effect: non-scaling-stroke;
 }
 
