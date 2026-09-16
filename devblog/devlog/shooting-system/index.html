@@ -1904,8 +1904,11 @@
                    HIDE PLAY BUTTON
                 ------------------------------------------------ */
 
-                playButton.style.visibility =
-                    "hidden";
+                playButton.disabled =
+                    true;
+
+                playButton.textContent =
+                    "SIMULATION";
 
 
                 /* ------------------------------------------------
@@ -2113,16 +2116,13 @@
 
 
                 /* ------------------------------------------------
-                   PLAY → REPLAY
+                   PLAY
                 ------------------------------------------------ */
 
                 setTimeout(() => {
 
-                    playButton.textContent =
-                        "↻";
-
-                    playButton.style.visibility =
-                        "visible";
+                    playButton.disabled =
+                        false;
 
                 }, 2800);
 
