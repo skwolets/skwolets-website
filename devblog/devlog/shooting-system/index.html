@@ -2180,6 +2180,9 @@
                PLAY / REPLAY
             ---------------------------------------------------- */
 
+            let animationTimers = [];
+            let windAnimationFrame = null;
+
             playButton.addEventListener("click", () => {
 
                 /* ------------------------------------------------
@@ -2254,111 +2257,127 @@
                    GRAVITY
                 ------------------------------------------------ */
 
-                setTimeout(() => {
+                animationTimers.push(
+                    setTimeout(() => {
 
-                    gravity.classList.add("visible");
+                        gravity.classList.add("visible");
 
-                }, 650);
+                    }, 650)
+                );
 
 
                 /* ------------------------------------------------
                    DRAG + WIND REVEAL
                 ------------------------------------------------ */
 
-                setTimeout(() => {
+                animationTimers.push(
+                    setTimeout(() => {
 
-                    drag.classList.add("visible");
+                        drag.classList.add("visible");
+                
+                        const startTime =
+                            performance.now();
 
-                    const startTime =
-                        performance.now();
+                        const duration =
+                            1300;
 
-                    const duration =
-                        1300;
+                        const startX =
+                            500;
 
-                    const startX =
-                        500;
-
-                    const endX =
-                        930;
+                        const endX =
+                            930;
 
 
-                    const animateWind =
-                        (currentTime) => {
+                        const animateWind =
+                            (currentTime) => {
+                                
+                                const progress =
+                                    Math.min(
+                                        (currentTime - startTime) /
+                                        duration,
+                                        1
+                                    );
 
-                            const progress =
-                                Math.min(
-                                    (currentTime - startTime) /
-                                    duration,
-                                    1
+                                const width =
+                                    (endX - startX) *
+                                    progress;
+
+
+                                windProgress.setAttribute(
+                                    "x",
+                                    startX
                                 );
 
-                            const width =
-                                (endX - startX) *
-                                progress;
-
-
-                            windProgress.setAttribute(
-                                "x",
-                                startX
-                            );
-
-                            windProgress.setAttribute(
-                                "width",
-                                width
-                            );
-
-
-                            if (progress < 1) {
-
-                                requestAnimationFrame(
-                                    animateWind
+                                windProgress.setAttribute(
+                                    "width",
+                                    width
                                 );
 
-                            }
 
-                        };
+                                if (progress < 1) {
+
+                                    windAnimationFrame =
+                                        requestAnimationFrame(
+                                            animateWind
+                                        );
+
+                                } else {
+
+                                    windAnimationFrame =
+                                        null;
+                
+                                }
+                            };
 
 
-                    requestAnimationFrame(
-                        animateWind
-                    );
+                        windAnimationFrame =
+                            requestAnimationFrame(
+                                animateWind
+                            );
 
-                }, 1500);
+                    }, 1500)
+                );
 
 
                 /* ------------------------------------------------
                    WIND LABEL
                 ------------------------------------------------ */
 
-                setTimeout(() => {
+                animationTimers.push(
+                    setTimeout(() => {
 
-                    wind.classList.add("visible");
+                        wind.classList.add("visible");
 
-                }, 2100);
+                    }, 2100)
+                );
 
 
                 /* ------------------------------------------------
                    IMPACT
                 ------------------------------------------------ */
 
-                setTimeout(() => {
+                animationTimers.push(
+                    setTimeout(() => {
 
-                    impact.style.display =
-                        "block";
+                        impact.style.display =
+                            "block";
 
-                }, 2800);
+                    }, 2800)
+                );
 
 
                 /* ------------------------------------------------
                    PLAY → REPLAY
                 ------------------------------------------------ */
 
-                setTimeout(() => {
+                animationTimers.push(
+                    setTimeout(() => {
 
-                    playButton.textContent =
-                        "↻";
+                        playButton.textContent =
+                            "↻";
 
-                }, 2800);
+                    }, 2800)
+                );
 
             });
 
