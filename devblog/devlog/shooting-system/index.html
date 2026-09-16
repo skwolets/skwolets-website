@@ -1780,9 +1780,17 @@
 
     document.addEventListener("DOMContentLoaded", () => {
 
-        const svg = document.querySelector(".ballistic-path");
-        const path = svg?.querySelector(".trajectory-main");
-        const impact = svg?.querySelector("#trajectory-impact");
+        const svg =
+            document.querySelector(".ballistic-path");
+
+        const path =
+            svg?.querySelector(".trajectory-main");
+
+        const windPath =
+            svg?.querySelector(".trajectory-wind");
+
+        const impact =
+            svg?.querySelector("#trajectory-impact");
 
         const playButton =
             document.getElementById("ballisticPlay");
@@ -1800,6 +1808,7 @@
         if (
             !svg ||
             !path ||
+            !windPath ||
             !impact ||
             !playButton ||
             !gravity ||
@@ -1811,10 +1820,25 @@
 
 
         /* ----------------------------------------------------
-           IMPACT POSITION
+           PATH LENGTHS
         ---------------------------------------------------- */
 
-        const pathLength = path.getTotalLength();
+        const pathLength =
+            path.getTotalLength();
+
+        const windLength =
+            windPath.getTotalLength();
+
+
+        windPath.style.setProperty(
+            "--wind-length",
+            windLength
+        );
+
+
+        /* ----------------------------------------------------
+           IMPACT POSITION
+        ---------------------------------------------------- */
 
         const endPoint =
             path.getPointAtLength(pathLength);
@@ -1830,8 +1854,19 @@
            Show complete simulation
         ---------------------------------------------------- */
 
-        path.style.strokeDasharray = pathLength;
-        path.style.strokeDashoffset = 0;
+        path.style.strokeDasharray =
+            pathLength;
+
+        path.style.strokeDashoffset =
+            0;
+
+
+        windPath.style.strokeDasharray =
+            windLength;
+
+        windPath.style.strokeDashoffset =
+            0;
+
 
         gravity.classList.add("visible");
         drag.classList.add("visible");
@@ -1848,29 +1883,60 @@
 
         playButton.addEventListener("click", () => {
 
-            /* Reset factors */
+            /* ------------------------------------------------
+               RESET FACTORS
+            ------------------------------------------------ */
 
             gravity.classList.remove("visible");
             drag.classList.remove("visible");
             wind.classList.remove("visible");
 
 
-            /* Hide impact */
+            /* ------------------------------------------------
+               HIDE IMPACT
+            ------------------------------------------------ */
 
             impact.style.display = "none";
 
 
-            /* Reset trajectory */
+            /* ------------------------------------------------
+               RESET MAIN TRAJECTORY
+            ------------------------------------------------ */
 
             path.style.animation = "none";
 
-            path.style.strokeDasharray = pathLength;
-            path.style.strokeDashoffset = pathLength;
+            path.style.strokeDasharray =
+                pathLength;
+
+            path.style.strokeDashoffset =
+                pathLength;
+
+
+            /* ------------------------------------------------
+               RESET WIND TRAJECTORY
+            ------------------------------------------------ */
+
+            windPath.style.animation = "none";
+
+            windPath.style.strokeDasharray =
+                windLength;
+
+            windPath.style.strokeDashoffset =
+                windLength;
+
+
+            /*
+             * Force browser reflow so the animations
+             * restart correctly on replay.
+             */
 
             path.getBoundingClientRect();
+            windPath.getBoundingClientRect();
 
 
-            /* Start trajectory */
+            /* ------------------------------------------------
+               START MAIN TRAJECTORY
+            ------------------------------------------------ */
 
             path.style.animation =
                 "ballisticTrajectory 2.8s linear forwards";
@@ -1903,6 +1969,9 @@
             ------------------------------------------------ */
 
             setTimeout(() => {
+
+                windPath.style.animation =
+                    "ballisticWind 0.7s linear forwards";
 
                 wind.classList.add("visible");
 
