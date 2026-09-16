@@ -2193,3 +2193,579 @@ footer {
     }
 
 }
+
+/* ========================================================
+   REWIND INTERACTIVE
+======================================================== */
+
+.rewind-visual {
+
+    position: relative;
+
+    width: 100%;
+
+    margin: 70px 0;
+
+    padding: 28px 30px 32px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #090909 0%,
+            #050505 100%
+        );
+
+    border-top: 1px solid #1d1d1d;
+    border-bottom: 1px solid #1d1d1d;
+
+    overflow: hidden;
+}
+
+
+/* ========================================================
+   HEADER
+======================================================== */
+
+.rewind-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+
+    font-family: monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    color: #555;
+}
+
+.rewind-header strong {
+
+    color: #ff3b3b;
+
+    font-size: 11px;
+
+    font-weight: 400;
+
+    letter-spacing: 2px;
+}
+
+
+/* ========================================================
+   SCENE
+======================================================== */
+
+.rewind-scene {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 260px;
+
+    overflow: hidden;
+
+    border: 1px solid #161616;
+
+    background:
+        linear-gradient(
+            to bottom,
+            transparent 0%,
+            transparent 74%,
+            #151515 75%,
+            #151515 75.5%,
+            transparent 75.5%
+        );
+}
+
+
+/* ========================================================
+   TARGETS
+======================================================== */
+
+.rewind-target {
+
+    position: absolute;
+
+    bottom: 24%;
+
+    width: 80px;
+
+    height: 150px;
+
+    display: flex;
+
+    justify-content: center;
+
+    transition:
+        transform 0.08s linear;
+}
+
+.rewind-target.current {
+
+    left: 72%;
+
+}
+
+.rewind-target.historical {
+
+    left: 72%;
+
+    opacity: 0.45;
+
+    pointer-events: none;
+
+}
+
+
+/* ========================================================
+   TARGET LABEL
+======================================================== */
+
+.rewind-target-label {
+
+    position: absolute;
+
+    top: -24px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    white-space: nowrap;
+
+    font-family: monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    color: #555;
+}
+
+.rewind-target.current
+.rewind-target-label {
+
+    color: #777;
+}
+
+.rewind-target.historical
+.rewind-target-label {
+
+    color: #ff3b3b;
+}
+
+
+/* ========================================================
+   CHARACTER
+======================================================== */
+
+.rewind-character {
+
+    position: relative;
+
+    width: 60px;
+
+    height: 140px;
+}
+
+
+/* HEAD */
+
+.rewind-character .head {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 50%;
+
+    width: 22px;
+
+    height: 22px;
+
+    transform: translateX(-50%);
+
+    border: 1px solid #777;
+
+    border-radius: 50%;
+}
+
+
+/* BODY */
+
+.rewind-character .body {
+
+    position: absolute;
+
+    top: 27px;
+
+    left: 50%;
+
+    width: 26px;
+
+    height: 58px;
+
+    transform: translateX(-50%);
+
+    border: 1px solid #777;
+}
+
+
+/* ARMS */
+
+.rewind-character .arm {
+
+    position: absolute;
+
+    top: 30px;
+
+    width: 7px;
+
+    height: 55px;
+
+    border: 1px solid #666;
+}
+
+.rewind-character .arm.left {
+
+    left: 7px;
+
+    transform:
+        rotate(10deg);
+}
+
+.rewind-character .arm.right {
+
+    right: 7px;
+
+    transform:
+        rotate(-10deg);
+}
+
+
+/* LEGS */
+
+.rewind-character .leg {
+
+    position: absolute;
+
+    top: 83px;
+
+    width: 8px;
+
+    height: 55px;
+
+    border: 1px solid #666;
+}
+
+.rewind-character .leg.left {
+
+    left: 19px;
+
+    transform:
+        rotate(4deg);
+}
+
+.rewind-character .leg.right {
+
+    right: 19px;
+
+    transform:
+        rotate(-4deg);
+}
+
+
+/* ========================================================
+   SHOT
+======================================================== */
+
+.rewind-shot {
+
+    position: absolute;
+
+    left: 7%;
+
+    top: 46%;
+
+    display: flex;
+
+    align-items: center;
+
+    width: 60%;
+
+    color: #ff3b3b;
+
+    font-family: monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+}
+
+.rewind-shot-line {
+
+    flex: 1;
+
+    height: 1px;
+
+    margin-left: 15px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff3b3b,
+            rgba(255, 59, 59, 0)
+        );
+
+    box-shadow:
+        0 0 8px
+        rgba(255, 59, 59, 0.25);
+}
+
+
+/* ========================================================
+   HIT
+======================================================== */
+
+.rewind-hit {
+
+    position: absolute;
+
+    left: 0;
+
+    top: 50%;
+
+    padding: 6px 10px;
+
+    border: 1px solid #ff3b3b;
+
+    color: #ff3b3b;
+
+    font-family: monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    opacity: 0;
+
+    transform:
+        translateY(-50%)
+        scale(0.9);
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+.rewind-hit.visible {
+
+    opacity: 1;
+
+    transform:
+        translateY(-50%)
+        scale(1);
+}
+
+
+/* ========================================================
+   TIMELINE
+======================================================== */
+
+.rewind-timeline {
+
+    margin-top: 28px;
+}
+
+.rewind-timeline-labels {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+
+    font-family: monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    color: #444;
+}
+
+
+/* ========================================================
+   RANGE
+======================================================== */
+
+.rewind-timeline input[type="range"] {
+
+    width: 100%;
+
+    height: 2px;
+
+    margin: 0;
+
+    appearance: none;
+
+    background: #292929;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+.rewind-timeline
+input[type="range"]::-webkit-slider-thumb {
+
+    appearance: none;
+
+    width: 10px;
+
+    height: 10px;
+
+    border: 1px solid #ff3b3b;
+
+    border-radius: 50%;
+
+    background: #080808;
+
+    box-shadow:
+        0 0 8px
+        rgba(255, 59, 59, 0.35);
+}
+
+.rewind-timeline
+input[type="range"]::-moz-range-thumb {
+
+    width: 10px;
+
+    height: 10px;
+
+    border: 1px solid #ff3b3b;
+
+    border-radius: 50%;
+
+    background: #080808;
+
+    box-shadow:
+        0 0 8px
+        rgba(255, 59, 59, 0.35);
+}
+
+
+/* ========================================================
+   TIMELINE TICKS
+======================================================== */
+
+.rewind-ticks {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 7px;
+
+    padding: 0 3px;
+}
+
+.rewind-ticks span {
+
+    width: 1px;
+
+    height: 5px;
+
+    background: #333;
+}
+
+
+/* ========================================================
+   PLAY BUTTON
+======================================================== */
+
+.rewind-play {
+
+    display: block;
+
+    margin: 28px auto 0;
+
+    padding: 10px 20px;
+
+    border: 1px solid #292929;
+
+    background: #090909;
+
+    color: #777;
+
+    font-family: monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+.rewind-play:hover {
+
+    border-color: #ff3b3b;
+
+    color: #ff3b3b;
+
+    background: #0d0d0d;
+}
+
+.rewind-play:disabled {
+
+    opacity: 0.4;
+
+    cursor: default;
+}
+
+
+/* ========================================================
+   MOBILE
+======================================================== */
+
+@media (max-width: 768px) {
+
+    .rewind-visual {
+
+        margin: 50px 0;
+
+        padding:
+            22px 18px 25px;
+    }
+
+    .rewind-scene {
+
+        height: 220px;
+    }
+
+    .rewind-target.current,
+    .rewind-target.historical {
+
+        left: 65%;
+    }
+
+    .rewind-shot {
+
+        left: 5%;
+
+        width: 55%;
+    }
+
+}
