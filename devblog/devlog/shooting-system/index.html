@@ -1274,7 +1274,7 @@
 
         </section>
 
-
+        
             <!-- ========================================================
                  09 — FROM SHOT TO RESULT
             ======================================================== -->
@@ -1290,29 +1290,35 @@
                 </h2>
 
                 <p class="lead">
-                    One shot passes through several stages, but the server remains the authority.
+                    The client reacts immediately. The server validates the shot,
+                    performs the authoritative simulation, and produces the final result.
                 </p>
 
 
                 <div class="architecture-code">
 
-            <pre><code><span class="code-client">CLIENT</span> <span class="code-main">SHOT</span>                      <span class="code-server">SERVER</span> <span class="code-main">VALIDATE</span>                       <span class="code-result">RESULT</span> <span class="code-main">DAMAGE</span>
-     │                                   │                                      │
-     ├─ command                          ├─ timestamp                           └─ authoritative
-     └─ prediction                       ├─ origin
-           │                             └─ direction
-   <span class="code-main">SIMULATE      │
-   </span>    
-           │  <span class="code-main">SIMULATE</span>
-           ├─ ballistics                  │
-           ├─ visuals                     ├─ ballistics
-                                          ├─ spatial grid
-                                          └─ rewind
-                                           │
-                                      <span class="code-main">TRACE</span>
-                                           │
-                                      <span class="code-main">HIT / MISS</span>
-            </code></pre>
+                    <pre><code><span class="code-client">CLIENT</span>
+<span class="code-main">SHOT</span>
+    │
+    ├─ command
+    ├─ prediction
+    └─ local simulation
+    │
+    ▼
+<span class="code-server">SERVER</span>
+<span class="code-main">VALIDATE</span>
+    │
+    ├─ validate shot
+    ├─ simulate ballistics
+    ├─ query spatial grid
+    ├─ rewind target
+    └─ trace
+    │
+    ▼
+<span class="code-result">RESULT</span>
+<span class="code-main">HIT / MISS</span>
+    │
+    └─ authoritative damage</code></pre>
 
                 </div>
 
@@ -1350,9 +1356,9 @@
                         RESPONSIVE
                     </strong>
 
-                    <p>
-                        Client prediction makes shooting respond immediately
-                        instead of waiting for a server round trip.
+                    <p class="lead">
+                        The client reacts immediately. The server validates the shot,
+                        performs the authoritative simulation, and produces the final result.
                     </p>
 
                 </div>
