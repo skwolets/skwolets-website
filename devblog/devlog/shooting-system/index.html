@@ -788,12 +788,20 @@
 
             </div>
 
-
             <p>
-                The movement system already sends predictive camera state to the server.
-                This means the server has the information necessary to compare the
-                requested shot against the player's current predicted view.
+                I originally used fire rate in RPM, for example 600 RPM for an AK-style rifle. 
+                Later, I switched to storing the fire interval directly in seconds.
+                <br>
+                So 600 RPM becomes a 0.1 second interval between shots.
             </p>
+
+           <p>
+               For the angle check, I did not have to invent another system just to replicate
+               the camera. Unreal Engine's movement system already carries the relevant view
+               information through its existing network movement flow.
+               <br><br>
+               I could simply build the shooting validation around data the server was already receiving.
+           </p>
 
 
             <div class="terminal">
