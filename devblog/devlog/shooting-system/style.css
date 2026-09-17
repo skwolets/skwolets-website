@@ -2478,6 +2478,17 @@ footer {
 
 }
 
+.rewind-target.historical.rewinding
+.rewind-character .head,
+.rewind-target.historical.rewinding
+.rewind-character .body,
+.rewind-target.historical.rewinding
+.rewind-character .arm,
+.rewind-target.historical.rewinding
+.rewind-character .leg {
+    border-color: #ff3b3b;
+}
+
 
 /* ========================================================
    TARGET LABEL
