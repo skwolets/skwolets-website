@@ -1850,6 +1850,55 @@ footer {
 
 }
 
+/* ============================================================
+   SHOOTING FLOW LIST
+============================================================ */
+
+.shooting-flow-list {
+    margin-top: 60px;
+
+    border-top: 1px solid #222;
+}
+
+.shooting-flow-list div {
+    display: grid;
+
+    grid-template-columns:
+        40px
+        140px
+        1fr;
+
+    align-items: center;
+
+    gap: 30px;
+
+    padding: 25px 0;
+
+    border-bottom: 1px solid #222;
+
+    font-size: 18px;
+
+    color: #aaa;
+}
+
+.shooting-flow-list span {
+    color: #ff3b3b;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+}
+
+.shooting-flow-list strong {
+    color: #fff;
+
+    font-size: 13px;
+
+    letter-spacing: 2px;
+
+    font-weight: 400;
+}
+
 
 /* ========================================================
    MOBILE
