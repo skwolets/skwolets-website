@@ -2489,6 +2489,10 @@ footer {
     border-color: #ff3b3b;
 }
 
+.rewind-target.historical.hit {
+    opacity: 1;
+}
+
 
 /* ========================================================
    TARGET LABEL
