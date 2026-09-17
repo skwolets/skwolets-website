@@ -1768,16 +1768,34 @@
                        TIMELINE LABEL
                     ------------------------------------------------ */
 
-                    if (value <= REWIND_START) {
+                    if (value === 0) {
 
                         historical.classList.add(
                             "rewinding"
+                        );
+
+                        historical.classList.add(
+                            "hit"
+                        );
+
+                    } else if (value <= REWIND_START) {
+
+                        historical.classList.add(
+                            "rewinding"
+                        );
+
+                        historical.classList.remove(
+                            "hit"
                         );
 
                     } else {
 
                         historical.classList.remove(
                             "rewinding"
+                        );
+
+                        historical.classList.remove(
+                            "hit"
                         );
                     }
 
