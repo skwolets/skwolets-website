@@ -1283,6 +1283,8 @@
                 A shooting system is not just a bullet moving forward.
             </p>
 
+            <br>
+
             <p>
                 It is the combination of prediction, networking, simulation,
                 validation, spatial queries, historical state and authoritative
@@ -1290,16 +1292,25 @@
             </p>
 
             <p>
-                In SKWOLETS, all of these parts are designed to work together
-                without turning every projectile into a heavyweight gameplay object
+                This system did not appear all at once. 
+                It started with a much simpler approach where the server trusted the client more than it should. 
+                Later, I moved to a fully server-side approach and gradually built the missing pieces around it.
             </p>
 
             <p>
-                The client gets immediate feedback.
-                The server remains in control.
-                The projectile follows a real simulated trajectory.
-                The Spatial Grid keeps candidate detection efficient.
-                Rewind provides the historical target state.
+                Over the course of about a year, 
+                I kept testing, breaking and rebuilding different parts of the system until all of these pieces could work together as one model.
+            </p>
+
+            <p>
+                In SKWOLETS, all of these parts are designed to work together without turning every projectile into a heavyweight gameplay object.
+            </p>
+
+            <br>
+
+            <p>
+                The client gets immediate feedback. The server remains in control. The projectile follows a real simulated trajectory. 
+                The Spatial Grid keeps candidate detection efficient. Rewind provides the historical target state. 
                 And the final damage decision always comes from the server.
             </p>
 
