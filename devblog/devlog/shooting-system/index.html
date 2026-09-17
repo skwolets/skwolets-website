@@ -1768,6 +1768,19 @@
                        TIMELINE LABEL
                     ------------------------------------------------ */
 
+                    if (value <= REWIND_START) {
+
+                        historical.classList.add(
+                            "rewinding"
+                        );
+
+                    } else {
+
+                        historical.classList.remove(
+                            "rewinding"
+                        );
+                    }
+
                     if (value > REWIND_START) {
 
                         time.textContent =
@@ -1809,7 +1822,7 @@
                             `SNAPSHOT −${snapshotTime} ms`;
 
                     } else {
-                        
+
                         shot.classList.add(
                             "visible"
                         );
