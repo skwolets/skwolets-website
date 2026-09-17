@@ -97,22 +97,28 @@
             </p>
 
             <p>
-                Shooting looks simple from the outside.
-                Pull the trigger, send a bullet forward, check if it hits something.
+                Shooting looks simple from the outside. Pull the trigger, send a bullet forward, check if it hits something.
             </p>
 
             <p>
-                In a networked multiplayer game, it becomes much more complicated.
-                The client needs an immediate response, while the server must remain
-                authoritative. Players have different latency, targets are constantly
-                moving, and projectiles need to behave consistently across the network.
+                In a networked multiplayer game, it becomes much more complicated. The client needs an immediate response, 
+                while the server must remain authoritative. Players have different latency, targets are constantly moving, 
+                and projectiles need to behave consistently across the network.
             </p>
 
             <p>
-                For SKWOLETS, I didn't want to create a traditional Projectile Actor for every bullet.
-                The goal is to build a centralized ballistic system
-                where simulation, validation and hit registration are separate systems
-                working together.
+                I am not approaching this as someone who already knows all the answers. Most of what is described here came from building the system, 
+                breaking it, testing it, measuring it, and then rebuilding parts of it when they did not behave the way I expected.
+            </p>
+
+            <p>
+                I learn this way because it is the way that works for me. I spend a lot of time testing the actual system under different conditions, 
+                looking at what fails, and trying to understand why. This shooting system is the result of that process.
+            </p>
+
+            <p>
+                For SKWOLETS, the goal is not to create a traditional projectile Actor for every bullet. 
+                The goal is to build a centralized ballistic system where simulation, validation and hit registration are separate systems working together.
             </p>
 
             <div class="quote-block">
