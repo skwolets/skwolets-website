@@ -1860,11 +1860,10 @@ footer {
     border-top: 1px solid #222;
 }
 
-.shooting-flow-list div {
+.shooting-flow-list > div {
     display: grid;
 
     grid-template-columns:
-        40px
         140px
         1fr;
 
@@ -1875,10 +1874,6 @@ footer {
     padding: 25px 0;
 
     border-bottom: 1px solid #222;
-
-    font-size: 18px;
-
-    color: #aaa;
 }
 
 .shooting-flow-list span {
@@ -1889,16 +1884,13 @@ footer {
     letter-spacing: 2px;
 }
 
-.shooting-flow-list strong {
-    color: #fff;
+.shooting-flow-list p {
+    margin: 0;
 
-    font-size: 13px;
+    font-size: 18px;
 
-    letter-spacing: 2px;
-
-    font-weight: 400;
+    color: #aaa;
 }
-
 
 /* ========================================================
    MOBILE
