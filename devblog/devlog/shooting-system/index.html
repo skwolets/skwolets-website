@@ -101,6 +101,14 @@
                 THE PROJECTILE
             </h2>
 
+            <div class="quote-block">
+
+                <strong>
+                    I use the term "projectile" as a general term for any damaging object fired from a weapon's muzzle, whether it's a bullet from a Kalashnikov rifle or a grenade from an underbarrel grenade launcher.<br>
+                </strong>
+
+            </div>
+
             <p>
                 In a networked multiplayer game, determinism is crucial. The client needs immediate feedback, while the server must remain authoritative. 
                 Players have different latency levels, targets are constantly moving, and projectiles must behave consistently regardless of network conditions.
@@ -131,15 +139,15 @@
         <section class="log-section">
 
             <h2>
-                ONE SYSTEM FOR EVERY BULLET
+                ONE SYSTEM FOR EVERY PROJECTILE
             </h2>
 
             <p class="lead">
-                Bullets are not individual objects.
+                Projectiles are not individual objects.
             </p>
 
             <p>
-                The system does not create a separate game object for every bullet flying through the world.
+                The system does not create a separate game object for every projectile flying through the world.
                 <br>
                 Instead, active projectiles are processed together as part of a centralized simulation.
                 <br>
@@ -147,13 +155,13 @@
                 simulation advances them in a single pass.
                 <br>
                 This significantly reduces the amount of per-projectile overhead and makes it possible
-                to handle a large number of airborne projectiles without turning every bullet into an
+                to handle a large number of airborne projectiles without turning every projectile into an
                 independent gameplay object.
             </p>
 
             <p>
                 The result is simple:
-                <strong>the bullet is treated as simulation data, not as a full game entity.</strong>
+                <strong>the projectile is treated as simulation data, not as a full game entity.</strong>
             </p>
 
             <div class="data-grid">
@@ -190,7 +198,7 @@
 
                 <div>
                     <span>
-                        ACTIVE BULLETS
+                        ACTIVE PROJECTILES
                     </span>
 
                     <strong>
@@ -220,7 +228,7 @@
             </h2>
 
             <p class="lead">
-                The bullet does not simply move from A to B.
+                The projectile does not simply move from A to B.
             </p>
 
             <p>
@@ -572,7 +580,7 @@
             </h2>
 
             <p class="lead">
-                Waiting for the server before showing a bullet would make shooting feel slow.
+                Waiting for the server before showing a projectile would make shooting feel slow.
             </p>
 
             <p>
@@ -660,7 +668,7 @@
 
             <p>
                 The important part is that these are not three independent gameplay
-                bullets. They are three executions of the same deterministic
+                projectiles. They are three executions of the same deterministic
                 projectile simulation in different contexts.
             </p>
 
@@ -832,7 +840,7 @@
             </h2>
 
             <p class="lead">
-                A bullet does not need to test every player in the world.
+                A projectile does not need to test every player in the world.
             </p>
 
             <p>
@@ -1144,7 +1152,7 @@
             </h2>
 
             <p class="lead">
-                Prediction can show a bullet. It cannot decide who gets hurt.
+                Prediction can show a projectile. It cannot decide who gets hurt.
             </p>
 
             <p>
@@ -1227,7 +1235,7 @@
             </h2>
 
             <p class="lead">
-                A shooting system is not just a bullet moving forward.
+                A shooting system is not just a projectile moving forward.
             </p>
 
             <br>
@@ -1590,7 +1598,7 @@
 
 
                             /* ------------------------------------
-                               Follow bullet trajectory speed
+                               Follow projectile trajectory speed
                             ------------------------------------ */
 
                             const bulletProgress =
