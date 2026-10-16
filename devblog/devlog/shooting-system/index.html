@@ -482,26 +482,21 @@
             </h2>
 
             <p class="lead">
-                Ammunition is data-driven.
+                Ammunition parameters are not hardcoded directly into the projectile simulation.
             </p>
 
             <p>
-                Rather than hardcoded into the projectile
-                simulation each ammunition type can define its own ballistic
-                characteristics, lifetime, and visual behaviour through external
-                configuration.
+                Instead, each ammunition type has its own ballistic characteristics, lifetime, and visual behaviour, all defined through external configuration.
             </p>
 
             <p>
-                This also makes the system moddable. New ammunition types can be added
-                by defining their parameters in the
+                This also allows the system to be modified without changing its internal logic. New ammunition types can be added by specifying their parameters in the
                 <a
                     href="#ammunition-configuration"
                     class="inline-config-link"
                 >
                     configuration
-                </a>
-                instead of changing the underlying projectile simulation.
+                </a>.
             </p>
 
             <details
