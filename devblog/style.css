@@ -275,7 +275,12 @@
 .updates summary::after {
     content: "⌄";
 
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
 
     margin-left: 20px;
 
@@ -284,6 +289,8 @@
     line-height: 1;
 
     color: #555;
+
+    transform-origin: center center;
 
     transition:
         transform 0.3s ease,
