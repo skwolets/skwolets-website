@@ -288,16 +288,6 @@ header {
     border: 1px solid #222;
 
     text-align: center;
-
-    transition:
-        border-color 0.25s,
-        transform 0.25s;
-}
-
-.architecture-node:hover {
-    transform: translateY(-3px);
-
-    border-color: #444;
 }
 
 .architecture-node.master {
