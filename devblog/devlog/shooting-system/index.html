@@ -1142,78 +1142,24 @@
         <section class="log-section security-section">
 
             <h2>
-                SERVER OWNS THE DAMAGE
+                HIT REGISTRATION
             </h2>
 
             <p class="lead">
-                Prediction can show a projectile. It cannot decide who gets hurt.
+                There is a golden rule in multiplayer game development: never trust the client.
             </p>
 
             <p>
-                The client-side simulation exists for responsiveness and visual
-                feedback. The authoritative projectile exists on the server.
+                Client-side simulation exists to ensure responsive controls and provide visual feedback. However, the server always has the final say on whether damage is applied.
             </p>
 
             <p>
-                Only the server-side hit result is allowed to call the damage
-                processing path.
+                Only a hit confirmed by the server can trigger damage processing.
             </p>
 
-
-            <div class="shooting-flow-list">
-
-                <div>
-
-                    <span>
-                        CLIENT
-                    </span>
-
-                    <p>
-                        Predicts the projectile and provides immediate feedback.
-                    </p>
-
-                </div>
-
-
-                <div>
-
-                    <span>
-                        SERVER
-                    </span>
-
-                    <p>
-                        Validates the shot and runs the authoritative simulation.
-                    </p>
-
-                </div>
-
-
-                <div>
-
-                    <span>
-                        REWIND
-                    </span>
-
-                    <p>
-                        Restores the target's historical state for hit registration.
-                    </p>
-
-                </div>
-
-
-                <div>
-
-                    <span>
-                        DAMAGE
-                    </span>
-
-                    <p>
-                        Applied only by the authoritative server simulation.
-                    </p>
-
-                </div>
-
-            </div>
+            <p>
+                The damage calculation itself is straightforward: calculate the bullet's kinetic energy and determine the final damage based on the body part hit.
+            </p>
 
         </section>
 
