@@ -273,7 +273,7 @@
 }
 
 .updates summary::after {
-    content: "⌄";
+    content: "⌵";
 
     display: inline-flex;
     align-items: center;
