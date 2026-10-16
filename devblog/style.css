@@ -304,6 +304,13 @@
     border-top: 1px solid #222;
 }
 
+.updates-category.is-disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+    user-select: none;
+}
+
 .update-item {
     position: relative;
 
