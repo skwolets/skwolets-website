@@ -2313,6 +2313,46 @@ footer {
     background: #000;
 }
 
+/* ============================================================
+   DISCLAIMER
+============================================================ */
+
+.disclaimer {
+    max-width: 1200px;
+
+    margin: 0 auto 80px;
+
+    padding: 35px 40px;
+
+    background: #090909;
+
+    border-left: 2px solid #ff3b3b;
+}
+
+.disclaimer-label {
+    margin-bottom: 15px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 4px;
+
+    color: #ff3b3b;
+}
+
+.disclaimer p {
+    max-width: 1000px;
+
+    margin: 8px 0;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    color: #777;
+}
+
+
 
 /* ============================================================
    SMALL MOBILE
