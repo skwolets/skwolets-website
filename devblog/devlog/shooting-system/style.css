@@ -645,16 +645,6 @@ header {
     background: #0b0b0b;
 
     border: 1px solid #181818;
-
-    transition:
-        border-color 0.25s,
-        transform 0.25s;
-}
-
-.security-grid div:hover {
-    transform: translateY(-3px);
-
-    border-color: #333;
 }
 
 .security-grid span {
