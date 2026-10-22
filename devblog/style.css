@@ -37,22 +37,6 @@
     background-position: center;
     background-repeat: no-repeat;
 
-    -webkit-mask-image:
-        linear-gradient(
-            to bottom,
-            black 0%,
-            black 50%,
-            transparent 100%
-        );
-
-    mask-image:
-        linear-gradient(
-            to bottom,
-            black 0%,
-            black 50%,
-            transparent 100%
-        );
-
     z-index: 0;
 
     animation:
@@ -63,9 +47,26 @@
         alternate;
 }
 
+.devblog-hero::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        to bottom,
+        transparent 50%,
+        #0b0b0b 100%
+    );
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
 .devblog-hero-content {
     position: relative;
-    z-index: 1;
+    z-index: 2;
 
     width: 100%;
     padding-right: 10%;
