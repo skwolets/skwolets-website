@@ -182,72 +182,14 @@
                 </strong>
             </div>
         </section>
-
-        <!-- ========================================================
-             SYSTEM OVERVIEW
-        ======================================================== -->
-
-        <section class="log-section">
-            <h2>РАЗДЕЛЁНИЕ ОТВЕТСТВЕННОСТИ</h2>
-
-            <p class="lead">
-                Вместо одного большого менеджера я разделил работу с объектами
-                на несколько независимых подсистем.
-            </p>
-
-            <p>
-                Каждая подсистема отвечает за отдельную часть жизненного цикла.
-                Это позволяет менять внутреннюю реализацию одной области, не
-                превращая остальные части системы в зависимости друг от друга.
-            </p>
-
-            <div class="system-map">
-                <div class="system-core">
-                    <span>INSTANCE REGISTRY / LIFECYCLE</span>
-                    <strong>UInstanceCoreSubsystem</strong>
-                    <small>Единый источник истины для Instances</small>
-                </div>
-
-                <div class="system-branches">
-                    <div class="system-node">
-                        <span>RELATIONSHIPS</span>
-                        <strong>Ownership</strong>
-                        <small>Parent / Child</small>
-                    </div>
-                    <div class="system-node">
-                        <span>ATOMIC OPERATIONS</span>
-                        <strong>Transaction</strong>
-                        <small>Изменение размещения</small>
-                    </div>
-                    <div class="system-node">
-                        <span>WORLD REPRESENTATION</span>
-                        <strong>Actor Factory</strong>
-                        <small>Создание и уничтожение Actor</small>
-                    </div>
-                    <div class="system-node">
-                        <span>DATA STORAGE</span>
-                        <strong>Persistence</strong>
-                        <small>Сохранение и восстановление</small>
-                    </div>
-                </div>
-            </div>
-
-            <p>
-                Эти подсистемы не дублируют ответственность друг друга. Core
-                управляет реестром и жизненным циклом Instances; Ownership описывает
-                отношения; Transaction выполняет операции над размещением;
-                Actor Factory управляет runtime-представлениями; Persistence
-                отвечает за долговременное хранение данных.
-            </p>
-        </section>
-
+        
         <!-- ========================================================
              CORE
         ======================================================== -->
 
         <section class="log-section">
-            <div class="section-number">01 / CORE</div>
-            <h2>INSTANCE CORE</h2>
+            <div class="section-number">ОБЪЕКТ</div>
+            <h2></h2>
 
             <p class="lead">
                 Центральный реестр и точка доступа ко всем Instances.
@@ -297,7 +239,7 @@
         ======================================================== -->
 
         <section class="log-section">
-            <div class="section-number">02 / OWNERSHIP</div>
+            <div class="section-number">ВЛАДЕНИЕ</div>
             <h2>OWNERSHIP SYSTEM</h2>
 
             <p class="lead">
@@ -377,7 +319,7 @@
         ======================================================== -->
 
         <section class="log-section">
-            <div class="section-number">03 / TRANSACTIONS</div>
+            <div class="section-number">ТРАНЗАКЦИИ</div>
             <h2>TRANSACTION SYSTEM</h2>
 
             <p class="lead">
@@ -445,7 +387,7 @@
         ======================================================== -->
 
         <section class="log-section">
-            <div class="section-number">04 / ACTOR REPRESENTATION</div>
+            <div class="section-number">РЕПРЕЗЕНТАЦИЯ</div>
             <h2>ACTOR FACTORY</h2>
 
             <p class="lead">
@@ -523,7 +465,7 @@
         ======================================================== -->
 
         <section class="log-section">
-            <div class="section-number">05 / DEFINITIONS</div>
+            <div class="section-number">ОПРЕДЕЛЕНИЯ</div>
             <h2>DEFINITIONS И ДАННЫЕ ПРЕДМЕТОВ</h2>
 
             <p class="lead">
@@ -576,7 +518,7 @@
         ======================================================== -->
 
         <section class="log-section">
-            <div class="section-number">06 / PERSISTENCE</div>
+            <div class="section-number">БАЗА ДАННЫХ</div>
             <h2>PERSISTENCE</h2>
 
             <p class="lead">
@@ -632,7 +574,7 @@
         ======================================================== -->
 
         <section class="log-section">
-            <h2>ЖИЗНЕННЫЙ ЦИКЛ INSTANCE</h2>
+            <h2>ЖИЗНЕННЫЙ ЦИКЛ ОБЪЕКТА</h2>
 
             <p class="lead">
                 Все подсистемы работают вокруг одного и того же объекта,
@@ -774,24 +716,7 @@
                 понятными, управляемыми и независимыми настолько, насколько это
                 возможно.
             </p>
-
-            <div class="final-statement">
-                <span>THE FOUNDATION</span>
-                <strong>
-                    INSTANCE IS THE OBJECT.<br>
-                    ACTOR IS THE REPRESENTATION.
-                </strong>
-            </div>
         </section>
-
-        <div class="disclaimer">
-            <div class="disclaimer-label">PRE-ALPHA</div>
-            <p>
-                SKWOLETS находится в разработке. Архитектура, внутренние системы,
-                механики и технические решения могут изменяться по мере развития проекта.
-            </p>
-        </div>
-
     </main>
 
     <footer>NVXIII</footer>
