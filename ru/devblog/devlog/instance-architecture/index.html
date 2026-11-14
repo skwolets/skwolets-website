@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Фундамент взаимодействия с предметами — SKWOLETS</title>
+    <meta name="description" content="Instance-based architecture в SKWOLETS: Core, Ownership, Transaction, Actor Factory и Persistence.">
+
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/devblog/style.css">
+    <link rel="stylesheet" href="/devblog/devlog/instance-system/style.css">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Фундамент взаимодействия с предметами — SKWOLETS">
+    <meta property="og:description" content="Архитектура Instances, Ownership, Transactions, Actor representations и Persistence.">
+    <meta property="og:image" content="https://skwolets.com/favicon/og-image.png">
+    <meta property="og:url" content="https://skwolets.com/ru/devblog/devlog/instance-system/">
+    <meta property="og:site_name" content="SKWOLETS">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Фундамент взаимодействия с предметами — SKWOLETS">
+    <meta name="twitter:description" content="Архитектура Instances, Ownership, Transactions, Actor representations и Persistence.">
+    <meta name="twitter:image" content="https://skwolets.com/favicon/og-image.png">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">SKWOLETS</div>
+        <nav>
+            <a href="/ru/">Главная</a>
+        </nav>
+    </header>
+
+    <!-- ============================================================
+         ARTICLE HERO
+    ============================================================ -->
+
+    <section class="log-hero">
+        <div class="log-hero-content">
+            <div class="log-label">SKWOLETS / DEV LOG</div>
+            <h1>
+                ФУНДАМЕНТ<br>
+                ВЗАИМОДЕЙСТВИЯ<br>
+                С ПРЕДМЕТАМИ
+            </h1>
+            <p>
+                Instance-based архитектура: единая система объектов, владения,
+                транзакций, Actor representations и сохранения состояния.
+            </p>
+        </div>
+    </section>
+
+    <main class="devlog-article">
+
+        <!-- ========================================================
+             INTRO
+        ======================================================== -->
+
+        <section class="log-section">
+            <h2>ОТ ПРЕДМЕТОВ К ОБЪЕКТНОЙ СИСТЕМЕ</h2>
+
+            <div class="quote-block">
+                <strong>
+                    В SKWOLETS предмет — это не Actor. Это самостоятельный Instance,
+                    который может существовать, изменяться и сохраняться независимо
+                    от своего представления в игровом мире.
+                </strong>
+            </div>
+
+            <p>
+                По мере развития проекта стало понятно, что обычной Actor-centric
+                модели недостаточно. Когда предмет существует только в виде Unreal
+                Actor, его состояние, размещение и жизненный цикл оказываются тесно
+                связаны с объектом, который находится в World.
+            </p>
+
+            <p>
+                Для небольшой игры это может быть вполне удобным решением. Но мне
+                нужна система, в которой предметы могут находиться в инвентарях,
+                контейнерах, экипировке и составе других объектов, сохраняться между
+                игровыми сессиями и восстанавливаться без необходимости постоянно
+                держать каждый из них в мире как Actor.
+            </p>
+
+            <p>
+                Поэтому я перешёл к Instance-based архитектуре. В ней постоянные
+                данные и отношения между объектами отделены от их временного
+                представления в Unreal Engine.
+            </p>
+
+            <div class="data-grid">
+                <div>
+                    <span>ИСТОЧНИК СОСТОЯНИЯ</span>
+                    <strong>INSTANCE</strong>
+                </div>
+                <div>
+                    <span>ИДЕНТИФИКАЦИЯ</span>
+                    <strong>GUID</strong>
+                </div>
+                <div>
+                    <span>ОТНОШЕНИЯ</span>
+                    <strong>OWNERSHIP</strong>
+                </div>
+                <div>
+                    <span>ПРЕДСТАВЛЕНИЕ В МИРЕ</span>
+                    <strong>ON DEMAND</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             ACTOR VS INSTANCE
+        ======================================================== -->
+
+        <section class="log-section">
+            <h2>INSTANCE — ИСТОЧНИК ИСТИНЫ</h2>
+
+            <p class="lead">
+                Actor представляет объект в игровом мире. Instance хранит сам объект
+                и его состояние.
+            </p>
+
+            <p>
+                Каждый Instance получает собственный GUID и существует независимо
+                от Actor. Его можно найти по идентификатору или получить напрямую
+                через ссылку на UObject. Уничтожение Actor representation не означает
+                уничтожение самого предмета.
+            </p>
+
+            <div class="comparison">
+                <div class="comparison-card instance-card">
+                    <span class="card-kicker">PERSISTENT DATA</span>
+                    <h3>UInstanceObject</h3>
+                    <ul>
+                        <li>Собственная идентичность (GUID)</li>
+                        <li>Состояние и данные предмета</li>
+                        <li>Связи с другими Instances</li>
+                        <li>Существует без Actor</li>
+                        <li>Может быть сохранён и восстановлен</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-card actor-card">
+                    <span class="card-kicker">RUNTIME REPRESENTATION</span>
+                    <h3>Unreal Actor</h3>
+                    <ul>
+                        <li>Визуальное и физическое представление</li>
+                        <li>Компоненты и взаимодействие с World</li>
+                        <li>Сетевое представление в игровом мире</li>
+                        <li>Создаётся по необходимости</li>
+                        <li>Может быть уничтожен отдельно</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p>
+                Это разделение позволяет не создавать Actor для каждого предмета,
+                который существует в системе. Например, содержимое закрытого
+                контейнера может оставаться набором Instances, пока сам контейнер
+                или его содержимое не потребуется представить в игровом мире.
+            </p>
+
+            <div class="quote-block quote-small">
+                <strong>
+                    Один Instance может пережить множество Actor representations.
+                    Но Actor не является владельцем жизненного цикла Instance.
+                </strong>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             SYSTEM OVERVIEW
+        ======================================================== -->
+
+        <section class="log-section">
+            <h2>ЕДИНАЯ СИСТЕМА, РАЗДЕЛЁННАЯ ПО ОТВЕТСТВЕННОСТИ</h2>
+
+            <p class="lead">
+                Вместо одного большого менеджера я разделил работу с Instances
+                на несколько независимых подсистем.
+            </p>
+
+            <p>
+                Каждая подсистема отвечает за отдельную часть жизненного цикла.
+                Это позволяет менять внутреннюю реализацию одной области, не
+                превращая остальные части системы в зависимости друг от друга.
+            </p>
+
+            <div class="system-map">
+                <div class="system-core">
+                    <span>INSTANCE REGISTRY / LIFECYCLE</span>
+                    <strong>UInstanceCoreSubsystem</strong>
+                    <small>Единый источник истины для Instances</small>
+                </div>
+
+                <div class="system-branches">
+                    <div class="system-node">
+                        <span>RELATIONSHIPS</span>
+                        <strong>Ownership</strong>
+                        <small>Parent / Child</small>
+                    </div>
+                    <div class="system-node">
+                        <span>ATOMIC OPERATIONS</span>
+                        <strong>Transaction</strong>
+                        <small>Изменение размещения</small>
+                    </div>
+                    <div class="system-node">
+                        <span>WORLD REPRESENTATION</span>
+                        <strong>Actor Factory</strong>
+                        <small>Создание и уничтожение Actor</small>
+                    </div>
+                    <div class="system-node">
+                        <span>DATA STORAGE</span>
+                        <strong>Persistence</strong>
+                        <small>Сохранение и восстановление</small>
+                    </div>
+                </div>
+            </div>
+
+            <p>
+                Эти подсистемы не дублируют ответственность друг друга. Core
+                управляет реестром и жизненным циклом Instances; Ownership описывает
+                отношения; Transaction выполняет операции над размещением;
+                Actor Factory управляет runtime-представлениями; Persistence
+                отвечает за долговременное хранение данных.
+            </p>
+        </section>
+
+        <!-- ========================================================
+             CORE
+        ======================================================== -->
+
+        <section class="log-section">
+            <div class="section-number">01 / CORE</div>
+            <h2>INSTANCE CORE</h2>
+
+            <p class="lead">
+                Центральный реестр и точка доступа ко всем Instances.
+            </p>
+
+            <p>
+                <strong>UInstanceCoreSubsystem</strong> — единственный источник
+                истины для зарегистрированных UInstanceObject. Именно здесь
+                находится центральная карта Instances и контролируется их
+                жизненный цикл.
+            </p>
+
+            <p>
+                Остальные подсистемы не должны создавать собственные независимые
+                реестры предметов. Если системе нужен Instance, она получает его
+                через Core — по GUID или через уже имеющуюся ссылку.
+            </p>
+
+            <div class="flow-list">
+                <div>
+                    <span>REGISTER</span>
+                    <p>Новый Instance получает идентификатор и регистрируется в Core.</p>
+                </div>
+                <div>
+                    <span>ACCESS</span>
+                    <p>Другие системы находят его через единый реестр.</p>
+                </div>
+                <div>
+                    <span>UPDATE</span>
+                    <p>Состояние Instance изменяется независимо от Actor representation.</p>
+                </div>
+                <div>
+                    <span>UNREGISTER</span>
+                    <p>При завершении жизненного цикла Instance удаляется из реестра.</p>
+                </div>
+            </div>
+
+            <p>
+                Важный принцип — Instance не должен зависеть от того, загружен ли
+                соответствующий Actor в World. Core работает с данными объекта,
+                а не с его визуальным представлением.
+            </p>
+        </section>
+
+        <!-- ========================================================
+             OWNERSHIP
+        ======================================================== -->
+
+        <section class="log-section">
+            <div class="section-number">02 / OWNERSHIP</div>
+            <h2>OWNERSHIP SYSTEM</h2>
+
+            <p class="lead">
+                Предметы могут быть частью других предметов.
+            </p>
+
+            <p>
+                В обычной инвентарной системе легко начать с массива предметов
+                внутри персонажа. Но такая модель быстро становится ограничением,
+                когда появляются контейнеры, экипировка, вложенные предметы и
+                составные объекты.
+            </p>
+
+            <p>
+                В SKWOLETS отношения между Instances вынесены в отдельную
+                <strong>UInstanceOwnershipSubsystem</strong>. Она отвечает за
+                связи Parent / Child и позволяет строить вложенные структуры
+                из независимых объектов.
+            </p>
+
+            <div class="ownership-diagram">
+                <div class="ownership-root">
+                    <span>ROOT INSTANCE</span>
+                    <strong>Character</strong>
+                </div>
+                <div class="ownership-connector"></div>
+                <div class="ownership-children">
+                    <div class="ownership-group">
+                        <div class="ownership-item">
+                            <strong>Inventory</strong>
+                            <small>Container</small>
+                        </div>
+                        <div class="ownership-item">
+                            <strong>Equipment</strong>
+                            <small>Container</small>
+                        </div>
+                        <div class="ownership-item">
+                            <strong>Weapon</strong>
+                            <small>Item</small>
+                        </div>
+                    </div>
+                    <div class="ownership-connector nested"></div>
+                    <div class="ownership-grandchildren">
+                        <div class="ownership-item">
+                            <strong>Magazine</strong>
+                            <small>Child Instance</small>
+                        </div>
+                        <div class="ownership-item">
+                            <strong>Optic</strong>
+                            <small>Child Instance</small>
+                        </div>
+                        <div class="ownership-item">
+                            <strong>Suppressor</strong>
+                            <small>Child Instance</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p>
+                Например, оружие может иметь собственные Instances магазина,
+                оптики и дульного устройства. Само оружие не превращает эти
+                объекты в свои компоненты данных: каждый из них остаётся
+                самостоятельным Instance со своим GUID и состоянием.
+            </p>
+
+            <p>
+                Та же модель подходит для одежды, экипировки, контейнеров и
+                транспортных средств. Разница заключается не в отдельной
+                системе для каждого типа предмета, а в структуре Ownership
+                и правилах конкретного объекта.
+            </p>
+        </section>
+
+        <!-- ========================================================
+             TRANSACTIONS
+        ======================================================== -->
+
+        <section class="log-section">
+            <div class="section-number">03 / TRANSACTIONS</div>
+            <h2>TRANSACTION SYSTEM</h2>
+
+            <p class="lead">
+                Перемещение предмета — это операция над состоянием системы,
+                а не простое изменение ссылки.
+            </p>
+
+            <p>
+                Когда Instance перемещается из одного контейнера в другой,
+                необходимо согласованно изменить его отношения с родителями
+                и проверить, допустима ли такая операция.
+            </p>
+
+            <p>
+                За это отвечает <strong>UInstanceTransactionSubsystem</strong>.
+                Она отделяет операции перемещения и изменения размещения от
+                Core и Ownership. Core хранит Instances, Ownership управляет
+                связями, а Transaction координирует изменение этих связей
+                как одну операцию.
+            </p>
+
+            <div class="transaction-flow">
+                <div class="transaction-step">
+                    <span>01</span>
+                    <strong>REQUEST</strong>
+                    <small>Запрос на перемещение Instance</small>
+                </div>
+                <div class="transaction-arrow">→</div>
+                <div class="transaction-step">
+                    <span>02</span>
+                    <strong>VALIDATE</strong>
+                    <small>Проверка условий операции</small>
+                </div>
+                <div class="transaction-arrow">→</div>
+                <div class="transaction-step">
+                    <span>03</span>
+                    <strong>COMMIT</strong>
+                    <small>Изменение Ownership</small>
+                </div>
+                <div class="transaction-arrow">→</div>
+                <div class="transaction-step result">
+                    <span>04</span>
+                    <strong>RESULT</strong>
+                    <small>Единый результат операции</small>
+                </div>
+            </div>
+
+            <p>
+                Это особенно важно для составных объектов. Например, установка
+                магазина в оружие должна менять размещение соответствующего
+                Instance через Transaction. Actor оружия и Actor магазина
+                обновляются уже после успешного изменения данных.
+            </p>
+
+            <div class="quote-block quote-small">
+                <strong>
+                    Сначала изменяется состояние Instance-системы.
+                    Затем runtime-представления приводятся в соответствие с ним.
+                </strong>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             ACTOR FACTORY
+        ======================================================== -->
+
+        <section class="log-section">
+            <div class="section-number">04 / ACTOR REPRESENTATION</div>
+            <h2>ACTOR FACTORY</h2>
+
+            <p class="lead">
+                Actor создаётся только тогда, когда объекту действительно
+                требуется представление в игровом мире.
+            </p>
+
+            <p>
+                <strong>UInstanceActorFactorySubsystem</strong> — единственная
+                подсистема, которая создаёт Actor representations для Instances.
+                Она находит подходящий Actor Class по типу Instance, создаёт Actor,
+                связывает его с Instance и выполняет необходимую инициализацию.
+            </p>
+
+            <p>
+                Factory не должна знать, из каких частей состоит конкретный
+                предмет. Она отвечает только за создание и регистрацию Actor.
+                Составные объекты восстанавливают собственные дочерние
+                представления самостоятельно.
+            </p>
+
+            <div class="factory-flow">
+                <div class="factory-instance">
+                    <span>DATA</span>
+                    <strong>Instance</strong>
+                    <small>GUID + Definition + State</small>
+                </div>
+                <div class="factory-arrow">
+                    <span>GET OR CREATE</span>
+                    <b>→</b>
+                </div>
+                <div class="factory-actor">
+                    <span>WORLD</span>
+                    <strong>Actor</strong>
+                    <small>Bound to Instance</small>
+                </div>
+            </div>
+
+            <p>
+                Например, когда создаётся Actor оружия, он связывается со своим
+                Instance. После собственной инициализации оружие получает
+                дочерние Instances через Ownership и запрашивает их
+                representations у Factory. Так восстанавливаются магазин,
+                оптика и другие установленные модули.
+            </p>
+
+            <p>
+                В результате Factory остаётся универсальной, а логика композиции
+                находится там, где ей и место, — внутри соответствующего
+                игрового объекта.
+            </p>
+
+            <div class="data-grid">
+                <div>
+                    <span>FACTORY</span>
+                    <strong>CREATES ACTORS</strong>
+                </div>
+                <div>
+                    <span>PARENT ACTOR</span>
+                    <strong>RESTORES CHILDREN</strong>
+                </div>
+                <div>
+                    <span>INSTANCE</span>
+                    <strong>REMAINS ALIVE</strong>
+                </div>
+                <div>
+                    <span>ACTOR</span>
+                    <strong>OPTIONAL</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             DEFINITIONS
+        ======================================================== -->
+
+        <section class="log-section">
+            <div class="section-number">05 / DEFINITIONS</div>
+            <h2>DEFINITIONS И ДАННЫЕ ПРЕДМЕТОВ</h2>
+
+            <p class="lead">
+                Тип объекта и конкретный экземпляр — разные уровни данных.
+            </p>
+
+            <p>
+                Каждый Instance имеет собственную идентичность и состояние,
+                но его базовые характеристики определяются Definition.
+                Это позволяет отделить описание типа предмета от конкретного
+                экземпляра, который существует в игровом мире.
+            </p>
+
+            <p>
+                Definitions построены на JSON. Серверный владелец может
+                настраивать существующие предметы и определять новые варианты
+                без необходимости создавать отдельную игровую реализацию
+                для каждого набора параметров.
+            </p>
+
+            <div class="definition-grid">
+                <div class="definition-card">
+                    <span>DEFINITION</span>
+                    <h3>Описание типа</h3>
+                    <p>
+                        Базовые характеристики, параметры и конфигурация
+                        конкретного вида предмета.
+                    </p>
+                </div>
+                <div class="definition-card">
+                    <span>INSTANCE</span>
+                    <h3>Конкретный объект</h3>
+                    <p>
+                        GUID, индивидуальное состояние и отношения
+                        с другими Instances.
+                    </p>
+                </div>
+            </div>
+
+            <p>
+                При этом система не ограничена одним конкретным классом предметов.
+                Можно использовать собственные типы, наследующиеся от
+                <strong>UInstanceObject</strong>, сохраняя единый подход
+                к идентификации, владению и Persistence.
+            </p>
+        </section>
+
+        <!-- ========================================================
+             PERSISTENCE
+        ======================================================== -->
+
+        <section class="log-section">
+            <div class="section-number">06 / PERSISTENCE</div>
+            <h2>PERSISTENCE</h2>
+
+            <p class="lead">
+                Сохраняется Instance и его данные, а не временный Actor в World.
+            </p>
+
+            <p>
+                Persistence работает с Instance-системой. Данные объектов
+                сериализуются в бинарный payload, а необходимая метаинформация
+                хранится отдельно. В качестве локального хранилища используется
+                PostgreSQL.
+            </p>
+
+            <p>
+                Такой подход позволяет сохранять не только стандартные предметы,
+                но и пользовательские типы, наследующиеся от UInstanceObject.
+                Для восстановления не требуется, чтобы соответствующий Actor
+                всё время существовал в игровом мире.
+            </p>
+
+            <div class="persistence-flow">
+                <div class="persistence-column">
+                    <span>RUNTIME</span>
+                    <strong>UInstanceObject</strong>
+                    <small>State + Ownership</small>
+                </div>
+                <div class="persistence-connector">
+                    <span>SERIALIZATION</span>
+                    <b>⇄</b>
+                </div>
+                <div class="persistence-column database">
+                    <span>STORAGE</span>
+                    <strong>PostgreSQL</strong>
+                    <small>Metadata + Binary Payload</small>
+                </div>
+            </div>
+
+            <p>
+                В текущей реализации используются snapshot и journal-файлы
+                базы данных. Это часть механизма хранения и восстановления
+                состояния, а не отдельная модель игровых объектов.
+            </p>
+
+            <p>
+                После загрузки Instance снова регистрируется в Core. Его
+                отношения восстанавливаются через Ownership, а Actor
+                representations создаются только там, где они нужны.
+            </p>
+        </section>
+
+        <!-- ========================================================
+             LIFECYCLE
+        ======================================================== -->
+
+        <section class="log-section">
+            <h2>ЖИЗНЕННЫЙ ЦИКЛ INSTANCE</h2>
+
+            <p class="lead">
+                Все подсистемы работают вокруг одного и того же объекта,
+                но каждая отвечает только за свою часть процесса.
+            </p>
+
+            <div class="lifecycle">
+                <div class="lifecycle-row">
+                    <div class="lifecycle-index">01</div>
+                    <div>
+                        <strong>CREATE</strong>
+                        <p>Создаётся Instance и получает собственный GUID.</p>
+                    </div>
+                    <div class="lifecycle-owner">CORE</div>
+                </div>
+                <div class="lifecycle-row">
+                    <div class="lifecycle-index">02</div>
+                    <div>
+                        <strong>REGISTER</strong>
+                        <p>Instance становится доступен через центральный реестр.</p>
+                    </div>
+                    <div class="lifecycle-owner">CORE</div>
+                </div>
+                <div class="lifecycle-row">
+                    <div class="lifecycle-index">03</div>
+                    <div>
+                        <strong>ATTACH / MOVE</strong>
+                        <p>Изменяются связи и размещение внутри объектной структуры.</p>
+                    </div>
+                    <div class="lifecycle-owner">OWNERSHIP / TRANSACTION</div>
+                </div>
+                <div class="lifecycle-row">
+                    <div class="lifecycle-index">04</div>
+                    <div>
+                        <strong>REPRESENT</strong>
+                        <p>При необходимости создаётся Actor representation.</p>
+                    </div>
+                    <div class="lifecycle-owner">ACTOR FACTORY</div>
+                </div>
+                <div class="lifecycle-row">
+                    <div class="lifecycle-index">05</div>
+                    <div>
+                        <strong>SAVE</strong>
+                        <p>Состояние Instance сериализуется и передаётся в хранилище.</p>
+                    </div>
+                    <div class="lifecycle-owner">PERSISTENCE</div>
+                </div>
+                <div class="lifecycle-row">
+                    <div class="lifecycle-index">06</div>
+                    <div>
+                        <strong>RESTORE</strong>
+                        <p>Instance восстанавливается и при необходимости получает Actor.</p>
+                    </div>
+                    <div class="lifecycle-owner">CORE / PERSISTENCE / FACTORY</div>
+                </div>
+            </div>
+
+            <p>
+                Важно, что это не жёсткая последовательность, которую каждый
+                предмет обязан проходить целиком. Instance может существовать
+                без Actor, перемещаться между контейнерами, сохраняться,
+                загружаться и снова получать представление в мире.
+            </p>
+        </section>
+
+        <!-- ========================================================
+             COMPOSITE OBJECTS
+        ======================================================== -->
+
+        <section class="log-section">
+            <h2>ОТ ПРЕДМЕТА К СЛОЖНОЙ СУЩНОСТИ</h2>
+
+            <p class="lead">
+                Та же архитектура должна работать не только для небольших
+                предметов, но и для сложных составных объектов.
+            </p>
+
+            <p>
+                Я не хочу строить отдельную систему хранения для оружия,
+                другую — для экипировки, и ещё одну — для транспорта.
+                В основе должна оставаться одна модель: независимые Instances,
+                связанные между собой через Ownership.
+            </p>
+
+            <div class="vehicle-structure">
+                <div class="vehicle-root">
+                    <span>COMPOSITE INSTANCE</span>
+                    <strong>Vehicle</strong>
+                </div>
+                <div class="vehicle-grid">
+                    <div><strong>Engine</strong><small>Instance</small></div>
+                    <div><strong>Fuel Tank</strong><small>Instance</small></div>
+                    <div><strong>Wheels</strong><small>Child Instances</small></div>
+                    <div><strong>Cargo</strong><small>Nested Instances</small></div>
+                    <div><strong>Doors</strong><small>Child Instances</small></div>
+                    <div><strong>Other Parts</strong><small>Child Instances</small></div>
+                </div>
+            </div>
+
+            <p>
+                Например, транспортное средство может состоять из двигателя,
+                колёс, топливного бака, дверей и груза. У каждого компонента
+                есть собственная идентичность и состояние. Вся структура
+                связывается через Ownership и может обрабатываться общей
+                системой Instances.
+            </p>
+
+            <p>
+                Это направление развития архитектуры: одна модель данных
+                для предметов, экипировки, контейнеров и больших составных
+                объектов — без необходимости превращать каждый сохраняемый
+                элемент в постоянно существующий Actor.
+            </p>
+        </section>
+
+        <!-- ========================================================
+             CONCLUSION
+        ======================================================== -->
+
+        <section class="log-final">
+            <h2>ЗАКЛЮЧЕНИЕ</h2>
+
+            <p>
+                Эта архитектура стала фундаментом, на котором будут строиться
+                остальные предметные системы SKWOLETS. Инвентарь, экипировка,
+                контейнеры, оружие и транспорт больше не должны существовать
+                как отдельные несвязанные решения.
+            </p>
+
+            <p>
+                Core отвечает за Instances. Ownership — за отношения.
+                Transaction — за операции. Actor Factory — за представление
+                в игровом мире. Persistence — за сохранение и восстановление.
+            </p>
+
+            <p>
+                Самое важное для меня — сохранить это разделение ответственности.
+                Когда система станет сложнее, её отдельные части должны оставаться
+                понятными, управляемыми и независимыми настолько, насколько это
+                возможно.
+            </p>
+
+            <div class="final-statement">
+                <span>THE FOUNDATION</span>
+                <strong>
+                    INSTANCE IS THE OBJECT.<br>
+                    ACTOR IS THE REPRESENTATION.
+                </strong>
+            </div>
+        </section>
+
+        <div class="disclaimer">
+            <div class="disclaimer-label">PRE-ALPHA</div>
+            <p>
+                SKWOLETS находится в разработке. Архитектура, внутренние системы,
+                механики и технические решения могут изменяться по мере развития проекта.
+            </p>
+        </div>
+
+    </main>
+
+    <footer>NVXIII</footer>
+
+    <button id="backToTop" class="back-to-top" aria-label="Вернуться наверх">↑</button>
+
+    <script>
+        const backToTop = document.getElementById("backToTop");
+
+        window.addEventListener("scroll", () => {
+            backToTop.classList.toggle("visible", window.scrollY > 500);
+        });
+
+        backToTop.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    </script>
+
+</body>
+</html>
