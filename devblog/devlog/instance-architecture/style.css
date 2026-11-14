@@ -361,88 +361,214 @@ header {
     font-size: 17px;
 }
 
+
 /* ============================================================
    OWNERSHIP DIAGRAM
 ============================================================ */
 
 .ownership-diagram {
     margin: 60px 0;
-    padding: 45px 30px;
+    padding: 50px 30px;
     background: #080808;
     border-top: 1px solid #222;
     border-bottom: 1px solid #222;
     text-align: center;
 }
 
-.ownership-root {
-    display: inline-flex;
-    min-width: 220px;
-    flex-direction: column;
-    padding: 23px 35px;
-    background: #111;
-    border: 1px solid #ff3b3b;
-}
+/* NODE */
 
-.ownership-root span,
-.ownership-item small {
-    color: #777;
-    font-size: 10px;
-    letter-spacing: 2px;
-}
-
-.ownership-root strong {
-    margin-top: 10px;
-    font-size: 20px;
-}
-
-.ownership-connector {
-    width: 1px;
-    height: 35px;
-    margin: 0 auto;
-    background: #555;
-}
-
-.ownership-children {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.ownership-group {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-}
-
-.ownership-item {
+.ownership-node {
     display: flex;
-    min-height: 76px;
+    width: 100%;
+    max-width: 280px;
+    min-height: 90px;
+    margin: 0 auto;
+    padding: 17px 20px;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
-    gap: 9px;
-    padding: 18px;
+    gap: 8px;
     background: #101010;
     border: 1px solid #292929;
 }
 
-.ownership-item strong {
-    font-size: 16px;
+.ownership-node strong {
+    color: #eee;
+    font-size: 17px;
 }
 
-.ownership-item small {
-    letter-spacing: 1px;
+.ownership-node small {
+    color: #777;
+    font-size: 11px;
 }
 
-.ownership-connector.nested {
+.node-type {
+    color: #888;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+/* NODE TYPES */
+
+.root-node {
+    border-color: #ff3b3b;
+}
+
+.root-node .node-type {
+    color: #ff5555;
+}
+
+.container-node,
+.slot-node {
+    border-color: #454545;
+}
+
+.item-node {
+    border-color: #343434;
+}
+
+.weapon-node {
+    border-color: #a64b3c;
+    background: #15100f;
+}
+
+.content-node {
+    min-height: 75px;
+    background: #0c0c0c;
+    border: 1px dashed #555;
+}
+
+/* CONNECTORS */
+
+.ownership-line {
+    width: 1px;
     height: 30px;
-    border-left: 1px dashed #444;
-    background: transparent;
+    margin: 0 auto;
+    background: #555;
 }
 
-.ownership-grandchildren {
+/* PROPERTIES */
+
+.ownership-properties {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.ownership-properties span {
+    padding: 5px 7px;
+    color: #999;
+    background: #1b1b1b;
+    border: 1px solid #292929;
+    font-size: 10px;
+}
+
+/* BRANCH */
+
+.ownership-branch {
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+.ownership-branch-line {
+    width: 66.66%;
+    height: 25px;
+    margin: 0 auto;
+    border-top: 1px solid #555;
+    border-left: 1px solid #555;
+    border-right: 1px solid #555;
+}
+
+.ownership-branch-items {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    padding-left: 16%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.ownership-branch-column {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+}
+
+.ownership-branch-column > .ownership-node {
+    flex: 1;
+}
+
+.ownership-branch-column .ownership-line {
+    height: 25px;
+}
+
+/* LEGEND */
+
+.ownership-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+    color: #777;
+    font-size: 11px;
+}
+
+.ownership-legend span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ownership-legend i {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+}
+
+.legend-item {
+    background: #a64b3c;
+}
+
+.legend-container {
+    background: #555;
+}
+
+.legend-content {
+    border: 1px dashed #999;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+    .ownership-diagram {
+        padding: 35px 12px;
+    }
+
+    .ownership-branch-items {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .ownership-branch-line {
+        width: 1px;
+        height: 25px;
+        border: none;
+        background: #555;
+    }
+
+    .ownership-branch-column {
+        max-width: 100%;
+    }
+
+    .ownership-node {
+        max-width: 100%;
+    }
+
+    .ownership-legend {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 /* ============================================================
