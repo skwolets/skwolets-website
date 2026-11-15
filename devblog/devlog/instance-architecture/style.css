@@ -502,6 +502,62 @@ header {
     height: 25px;
 }
 
+
+/* ============================================================
+   NESTED OWNERSHIP BRANCH
+============================================================ */
+
+.ownership-subbranch {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 25px;
+    padding-top: 25px;
+}
+
+.ownership-subbranch::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 25%;
+    right: 25%;
+    height: 1px;
+    background: #555;
+}
+
+.ownership-subbranch > .ownership-node {
+    position: relative;
+}
+
+.ownership-subbranch > .ownership-node::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -26px;
+    width: 1px;
+    height: 25px;
+    background: #555;
+}
+
+@media (max-width: 700px) {
+    .ownership-subbranch {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding-top: 0;
+        margin-top: 20px;
+    }
+
+    .ownership-subbranch::before {
+        display: none;
+    }
+
+    .ownership-subbranch > .ownership-node::before {
+        top: -21px;
+        height: 20px;
+    }
+}
+
 /* LEGEND */
 
 .ownership-legend {
