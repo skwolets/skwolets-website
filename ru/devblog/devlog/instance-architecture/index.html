@@ -270,113 +270,120 @@
             </p>
 
 
-            <div class="ownership-diagram">
+            
+<div class="ownership-diagram">
 
-                <!-- CHARACTER -->
-                <div class="ownership-node container-node">
-                    <strong>Персонаж</strong>
-                </div>
+    <!-- CHARACTER -->
+    <div class="ownership-node container-node">
+        <strong>Персонаж</strong>
+    </div>
 
-                <div class="ownership-line"></div>
-        
-                <!-- INVENTORY -->
-                <div class="ownership-node root-node">
-                    <span class="node-type">КОРНЕВОЙ ОБЪЕКТ</span>
-                    <strong>Инвентарь</strong>
-                    <small>Содержит другие объекты</small>
-                </div>
+    <div class="ownership-line"></div>
 
-                <div class="ownership-line"></div>
+    <!-- INVENTORY -->
+    <div class="ownership-node root-node">
+        <span class="node-type">КОРНЕВОЙ ОБЪЕКТ</span>
+        <strong>Инвентарь</strong>
+        <small>Содержит другие объекты</small>
+    </div>
 
-                <!-- HANDS -->
-                <div class="ownership-node slot-node">
-                    <span class="node-type">МЕСТО РАЗМЕЩЕНИЯ</span>
-                    <strong>Руки</strong>
-                    <small>Место для размещения предметов</small>
-                </div>
+    <div class="ownership-line"></div>
 
-                <div class="ownership-line"></div>
+    <!-- HANDS -->
+    <div class="ownership-node slot-node">
+        <span class="node-type">МЕСТО РАЗМЕЩЕНИЯ</span>
+        <strong>Руки</strong>
+        <small>Место для размещения предметов</small>
+    </div>
 
-                <!-- WEAPON -->
-                <div class="ownership-node item-node weapon-node">
-                    <span class="node-type">ОБЪЕКТ</span>
-                    <strong>Оружие</strong>
-                    <div class="ownership-properties">
-                       <span>Вес</span>
-                        <span>Состояние</span>
-                        <span>Повреждения</span>
-                        <span>Владелец</span>
+    <!-- NESTED OBJECTS -->
+    <div class="ownership-nested-group">
+
+        <div class="ownership-line"></div>
+
+        <!-- WEAPON -->
+        <div class="ownership-node item-node weapon-node">
+            <span class="node-type">ОБЪЕКТ</span>
+            <strong>Оружие</strong>
+            <div class="ownership-properties">
+                <span>Вес</span>
+                <span>Состояние</span>
+                <span>Повреждения</span>
+                <span>Владелец</span>
+            </div>
+        </div>
+
+        <div class="ownership-line"></div>
+
+        <!-- ATTACHMENTS -->
+        <div class="ownership-branch">
+            <div class="ownership-branch-line"></div>
+
+            <div class="ownership-branch-items">
+
+                <!-- MAGAZINE -->
+                <div class="ownership-branch-column">
+                    <div class="ownership-node item-node">
+                        <span class="node-type">ОБЪЕКТ</span>
+                        <strong>Магазин</strong>
+                        <div class="ownership-properties">
+                            <span>Вес</span>
+                            <span>Состояние</span>
+                            <span>Повреждения</span>
+                            <span>Владелец</span>
+                        </div>
+                    </div>
+
+                    <div class="ownership-line"></div>
+
+                    <div class="ownership-node content-node">
+                        <span class="node-type">ВЛОЖЕННЫЕ ОБЪЕКТЫ</span>
+                        <strong>Патроны</strong>
+                        <small>Количество и состояние</small>
                     </div>
                 </div>
 
-                <div class="ownership-line"></div>
-
-                <!-- ATTACHMENTS -->
-                <div class="ownership-branch">
-                    <div class="ownership-branch-line"></div>
-
-                    <div class="ownership-branch-items">
-        
-                        <!-- MAGAZINE -->
-                        <div class="ownership-branch-column">
-                            <div class="ownership-node item-node">
-                                <span class="node-type">ОБЪЕКТ</span>
-                                <strong>Магазин</strong>
-                                <div class="ownership-properties">
-                                    <span>Вес</span>
-                                    <span>Состояние</span>
-                                    <span>Повреждения</span>
-                                    <span>Владелец</span>
-                                </div>
-                            </div>
-
-                            <div class="ownership-line"></div>
-        
-                            <div class="ownership-node content-node">
-                                <span class="node-type">ВЛОЖЕННЫЕ ОБЪЕКТЫ</span>
-                                <strong>Патроны</strong>
-                                <small>Количество и состояние</small>
-                            </div>
+                <!-- OPTIC -->
+                <div class="ownership-branch-column">
+                    <div class="ownership-node item-node">
+                        <span class="node-type">ОБЪЕКТ</span>
+                        <strong>Оптика</strong>
+                        <div class="ownership-properties">
+                            <span>Вес</span>
+                            <span>Состояние</span>
+                            <span>Повреждения</span>
+                            <span>Владелец</span>
                         </div>
-
-                        <!-- OPTIC -->
-                        <div class="ownership-branch-column">
-                            <div class="ownership-node item-node">
-                                <span class="node-type">ОБЪЕКТ</span>
-                                <strong>Оптика</strong>
-                                <div class="ownership-properties">
-                                    <span>Вес</span>
-                                    <span>Состояние</span>
-                                    <span>Повреждения</span>
-                                    <span>Владелец</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- MUZZLE -->
-                        <div class="ownership-branch-column">
-                            <div class="ownership-node item-node">
-                                <span class="node-type">ОБЪЕКТ</span>
-                                <strong>Дульное устройство</strong>
-                                <div class="ownership-properties">
-                                    <span>Вес</span>
-                                    <span>Состояние</span>
-                                    <span>Повреждения</span>
-                                    <span>Владелец</span>
-                                </div>
-                            </div>
-                        </div>
-        
                     </div>
                 </div>
 
-                <div class="ownership-legend">
-                    <span><i class="legend-item"></i> Самостоятельный объект</span>
-                    <span><i class="legend-container"></i> Контейнер или место размещения</span>
-                    <span><i class="legend-content"></i> Вложенные объекты</span>
+                <!-- MUZZLE -->
+                <div class="ownership-branch-column">
+                    <div class="ownership-node item-node">
+                        <span class="node-type">ОБЪЕКТ</span>
+                        <strong>Дульное устройство</strong>
+                        <div class="ownership-properties">
+                            <span>Вес</span>
+                            <span>Состояние</span>
+                            <span>Повреждения</span>
+                            <span>Владелец</span>
+                        </div>
+                    </div>
                 </div>
 
             </div>
+        </div>
+
+    </div>
+
+    <div class="ownership-legend">
+        <span><i class="legend-item"></i> Самостоятельный объект</span>
+        <span><i class="legend-container"></i> Контейнер или место размещения</span>
+        <span><i class="legend-content"></i> Вложенные объекты</span>
+    </div>
+
+</div>
+
 
             <p>
                 Мне не пришлось создавать отдельную систему вложенности
