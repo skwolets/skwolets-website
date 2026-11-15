@@ -787,6 +787,7 @@
 
 
 
+
 <!-- ========================================================
      COMPOSITE VEHICLE
 ======================================================== -->
@@ -797,24 +798,24 @@
     <h2>ОДИН ПРИНЦИП — РАЗНЫЕ ПРЕДМЕТЫ</h2>
 
     <p class="lead">
-        Чтобы показать, насколько универсальным может быть этот принцип,
+        Чтобы показать универсальность этой архитектуры,
         рассмотрим более сложный пример — автомобиль.
     </p>
 
     <p>
-        В его состав входят совершенно разные предметы: двигатель,
-        аккумулятор, топливный бак, кузов, колёса и другие компоненты.
-        У каждого из них есть собственное состояние и характеристики.
-        При этом некоторые предметы сами могут содержать другие предметы.
+        Автомобиль состоит из множества самостоятельных предметов.
+        Двигатель, аккумулятор, топливный бак, колёса, фары —
+        каждый из них имеет собственное состояние и характеристики.
+        При этом некоторые предметы могут содержать другие предметы.
     </p>
 
     <div class="ownership-diagram">
 
         <!-- ROOT OBJECT -->
         <div class="ownership-node root-node">
-            <span class="node-type">КОРНЕВАЯ СУЩНОСТЬ</span>
+            <span class="node-type">ROOT OBJECT</span>
             <strong>Автомобиль</strong>
-            <small>Собственное состояние и характеристики</small>
+            <small>Корневой предмет</small>
             <div class="ownership-properties">
                 <span>Состояние</span>
                 <span>Прочность</span>
@@ -824,19 +825,19 @@
 
         <div class="ownership-line"></div>
 
-        <!-- MAIN BRANCH -->
+        <!-- DIRECT OWNERSHIP -->
         <div class="ownership-branch">
             <div class="ownership-branch-line"></div>
 
             <div class="ownership-branch-items">
 
-                <!-- ENGINE AND FUEL -->
+                <!-- ENGINE -->
                 <div class="ownership-branch-column">
 
                     <div class="ownership-node item-node">
-                        <span class="node-type">ПРЕДМЕТ</span>
+                        <span class="node-type">ITEM</span>
                         <strong>Двигатель</strong>
-                        <small>Собственное состояние</small>
+                        <small>Вложенный предмет</small>
                         <div class="ownership-properties">
                             <span>Износ</span>
                             <span>Повреждения</span>
@@ -845,12 +846,12 @@
 
                     <div class="ownership-subbranch">
                         <div class="ownership-node content-node">
-                            <span class="node-type">COMPONENT</span>
+                            <span class="node-type">ITEM</span>
                             <strong>Стартер</strong>
                         </div>
 
                         <div class="ownership-node content-node">
-                            <span class="node-type">COMPONENT</span>
+                            <span class="node-type">ITEM</span>
                             <strong>Генератор</strong>
                         </div>
                     </div>
@@ -858,9 +859,9 @@
                     <div class="ownership-line"></div>
 
                     <div class="ownership-node item-node">
-                        <span class="node-type">ПРЕДМЕТ</span>
+                        <span class="node-type">ITEM</span>
                         <strong>Топливный бак</strong>
-                        <small>Собственное состояние</small>
+                        <small>Вложенный предмет</small>
                         <div class="ownership-properties">
                             <span>Количество топлива</span>
                             <span>Повреждения</span>
@@ -869,7 +870,7 @@
 
                     <div class="ownership-subbranch">
                         <div class="ownership-node content-node">
-                            <span class="node-type">COMPONENT</span>
+                            <span class="node-type">ITEM</span>
                             <strong>Топливный насос</strong>
                         </div>
                     </div>
@@ -880,9 +881,9 @@
                 <div class="ownership-branch-column">
 
                     <div class="ownership-node item-node">
-                        <span class="node-type">ПРЕДМЕТ</span>
+                        <span class="node-type">ITEM</span>
                         <strong>Кузов</strong>
-                        <small>Собственное состояние</small>
+                        <small>Вложенный предмет</small>
                         <div class="ownership-properties">
                             <span>Прочность</span>
                             <span>Повреждения</span>
@@ -891,17 +892,17 @@
 
                     <div class="ownership-subbranch">
                         <div class="ownership-node content-node">
-                            <span class="node-type">COMPONENT</span>
+                            <span class="node-type">ITEM</span>
                             <strong>Капот</strong>
                         </div>
 
                         <div class="ownership-node content-node">
-                            <span class="node-type">COMPONENT</span>
+                            <span class="node-type">ITEM</span>
                             <strong>Багажник</strong>
                         </div>
 
                         <div class="ownership-node content-node">
-                            <span class="node-type">COMPONENT</span>
+                            <span class="node-type">ITEM</span>
                             <strong>Двери</strong>
                         </div>
                     </div>
@@ -909,7 +910,7 @@
                     <div class="ownership-line"></div>
 
                     <div class="ownership-node item-node">
-                        <span class="node-type">ПРЕДМЕТ</span>
+                        <span class="node-type">ITEM</span>
                         <strong>Переднее левое колесо</strong>
                         <div class="ownership-properties">
                             <span>Износ</span>
@@ -920,7 +921,7 @@
                     <div class="ownership-line"></div>
 
                     <div class="ownership-node item-node">
-                        <span class="node-type">ПРЕДМЕТ</span>
+                        <span class="node-type">ITEM</span>
                         <strong>Переднее правое колесо</strong>
                         <div class="ownership-properties">
                             <span>Износ</span>
@@ -931,7 +932,7 @@
                     <div class="ownership-line"></div>
 
                     <div class="ownership-node item-node">
-                        <span class="node-type">ПРЕДМЕТ</span>
+                        <span class="node-type">ITEM</span>
                         <strong>Заднее левое колесо</strong>
                         <div class="ownership-properties">
                             <span>Износ</span>
@@ -942,7 +943,7 @@
                     <div class="ownership-line"></div>
 
                     <div class="ownership-node item-node">
-                        <span class="node-type">ПРЕДМЕТ</span>
+                        <span class="node-type">ITEM</span>
                         <strong>Заднее правое колесо</strong>
                         <div class="ownership-properties">
                             <span>Износ</span>
@@ -956,9 +957,9 @@
                 <div class="ownership-branch-column">
 
                     <div class="ownership-node item-node">
-                        <span class="node-type">ПРЕДМЕТ</span>
+                        <span class="node-type">ITEM</span>
                         <strong>Аккумулятор</strong>
-                        <small>Собственное состояние</small>
+                        <small>Вложенный предмет</small>
                         <div class="ownership-properties">
                             <span>Заряд</span>
                             <span>Износ</span>
@@ -968,14 +969,14 @@
                     <div class="ownership-line"></div>
 
                     <div class="ownership-node item-node">
-                        <span class="node-type">ПРЕДМЕТ</span>
+                        <span class="node-type">ITEM</span>
                         <strong>Левая фара</strong>
-                        <small>Собственное состояние</small>
+                        <small>Вложенный предмет</small>
                     </div>
 
                     <div class="ownership-subbranch">
                         <div class="ownership-node content-node">
-                            <span class="node-type">COMPONENT</span>
+                            <span class="node-type">ITEM</span>
                             <strong>Левая лампочка</strong>
                         </div>
                     </div>
@@ -983,14 +984,14 @@
                     <div class="ownership-line"></div>
 
                     <div class="ownership-node item-node">
-                        <span class="node-type">ПРЕДМЕТ</span>
+                        <span class="node-type">ITEM</span>
                         <strong>Правая фара</strong>
-                        <small>Собственное состояние</small>
+                        <small>Вложенный предмет</small>
                     </div>
 
                     <div class="ownership-subbranch">
                         <div class="ownership-node content-node">
-                            <span class="node-type">COMPONENT</span>
+                            <span class="node-type">ITEM</span>
                             <strong>Правая лампочка</strong>
                         </div>
                     </div>
@@ -1002,25 +1003,31 @@
 
         <!-- LEGEND -->
         <div class="ownership-legend">
-            <span>Красная рамка — самостоятельный предмет</span>
-            <span>Пунктирная рамка — вложенный компонент</span>
+            <span>Красная рамка — корневой или самостоятельный предмет</span>
+            <span>Пунктирная рамка — вложенный предмет</span>
         </div>
 
     </div>
 
     <p>
-        При этом для двигателя, аккумулятора, колёс или фар не требуется
-        создавать отдельные механизмы вложенности. Все они используют
-        один и тот же принцип: предмет может содержать другие предметы,
-        а каждый вложенный предмет сохраняет собственное состояние
-        и может иметь собственный состав.
+        Здесь нет отдельных систем для двигателя, электрооборудования
+        или других частей автомобиля. Каждый элемент представлен
+        обычным предметом, который может иметь собственные свойства,
+        состояние и вложенные предметы.
     </p>
 
     <p>
-        Именно это позволяет использовать одну архитектуру для самых
-        разных объектов — от небольшого предмета в инвентаре до сложного
-        составного автомобиля.
+        Точно так же устроено и оружие: оно может содержать магазин,
+        оптику, глушитель и другие предметы. Меняется только состав,
+        но сам принцип остаётся неизменным.
     </p>
+
+    <div class="quote-block quote-small">
+        <strong>
+            Один принцип вложенности позволяет описывать совершенно
+            разные объекты, независимо от их сложности и состава.
+        </strong>
+    </div>
 
 </section>
 
