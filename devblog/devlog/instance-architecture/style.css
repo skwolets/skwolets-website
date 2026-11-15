@@ -425,12 +425,12 @@ header {
 }
 
 .item-node {
-    border-color: #343434;
-}
-
-.weapon-node {
     border-color: #a64b3c;
     background: #15100f;
+}
+
+.item-node .node-type {
+    color: #ff5555;
 }
 
 .content-node {
