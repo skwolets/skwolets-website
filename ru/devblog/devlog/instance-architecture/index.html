@@ -580,66 +580,63 @@
                     </p>
                 </div>
             </div>
-
             
-            <details
-                class="definition-config"
-                id="firearm-configuration"
-            >
-                <summary class="definition-config-header">
-                    <span>FIREARM CONFIGURATION</span>
-                    <strong>JSON</strong>
-                </summary>
+<details
+    class="definition-config"
+    id="firearm-configuration"
+>
+    <summary class="definition-config-header">
+        <span>КОНФИГУРАЦИЯ ОРУЖИЯ</span>
+        <strong>JSON</strong>
+    </summary>
 
-                <pre><code class="language-json">{
-                "Version": 1,
-                "Firearms": [
-                    {
-                        "Id": "AKM",
-                        "Enabled": true,
-                        "DisplayName": "AKM assault rifle",
-                        "Model": "/Game/Lib/Firearm/Rifle/AKM/Mesh/SKM_AKM.SKM_AKM",
-                        "AnimTag": "OverlayMode.Rifle",
-                        "BarrelFactor": 1.0,
-                        "BaseSpreadMOA": 3.0,
-                        "ChamberSize": 1,
-                        "AutoChamber": true,
-                        "Sequences": [
-                            "AKM_Reload",
-                            "AKM_Unjam",
-                            "AKM_Selector",
-                            "AKM_MagCheck",
-                            "AKM_ChamberCheck"
-                        ],
-                        "Wear": {
-                            "WearPerShot": 0.0015,
-                            "JamChanceMultiplier": 1.0,
-                            "CriticalWearThreshold": 0.3
-                        },
-                        "AcousticPropagation": {
-                            "Begin": "/Game/Lib/Firearm/SFX/Assets/Cues/01_CARBINE/01_CARBINE_Oneshot.01_CARBINE_Oneshot",
-                            "End": "/Game/Lib/Firearm/SFX/Assets/Cues/01_CARBINE/01_CARBINE_Stop.01_CARBINE_Stop",
-                            "Tail": "/Game/Lib/Firearm/SFX/Assets/Cues/01_CARBINE/01_CARBINE_Tail.01_CARBINE_Tail",
-                            "Range": 3000.0
-                        },
-                        "Magazines": ["Mag_AKM_30Rnd"],
-                        "AmmoTypes": [
-                            "Ammo_762x39",
-                            "Ammo_762x39Tracer",
-                            "Ammo_762x39Subsonic"
-                        ],
-                        "Muzzles": ["AK_PBS1"],
-                        "AmmoSource": "DetachableMag",
-                        "FireModes": [
-                            { "Mode": "Semi", "Interval": 0.130 },
-                            { "Mode": "Auto", "Interval": 0.100 },
-                            { "Mode": "Safe" }
-                        ]
-                    }
-                ]
-            }</code></pre>
-            </details>
-
+    <pre><code class="language-json">{
+    [
+        {
+            "Name": "AKM",
+            "DisplayName": "AKM assault rifle",
+            "Model": "/Firearm/Rifle/AKM",
+            "AnimTag": "Rifle",
+            "BarrelFactor": 1.0,
+            "BaseSpreadMOA": 3.0,
+            "ChamberSize": 1,
+            "AutoChamber": true,
+            "Sequences": [
+                "AKM_ReloadSequence",
+                "AKM_Unjam",
+                "AKM_Selector",
+                "AKM_MagCheck",
+                "AKM_ChamberCheck"
+            ],
+            "Wear": {
+                "WearPerShot": 0.0015,
+                "JamChanceMultiplier": 1.0,
+                "CriticalWearThreshold": 0.3
+            },
+            "AcousticPropagation": {
+                "Begin": "/Firearm/SFX/AK_Family/AK_Oneshot",
+                "End": "/Firearm/SFX/AK_Family/AK_Stop",
+                "Tail": "/Firearm/SFX/AK_Family/AK_Tail",
+                "Range": 3000.0
+            },
+            "Magazines": ["Mag_AKM_30Rnd"],
+            "AmmoTypes": [
+                "Ammo_762x39",
+                "Ammo_762x39Tracer",
+                "Ammo_762x39Subsonic"
+            ],
+            "Muzzles": ["AK_PBS1"],
+            "Optics": ["PSO1],
+            "AmmoSource": "DetachableMag",
+            "FireModes": [
+                { "Mode": "Semi", "Interval": 0.130 },
+                { "Mode": "Auto", "Interval": 0.100 },
+                { "Mode": "Safe" }
+            ]
+        }
+    ]
+}</code></pre>
+</details>
 
             </div>
 
