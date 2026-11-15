@@ -756,27 +756,20 @@
 
             <div class="persistence-flow">
                 <div class="persistence-column">
-                    <span>RUNTIME</span>
+                    <span>РАНТАЙМ</span>
                     <strong>Предметы</strong>
-                    <small>Состояние + Вложенность</small>
+                    <small>Состояние + вложенность</small>
                 </div>
                 <div class="persistence-connector">
-                    <span>SERIALIZATION</span>
+                    <span>СЕРИАЛИЗАЦИЯ</span>
                     <b>⇄</b>
                 </div>
                 <div class="persistence-column database">
-                    <span>STORAGE</span>
-                    <strong>Local Backend</strong>
-                    <small>Binary Data + Journal</small>
+                    <span>ХРАНИЛИЩЕ</span>
+                    <strong>ВНУТРЕННЯЯ ЛОГИКА</strong>
+                    <small>Бинарные данные + журнал изменений</small>
                 </div>
             </div>
-
-            <p>
-                Для хранения используются два файла: snapshot и journal.
-                Первый содержит сохранённое состояние данных, второй фиксирует
-                изменения. Это позволяет восстанавливать состояние системы
-                после перезапуска.
-            </p>
 
             <p>
                 После загрузки предметы снова регистрируются в системе
