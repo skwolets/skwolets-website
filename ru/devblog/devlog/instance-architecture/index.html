@@ -594,14 +594,14 @@
     [
         {
             "Name": "AKM",
-            "DisplayName": "AKM assault rifle",
-            "Model": "/Firearm/Rifle/AKM",
-            "AnimTag": "Rifle",
+            "DisplayName": "AKM Assault Rifle",
+            "Model": "/Firearm/Rifle/M_AKM",
             "BarrelFactor": 1.0,
             "BaseSpreadMOA": 3.0,
             "ChamberSize": 1,
             "AutoChamber": true,
-            "Sequences": [
+            "AnimTag": "Rifle",
+            "AnimSequences": [
                 "AKM_ReloadSequence",
                 "AKM_Unjam",
                 "AKM_Selector",
@@ -614,9 +614,9 @@
                 "CriticalWearThreshold": 0.3
             },
             "AcousticPropagation": {
-                "Begin": "/Firearm/SFX/AK_Family/AK_Oneshot",
-                "End": "/Firearm/SFX/AK_Family/AK_Stop",
-                "Tail": "/Firearm/SFX/AK_Family/AK_Tail",
+                "Begin": "/Firearm/SFX/AK_Family/S_AK_Oneshot",
+                "End": "/Firearm/SFX/AK_Family/S_AK_Stop",
+                "Tail": "/Firearm/SFX/AK_Family/S_AK_Tail",
                 "Range": 3000.0
             },
             "Magazines": ["Mag_AKM_30Rnd"],
@@ -637,6 +637,91 @@
     ]
 }</code></pre>
 </details>
+
+<details class="definition-config" id="magazine-configuration">
+    <summary class="definition-config-header">
+        <span>MAGAZINE CONFIGURATION</span>
+        <strong>JSON</strong>
+    </summary>
+
+    <pre><code class="language-json">{
+    [
+        {
+            "Id": "Mag_AKM_30Rnd",
+            "DisplayName": "Steel Magazine AK",
+            "Capacity": 30,
+            "Model": {
+                "MagazineMeshName": "Firearm/Rifle/AKM/Magazine/M_AK_SteelMag_30Rnd",
+                "RoundMeshName": "Firearm/Ammunition/Cartridge/M_762x39",
+                "RoundScale": 0.86
+            },
+            "RoundLayout": {
+                "Location": [-0.5, -3.7, 9.45],
+                "Rotation": [-5.0, 0, 0],
+                "Spacing": [0, -0.3145, 0.97561],
+                "UseCurvedLayout": true,
+                "UseDoubleStack": true,
+                "SideOffset": [1, 0.2, -0.6],
+                "YawAngle": -3.0,
+                "CurveIntensity": 1.35,
+                "CurveRotationCompensation": [-16, 0, 0],
+                "CurveAxis": [0, -1, 0],
+                "ExcludeFirstRoundFromCompression": false
+            }
+        }
+    ]
+}</code></pre>
+</details>
+
+
+<details class="definition-config" id="muzzle-configuration">
+    <summary class="definition-config-header">
+        <span>MUZZLE CONFIGURATION</span>
+        <strong>JSON</strong>
+    </summary>
+
+    <pre><code class="language-json">{
+    [
+        {
+            "Id": "AK_PBS1",
+            "DisplayName": "PBS-1 Suppressor",
+            "Model": "/Firearm/Device/Muzzle/PBS1",
+            "BarrelFactor": 0.85,
+            "RecoilMultiplier": 0.95,
+            "AcousticPropagation": {
+                "Begin": "/Firearm/SFX/AK_Family/S_PBS1_Oneshot",
+                "End": "/Firearm/SFX/AK_Family/S_PBS1_Stop",
+                "Tail": "/Firearm/SFX/AK_Family/S_PBS1_Tail",
+                "Range": 1800.0
+            }
+        }
+    ]
+}</code></pre>
+</details>
+
+<details class="definition-config" id="optic-configuration">
+    <summary class="definition-config-header">
+        <span>КОНФИГУРАЦИЯ ОПТИКИ</span>
+        <strong>JSON</strong>
+    </summary>
+
+    <pre><code class="language-json">{
+    [
+        {
+            "Id": "Optic_PSO1",
+            "DisplayName": "PSO-1 Optical Sight",
+            "Model": "/Firearm/Device/Optic/PSO1/M_PSO1",
+            "Magnification": 4.0,
+            "ZeroingDistance": 100,
+            "Reticle": {
+                "Texture": "/Firearm/Device/Optic/PSO1/T_PSO1_Reticle",
+                "Brightness": 1.0
+            }
+        }
+    ]
+}</code></pre>
+</details>
+
 
             </div>
 
