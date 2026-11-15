@@ -640,7 +640,7 @@
 
 <details class="definition-config" id="magazine-configuration">
     <summary class="definition-config-header">
-        <span>MAGAZINE CONFIGURATION</span>
+        <span>КОНФИГУРАЦИЯ МАГАЗИНА</span>
         <strong>JSON</strong>
     </summary>
 
@@ -676,7 +676,7 @@
 
 <details class="definition-config" id="muzzle-configuration">
     <summary class="definition-config-header">
-        <span>MUZZLE CONFIGURATION</span>
+        <span>КОНФИГУРАЦИЯ ДУЛЬНОГО УСТРОЙСТВА</span>
         <strong>JSON</strong>
     </summary>
 
@@ -686,6 +686,7 @@
             "Id": "AK_PBS1",
             "DisplayName": "PBS-1 Suppressor",
             "Model": "/Firearm/Device/Muzzle/PBS1",
+            "Type": "Suppressor",
             "BarrelFactor": 0.85,
             "RecoilMultiplier": 0.95,
             "AcousticPropagation": {
@@ -701,7 +702,7 @@
 
 <details class="definition-config" id="optic-configuration">
     <summary class="definition-config-header">
-        <span>КОНФИГУРАЦИЯ ОПТИКИ</span>
+        <span>КОНФИГУРАЦИЯ ОПТИЧЕСКОГО УСТРОЙСТВА</span>
         <strong>JSON</strong>
     </summary>
 
@@ -711,8 +712,8 @@
             "Id": "Optic_PSO1",
             "DisplayName": "PSO-1 Optical Sight",
             "Model": "/Firearm/Device/Optic/PSO1/M_PSO1",
-            "Magnification": 4.0,
-            "ZeroingDistance": 100,
+            "Magnifications": [4.0],
+            "ZeroingDistances": [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
             "Reticle": {
                 "Texture": "/Firearm/Device/Optic/PSO1/T_PSO1_Reticle",
                 "Brightness": 1.0
