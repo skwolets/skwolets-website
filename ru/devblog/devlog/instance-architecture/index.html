@@ -581,28 +581,52 @@
                 </div>
             </div>
 
-            <div class="json-config">
-                <div class="json-config-header">
+            <div class="definition-config">
+                <div class="definition-config-header">
                     <span>DEFINITION</span>
                     <strong>AKM</strong>
                 </div>
 
-                <pre><code class="language-json">{
-                "Version": 1,
-                "Firearms": [
-                    {
-                        "Id": "AKM",
-                        "Enabled": true,
-                        "DisplayName": "AKM assault rifle",
-                        "BaseSpreadMOA": 3.0,
-                        "ChamberSize": 1,
-                        "AutoChamber": true,
-                        "Magazines": ["Mag_AKM_30Rnd"],
-                        "AmmoTypes": ["Ammo_762x39"],
-                        "Muzzles": ["AK_PBS1"]
+                <details
+                class="definition-config"
+                id="item-configuration">
+                <summary class="definition-config-header">
+                    <span>
+                        ITEM CONFIGURATION
+                    </span>
+
+                    <strong>
+                        JSON
+                    </strong>
+                </summary>
+
+                <pre><code>[
+                {
+                    "Type": "Ammo_762x39",
+                    "Velocity": 71800,
+                    "BulletWeight": 7.9,
+                    "BallisticCoefficient": 0.294,
+                    "Lifetime": 3.0,
+                    "ProjectileCount": 1
+                },
+                {
+                    "Type": "Ammo_762x39Tracer",
+                    "Parent": "Ammo_762x39",
+                    "Particle": {
+                        "ParticleSystem": "Tracer",
+                        "SpawnDelayDistance": 100
                     }
-                ]
-            }</code></pre>
+                },
+                {
+                    "Type": "Ammo_762x39Subsonic",
+                    "Parent": "Ammo_762x39",
+                    "Velocity": 28500,
+                    "BulletWeight": 12.5,
+                    "Lifetime": 4.0
+                }
+            ]</code></pre>
+            </details>
+
             </div>
 
             <p>
