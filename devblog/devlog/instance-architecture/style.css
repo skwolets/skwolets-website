@@ -402,6 +402,12 @@ header {
     font-size: 11px;
 }
 
+.ownership-nested-group {
+    margin: 0 auto;
+    padding: 25px 20px;
+    border: 1px dashed #555;
+}
+
 .node-type {
     color: #888;
     font-size: 9px;
