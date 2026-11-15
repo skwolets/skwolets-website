@@ -837,38 +837,6 @@ header {
     text-align: right;
 }
 
-/* --------------------------------------------------------
-   JSON CONFIGURATION
--------------------------------------------------------- */
-
-.json-config {
-    margin-top: 45px;
-}
-
-.json-config-header {
-    padding: 13px 14px;
-}
-
-.json-config-header span {
-    font-size: 9px;
-    letter-spacing: 1.5px;
-}
-
-.json-config-header strong {
-    margin-right: 12px;
-    font-size: 9px;
-}
-
-.json-config pre {
-    padding: 20px 15px;
-    overflow-x: auto;
-}
-
-.json-config code {
-    font-size: 11px;
-    line-height: 1.7;
-}
-
 /* ============================================================
    COMPOSITE VEHICLE
 ============================================================ */
