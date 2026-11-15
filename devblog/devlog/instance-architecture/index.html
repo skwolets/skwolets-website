@@ -1,1 +1,784 @@
-Template
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Object and Item Architecture — SKWOLETS</title>
+    <meta name="description" content="Object architecture in SKWOLETS: Core, Ownership, Transactions, Item Representations, and Persistence.">
+
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/devblog/style.css">
+    <link rel="stylesheet" href="/devblog/devlog/instance-architecture/style.css">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="The Foundation of Item Interaction — SKWOLETS">
+    <meta property="og:description" content="Architecture for Objects, Ownership, Transactions, Item Representations, and Persistence.">
+    <meta property="og:image" content="https://skwolets.com/favicon/og-image.png">
+    <meta property="og:url" content="https://skwolets.com/devblog/devlog/instance-architecture/">
+    <meta property="og:site_name" content="SKWOLETS">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Foundation of Item Interaction — SKWOLETS">
+    <meta name="twitter:description" content="Architecture for Objects, Ownership, Transactions, Item Representations, and Persistence.">
+    <meta name="twitter:image" content="https://skwolets.com/favicon/og-image.png">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">SKWOLETS</div>
+        <nav>
+            <a href="/ru/">Home</a>
+        </nav>
+    </header>
+
+    <!-- ============================================================
+         ARTICLE HERO
+    ============================================================ -->
+
+    <section class="log-hero">
+        <div class="log-hero-content">
+            <div class="log-label">SKWOLETS / DEV LOG</div>
+            <h1>
+                OBJECT<br>
+                AND ITEM<br>
+                ARCHITECTURE
+            </h1>
+            <p>
+                A unified architecture for managing objects,
+                their state, ownership, visual representations,
+                and persistence
+            </p>
+        </div>
+    </section>
+
+    <main class="devlog-article">
+
+        <!-- ========================================================
+             INTRO
+        ======================================================== -->
+
+        <section class="log-section">
+            <h2>PROLOGUE</h2>
+
+            <div class="quote-block">
+                <strong>
+                    In this article, I use the term "object" to refer to data
+                    and state, and "item" to refer to its visual representation
+                    in the game world.
+                </strong>
+            </div>
+
+            <p>
+                For me, the hardest part of writing an article is always getting started.
+                The system is already working, everything is clear in my head,
+                and the architecture has been designed and implemented.
+                But when you open a blank page, one simple question comes up:
+                where do I even begin?
+            </p>
+
+            <p>
+                Since I can't seem to jump straight into the technical details,
+                I'll start with something a little more personal. That's always easier.
+            </p>
+
+            <p>
+                The movie "The Matrix" touches on an interesting idea:
+                everything around us can be thought of as computer code.
+                Every system has its own purpose, interacts with other systems,
+                and can still evolve independently of them.
+            </p>
+
+            <p>
+                When you think about it, even a very complex system can have
+                a surprisingly simple foundation.
+            </p>
+
+            <p>
+                Take something as ordinary as a loaf of bread.
+            </p>
+
+            <p>
+                In the game world, bread is represented by an item,
+                but an object is what actually keeps track of it.
+                That's where its data, properties, and current state are stored.
+            </p>
+
+            <p>
+                The object can hold information about whether the bread is wet,
+                dirty, hot or cold, or damaged.
+                It can belong to a backpack, be held in a character's hands,
+                or simply lie somewhere on the ground.
+            </p>
+
+            <p>
+                Its state can change due to external factors:
+                rain, wind, time, falling, or physical interaction, for example.
+            </p>
+
+            <p>
+                Just like in real life.
+            </p>
+
+            <p>
+                So, an item is really just the visible representation of an object.
+            </p>
+
+            <p>
+                And that's where the idea for a new architecture
+                for item interaction came from.
+            </p>
+        </section>
+
+
+        <section class="log-section">
+            <h2>THE OBJECT AND ITS REPRESENTATION</h2>
+
+            <p>
+                Previously, I treated an object and its visual representation
+                as one and the same thing. Data, state, and how something appeared
+                in the game world were tightly connected. But over time,
+                I realized that this approach was limiting.
+            </p>
+
+            <p>
+                An object doesn't need to have a visual representation
+                in the game world at all times in order to keep existing.
+            </p>
+
+            <p>
+                So I decided to separate the object from its visual representation.
+            </p>
+
+            <div class="comparison">
+                <div class="comparison-card instance-card">
+                    <span class="card-kicker">OBJECT</span>
+                    <h3>What exists in the system</h3>
+                    <ul>
+                        <li>Has its own state</li>
+                        <li>Stores its own data</li>
+                        <li>Can contain other objects</li>
+                        <li>Exists independently of the game world</li>
+                        <li>Can be stored even when nobody can see it</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-card actor-card">
+                    <span class="card-kicker">ITEM</span>
+                    <h3>What you see in the game</h3>
+                    <ul>
+                        <li>Has a visual appearance</li>
+                        <li>Can move and interact with its surroundings</li>
+                        <li>Reflects the object's state</li>
+                        <li>Appears when needed</li>
+                        <li>Can be removed without affecting the object itself</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <!-- ========================================================
+             CORE
+        ======================================================== -->
+
+        <section class="log-section">
+            <div class="section-number">CENTRALIZATION</div>
+            <h2>A SINGLE SYSTEM CORE</h2>
+
+            <div class="quote-block">
+                <strong>
+                    One Ring to rule them all,<br>
+                    One Ring to find them,<br>
+                    One Ring to bring them all<br>
+                    And in the darkness bind them.
+                </strong>
+                <br>
+                <small>J. R. R. Tolkien — "The Lord of the Rings"</small>
+            </div>
+
+            <p>
+                As the number of objects grows, it's important to have
+                a single place where information about any of them can be accessed.
+            </p>
+
+            <div class="flow-list">
+                <div>
+                    <span>CREATION</span>
+                    <p>The object is registered in the system and receives a unique identifier.</p>
+                </div>
+                <div>
+                    <span>ACCESS</span>
+                    <p>Other systems find the required object using its identifier.</p>
+                </div>
+                <div>
+                    <span>MODIFICATION</span>
+                    <p>The object's data and state can be updated independently of its visual representation.</p>
+                </div>
+                <div>
+                    <span>REMOVAL</span>
+                    <p>Once its lifecycle is complete, the object is removed from the system.</p>
+                </div>
+            </div>
+
+            <p>
+                This approach eliminated the need to maintain separate lists
+                of objects in every subsystem. It minimizes the risk of duplicated
+                data and synchronization issues, while also making it easier
+                for different parts of the system to work together.
+            </p>
+        </section>
+
+
+
+
+        <!-- ========================================================
+             OWNERSHIP
+        ======================================================== -->
+
+        <section class="log-section">
+            <div class="section-number">OWNERSHIP</div>
+            <h2>ONE OBJECT INSIDE ANOTHER</h2>
+
+            <p>
+                For example, a character has a weapon. The weapon has an optic,
+                a muzzle device, and a magazine attached to it. The magazine
+                contains cartridges. Each of these elements is an independent
+                object with its own data and state.
+            </p>
+
+            <p>
+                So what we end up with is more than just a list of items.
+                It's a hierarchical structure.
+            </p>
+
+
+            <div class="ownership-diagram">
+
+                <!-- CHARACTER -->
+                <div class="ownership-node container-node">
+                    <strong>Character</strong>
+                </div>
+
+                <div class="ownership-line"></div>
+
+                <!-- INVENTORY -->
+                <div class="ownership-node root-node">
+                    <span class="node-type">OBJECT</span>
+                    <strong>Inventory</strong>
+                    <small>Contains other objects</small>
+                </div>
+
+                <div class="ownership-line"></div>
+
+                <!-- HANDS -->
+                <div class="ownership-node slot-node">
+                    <span class="node-type">SLOT</span>
+                    <strong>Hands</strong>
+                    <small>Slot for holding items</small>
+                </div>
+
+                <div class="ownership-line"></div>
+
+                <!-- NESTED OBJECTS -->
+                <div class="ownership-nested-group">
+
+                    <div class="ownership-line"></div>
+
+                    <!-- WEAPON -->
+                    <div class="ownership-node item-node weapon-node">
+                        <span class="node-type">OBJECT</span>
+                        <strong>Weapon</strong>
+                        <div class="ownership-properties">
+                            <span>Identifier</span>
+                            <span>State</span>
+                            <span>Owner</span>
+                        </div>
+                    </div>
+
+                    <div class="ownership-line"></div>
+
+                    <!-- ATTACHMENTS -->
+                    <div class="ownership-branch">
+                        <div class="ownership-branch-line"></div>
+
+                        <div class="ownership-branch-items">
+
+                            <!-- MAGAZINE -->
+                            <div class="ownership-branch-column">
+                                <div class="ownership-node item-node">
+                                    <span class="node-type">OBJECT</span>
+                                    <strong>Magazine</strong>
+                                    <div class="ownership-properties">
+                                        <span>Identifier</span>
+                                        <span>State</span>
+                                        <span>Owner</span>
+                                    </div>
+                                </div>
+
+                                <div class="ownership-line"></div>
+
+                                <div class="ownership-node content-node">
+                                    <span class="node-type">NESTED OBJECTS</span>
+                                    <strong>Cartridges</strong>
+                                    <small>Quantity, types, and state</small>
+                                </div>
+                            </div>
+
+                            <!-- OPTIC -->
+                            <div class="ownership-branch-column">
+                                <div class="ownership-node item-node">
+                                    <span class="node-type">OBJECT</span>
+                                    <strong>Optic</strong>
+                                    <div class="ownership-properties">
+                                        <span>Identifier</span>
+                                        <span>State</span>
+                                        <span>Owner</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- MUZZLE -->
+                            <div class="ownership-branch-column">
+                                <div class="ownership-node item-node">
+                                    <span class="node-type">OBJECT</span>
+                                    <strong>Muzzle Device</strong>
+                                    <div class="ownership-properties">
+                                        <span>Identifier</span>
+                                        <span>State</span>
+                                        <span>Owner</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="ownership-legend">
+                    <span><i class="legend-item"></i> Independent object</span>
+                    <span><i class="legend-container"></i> Container or slot</span>
+                    <span><i class="legend-content"></i> Nested objects</span>
+                </div>
+
+            </div>
+
+
+            <p>
+                I didn't have to create a separate nesting system
+                for every type of object. They all follow the same principle,
+                while the specific rules — what an object can contain,
+                where it can be placed, and which elements are available to it —
+                are defined by its own data.
+            </p>
+
+            <p>
+                Each object also keeps its own identity and state.
+                The magazine doesn't become part of the weapon's data,
+                and the optic doesn't become part of some aiming system.
+                They're independent objects that can exist separately
+                from their current owner and change owners as the game progresses.
+            </p>
+
+            <p>
+                Items, on the other hand, represent these objects in the game world.
+                If a weapon is in a character's hands, its visual representation
+                appears there too. If the magazine is removed, it can get
+                its own representation without losing its identity as the same object.
+            </p>
+        </section>
+
+
+
+
+        <!-- ========================================================
+             TRANSACTIONS
+        ======================================================== -->
+
+        <section class="log-section">
+            <div class="section-number">TRANSACTIONS</div>
+            <h2>THE TRANSFER SYSTEM</h2>
+
+            <p>
+                A separate transaction mechanism handles object transfers
+                and changes to the relationships between them. This prevents
+                other systems from directly interfering with the ownership structure.
+            </p>
+
+            <p>
+                When an object moves from one container to another,
+                the system checks whether the operation is allowed,
+                frees up its previous slot, and establishes the new relationship.
+                All these actions are performed together.
+            </p>
+
+            <div class="transaction-flow">
+                <div class="transaction-step">
+                    <strong>REQUEST</strong>
+                    <small>Request to move an object</small>
+                </div>
+                <div class="transaction-arrow">→</div>
+                <div class="transaction-step">
+                    <strong>VALIDATION</strong>
+                    <small>Check whether the operation is allowed</small>
+                </div>
+                <div class="transaction-arrow">→</div>
+                <div class="transaction-step">
+                    <strong>COMMIT</strong>
+                    <small>Update relationships between objects</small>
+                </div>
+                <div class="transaction-arrow">→</div>
+                <div class="transaction-step result">
+                    <strong>RESULT</strong>
+                    <small>Operation completed</small>
+                </div>
+            </div>
+
+
+            <p>
+                Installing a magazine into a weapon is also a transfer operation.
+                The weapon's visual representation is updated only after
+                the transfer has been completed successfully.
+            </p>
+        </section>
+
+
+        <!-- ========================================================
+             ACTOR FACTORY
+        ======================================================== -->
+
+        <section class="log-section">
+            <div class="section-number">REPRESENTATION</div>
+            <h2>CREATING A REPRESENTATION</h2>
+
+            <p>
+                A separate representation creation mechanism determines
+                which representation corresponds to a particular object type,
+                creates it, and links it to the original object.
+            </p>
+
+            <p>
+                The mechanism itself doesn't need to know what the object
+                is made up of. Its job is limited to creating and registering
+                the representation.
+            </p>
+
+            <div class="factory-flow">
+                <div class="factory-instance">
+                    <span>DATA</span>
+                    <strong>Object</strong>
+                    <small>Identifier + State</small>
+                </div>
+                <div class="factory-arrow">
+                    <span>GET OR CREATE</span>
+                    <b>→</b>
+                </div>
+                <div class="factory-actor">
+                    <span>GAME WORLD</span>
+                    <strong>Item</strong>
+                    <small>Visual representation of the object</small>
+                </div>
+            </div>
+
+            <p>
+                When a weapon needs to appear in the game world,
+                an item is created for it. Once initialized,
+                it accesses the object's data, identifies its nested objects,
+                and requests separate representations for each of them.
+                That's how the magazine, optic, and other attachments are brought back.
+            </p>
+
+            <div class="data-grid">
+                <div>
+                    <span>SYSTEM</span>
+                    <strong>CREATES REPRESENTATIONS</strong>
+                </div>
+                <div>
+                    <span>COMPOSITE OBJECT</span>
+                    <strong>RESTORES NESTED STRUCTURE</strong>
+                </div>
+                <div>
+                    <span>ORIGINAL DATA</span>
+                    <strong>EXISTS INDEPENDENTLY</strong>
+                </div>
+                <div>
+                    <span>REPRESENTATION</span>
+                    <strong>CREATED WHEN NEEDED</strong>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================================
+             DEFINITIONS
+        ======================================================== -->
+
+        <section class="log-section">
+            <div class="section-number">DEFINITIONS</div>
+            <h2>ITEM DEFINITIONS</h2>
+
+            <p>
+                Every item has its own identity, while its base properties
+                are defined by a shared type definition. This means there's
+                no need to duplicate the same item definition for every instance.
+            </p>
+
+            <p>
+                These definitions are stored in JSON format. Server owners can
+                customize existing items and create new variations by changing
+                their properties and settings, without having to develop
+                a separate game implementation for each one.
+            </p>
+
+<details
+    class="definition-config"
+    id="firearm-configuration"
+>
+    <summary class="definition-config-header">
+        <span>FIREARM CONFIGURATION</span>
+        <strong>JSON</strong>
+    </summary>
+
+    <pre><code>[
+    {
+        "Id": "AKM",
+        "DisplayName": "AKM Assault Rifle",
+        "Model": "/Firearm/Rifle/AKM/M_AKM",
+        "BarrelFactor": 1.0,
+        "BaseSpreadMOA": 3.0,
+        "ChamberSize": 1,
+        "AutoChamber": true,
+        "AmmoSource": "DetachableMag",
+        "AnimTag": "Rifle",
+        "AnimSequences": [
+            "AKM_ReloadSequence",
+            "AKM_Unjam",
+            "AKM_Selector",
+            "AKM_MagCheck",
+            "AKM_ChamberCheck"
+        ],
+        "Wear": {
+            "WearPerShot": 0.0015,
+            "JamChanceMultiplier": 1.0,
+            "CriticalWearThreshold": 0.3
+        },
+        "AcousticPropagation": {
+            "Begin": "/Firearm/SFX/AK_Family/S_AK_Oneshot",
+            "End": "/Firearm/SFX/AK_Family/S_AK_Stop",
+            "Tail": "/Firearm/SFX/AK_Family/S_AK_Tail",
+            "Range": 3000.0
+        },
+        "Magazines": ["Mag_AKM_30Rnd"],
+        "AmmoTypes": [
+            "Ammo_762x39",
+            "Ammo_762x39Tracer",
+            "Ammo_762x39Subsonic"
+        ],
+        "Muzzles": ["Muzzle_PBS1"],
+        "Optics": ["Optic_PSO1"],
+        "FireModes": [
+            { "Mode": "Semi", "Interval": 0.130 },
+            { "Mode": "Auto", "Interval": 0.100 },
+            { "Mode": "Safe" }
+        ]
+    }
+]</code></pre>
+</details>
+
+<details class="definition-config" id="magazine-configuration">
+    <summary class="definition-config-header">
+        <span>MAGAZINE CONFIGURATION</span>
+        <strong>JSON</strong>
+    </summary>
+
+    <pre><code>[
+    {
+        "Id": "Mag_AKM_30Rnd",
+        "DisplayName": "Steel Magazine AK",
+        "Capacity": 30,
+        "Model": {
+            "MagazineMeshName": "Firearm/Ammunition/Magazine/AK_SteelMag_30Rnd/M_AK_SteelMag_30Rnd",
+            "RoundMeshName": "Firearm/Ammunition/Cartridge/762x39/M_762x39",
+            "RoundScale": 0.86
+        },
+        "AmmoTypes": [
+            "Ammo_762x39",
+            "Ammo_762x39Tracer",
+            "Ammo_762x39Subsonic"
+        ],
+        "RoundLayout": {
+            "Location": [-0.5, -3.7, 9.45],
+            "Rotation": [-5.0, 0, 0],
+            "Spacing": [0, -0.3145, 0.97561],
+            "UseCurvedLayout": true,
+            "UseDoubleStack": true,
+            "SideOffset": [1, 0.2, -0.6],
+            "YawAngle": -3.0,
+            "CurveIntensity": 1.35,
+            "CurveRotationCompensation": [-16, 0, 0],
+            "CurveAxis": [0, -1, 0],
+            "ExcludeFirstRoundFromCompression": false
+        }
+    }
+]</code></pre>
+</details>
+
+<details class="definition-config" id="muzzle-configuration">
+    <summary class="definition-config-header">
+        <span>MUZZLE DEVICE CONFIGURATION</span>
+        <strong>JSON</strong>
+    </summary>
+
+    <pre><code>[
+    {
+        "Id": "Muzzle_PBS1",
+        "DisplayName": "PBS-1 Suppressor",
+        "Model": "/Firearm/Device/Muzzle/PBS1/M_PBS1",
+        "Type": "Suppressor",
+        "BarrelFactor": 0.85,
+        "RecoilMultiplier": 0.95,
+        "AcousticPropagation": {
+            "Begin": "/Firearm/SFX/AK_Family/S_PBS1_Oneshot",
+            "End": "/Firearm/SFX/AK_Family/S_PBS1_Stop",
+            "Tail": "/Firearm/SFX/AK_Family/S_PBS1_Tail",
+            "Range": 1800.0
+        }
+    }
+]</code></pre>
+</details>
+
+<details class="definition-config" id="optic-configuration">
+    <summary class="definition-config-header">
+        <span>OPTIC CONFIGURATION</span>
+        <strong>JSON</strong>
+    </summary>
+
+    <pre><code>[
+    {
+        "Id": "Optic_PSO1",
+        "DisplayName": "PSO-1 Optical Sight",
+        "Model": "/Firearm/Device/Optic/PSO1/M_PSO1",
+        "Magnifications": [4.0],
+        "ZeroingDistances": [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
+        "Reticle": {
+            "Texture": "/Firearm/Device/Optic/PSO1/T_PSO1_Reticle",
+            "Brightness": 1.0
+        }
+    }
+]</code></pre>
+</details>
+
+            </div>
+
+            <br></br>
+
+            <p>
+                This approach doesn't limit the system to a predefined set
+                of types. Server owners can create their own item variations
+                while keeping the same underlying principles for identification,
+                storage, ownership, and persistence.
+            </p>
+        </section>
+
+
+
+        <!-- ========================================================
+             PERSISTENCE
+        ======================================================== -->
+
+        <section class="log-section">
+            <div class="section-number">DATA STORAGE</div>
+            <h2>SAVING AND RESTORATION</h2>
+
+            <p>
+                The persistence system works directly with object data.
+                It uses a custom binary protocol: an object's state is serialized
+                for storage and reconstructed when loaded.
+            </p>
+
+            <p>
+                It doesn't matter whether we're dealing with a weapon,
+                a magazine, a cartridge, or an entirely new item added
+                by a server owner. The system handles data as a universal
+                sequence of bytes without interfering with its internal structure.
+            </p>
+
+            <div class="persistence-flow">
+                <div class="persistence-column">
+                    <span>RUNTIME</span>
+                    <strong>Objects</strong>
+                    <small>State + Ownership</small>
+                </div>
+                <div class="persistence-connector">
+                    <span>SERIALIZATION</span>
+                    <b>⇄</b>
+                </div>
+                <div class="persistence-column">
+                    <span>STORAGE</span>
+                    <strong>Internal Logic</strong>
+                    <small>Binary Data + Change Journal</small>
+                </div>
+            </div>
+
+            <p>
+                Once loaded, objects are registered in the system again
+                with their original identifiers and states. Their relationships
+                with other objects are restored as well, while visual
+                representations are created only where they're needed.
+            </p>
+        </section>
+
+
+        <!-- ========================================================
+             CONCLUSION
+        ======================================================== -->
+
+        <section class="log-section">
+            <h2>CONCLUSION</h2>
+
+            <p>
+                In the end, I got exactly what I was aiming for:
+                One Ring to rule them all. Now I can move on to the next thing.
+            </p>
+
+            <p>
+                There's still a lot of work ahead, and the system will
+                gradually become more complex. But what's important to me
+                is keeping the original idea intact: clear separation of
+                responsibilities, with each part remaining understandable,
+                manageable, and as independent as possible.
+            </p>
+        </section>
+
+    </main>
+
+    <footer>NVXIII</footer>
+
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
+
+    <script>
+        const backToTop = document.getElementById("backToTop");
+
+        window.addEventListener("scroll", () => {
+            backToTop.classList.toggle("visible", window.scrollY > 500);
+        });
+
+        backToTop.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    </script>
+
+</body>
+</html>
