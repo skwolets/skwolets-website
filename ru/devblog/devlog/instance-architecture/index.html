@@ -789,210 +789,212 @@
 
 
 
+
 <!-- ========================================================
      COMPOSITE VEHICLE
 ======================================================== -->
 
 <section class="log-section">
-
-    <div class="section-number">КОМПОЗИЦИЯ</div>
-    <h2>ОДИН ПРИНЦИП — РАЗНЫЕ ПРЕДМЕТЫ</h2>
+    <div class="section-number">СОСТАВНЫЕ ОБЪЕКТЫ</div>
+    <h2>ОТ ПРЕДМЕТА К СЛОЖНОЙ СУЩНОСТИ</h2>
 
     <p class="lead">
-        Чтобы показать универсальность этой архитектуры,
-        рассмотрим более сложный пример — автомобиль.
+        Та же архитектура должна работать не только для небольших
+        предметов, но и для сложных составных объектов.
     </p>
 
     <p>
-        Автомобиль состоит из множества самостоятельных предметов.
-        Двигатель, аккумулятор, топливный бак, колёса и фары —
-        каждый из них имеет собственное состояние и характеристики.
-        Некоторые из этих предметов, в свою очередь, могут содержать
-        другие предметы.
+        Я не хочу создавать отдельную систему хранения для оружия,
+        экипировки и транспорта. В основе должна оставаться одна модель:
+        предметы могут содержать другие предметы, образуя структуры
+        любой сложности.
     </p>
 
     <div class="ownership-diagram">
 
-        <!-- ROOT OBJECT -->
+        <!-- VEHICLE -->
         <div class="ownership-node root-node">
-            <span class="node-type">ROOT OBJECT</span>
+            <span class="node-type">КОРНЕВАЯ СУЩНОСТЬ</span>
             <strong>Автомобиль</strong>
-            <small>Корневой предмет</small>
-            <div class="ownership-properties">
-                <span>Состояние</span>
-                <span>Прочность</span>
-                <span>Владелец</span>
-            </div>
+            <small>Состояние · Повреждения · Владелец</small>
         </div>
 
         <div class="ownership-line"></div>
 
-        <!-- DIRECT CHILDREN -->
+        <!-- MAIN BRANCH -->
         <div class="ownership-branch">
             <div class="ownership-branch-line"></div>
 
             <div class="ownership-branch-items">
 
-                <!-- ENGINE AND FUEL TANK -->
+                <!-- POWERTRAIN -->
                 <div class="ownership-branch-column">
 
-                    <!-- ENGINE -->
-                    <div class="ownership-node item-node">
-                        <span class="node-type">ITEM</span>
-                        <strong>Двигатель</strong>
-                        <div class="ownership-properties">
-                            <span>Износ</span>
-                            <span>Повреждения</span>
-                        </div>
+                    <div class="ownership-node container-node">
+                        <span class="node-type">СИСТЕМА</span>
+                        <strong>Силовая установка</strong>
                     </div>
 
-                    <div class="ownership-line"></div>
+                    <div class="ownership-subbranch">
+
+                        <!-- ENGINE -->
+                        <div class="ownership-node item-node">
+                            <span class="node-type">ПРЕДМЕТ</span>
+                            <strong>Двигатель</strong>
+                            <div class="ownership-properties">
+                                <span>Износ</span>
+                                <span>Температура</span>
+                                <span>Повреждения</span>
+                            </div>
+                        </div>
+
+                        <!-- FUEL -->
+                        <div class="ownership-node item-node">
+                            <span class="node-type">ПРЕДМЕТ</span>
+                            <strong>Топливный бак</strong>
+                            <div class="ownership-properties">
+                                <span>Уровень топлива</span>
+                                <span>Состояние</span>
+                            </div>
+                        </div>
+
+                    </div>
 
                     <div class="ownership-subbranch">
-                        <div class="ownership-node content-node">
-                            <span class="node-type">ITEM</span>
+
+                        <div class="ownership-node item-node">
+                            <span class="node-type">КОМПОНЕНТ</span>
                             <strong>Стартер</strong>
+                            <small>Износ · Повреждения</small>
                         </div>
 
-                        <div class="ownership-node content-node">
-                            <span class="node-type">ITEM</span>
+                        <div class="ownership-node item-node">
+                            <span class="node-type">КОМПОНЕНТ</span>
                             <strong>Генератор</strong>
+                            <small>Износ · Состояние</small>
                         </div>
-                    </div>
 
-                    <!-- FUEL TANK -->
-                    <div class="ownership-node item-node">
-                        <span class="node-type">ITEM</span>
-                        <strong>Топливный бак</strong>
-                        <div class="ownership-properties">
-                            <span>Количество топлива</span>
-                            <span>Повреждения</span>
-                        </div>
                     </div>
 
                     <div class="ownership-line"></div>
 
-                    <div class="ownership-subbranch">
-                        <div class="ownership-node content-node">
-                            <span class="node-type">ITEM</span>
-                            <strong>Топливный насос</strong>
-                        </div>
+                    <div class="ownership-node item-node">
+                        <span class="node-type">КОМПОНЕНТ</span>
+                        <strong>Топливный насос</strong>
+                        <small>Состояние · Износ</small>
                     </div>
 
                 </div>
 
-                <!-- BODY AND WHEELS -->
+                <!-- ELECTRICAL -->
                 <div class="ownership-branch-column">
 
-                    <!-- BODY -->
-                    <div class="ownership-node item-node">
-                        <span class="node-type">ITEM</span>
-                        <strong>Кузов</strong>
-                        <div class="ownership-properties">
-                            <span>Прочность</span>
-                            <span>Повреждения</span>
-                        </div>
+                    <div class="ownership-node container-node">
+                        <span class="node-type">СИСТЕМА</span>
+                        <strong>Электрооборудование</strong>
                     </div>
-
-                    <div class="ownership-line"></div>
 
                     <div class="ownership-subbranch">
-                        <div class="ownership-node content-node">
-                            <span class="node-type">ITEM</span>
-                            <strong>Капот</strong>
+
+                        <!-- BATTERY -->
+                        <div class="ownership-node item-node">
+                            <span class="node-type">ПРЕДМЕТ</span>
+                            <strong>Аккумулятор</strong>
+                            <div class="ownership-properties">
+                                <span>Заряд</span>
+                                <span>Износ</span>
+                                <span>Состояние</span>
+                            </div>
                         </div>
 
-                        <div class="ownership-node content-node">
-                            <span class="node-type">ITEM</span>
-                            <strong>Багажник</strong>
+                        <!-- HEADLIGHTS -->
+                        <div class="ownership-node item-node">
+                            <span class="node-type">СОСТАВНОЙ ПРЕДМЕТ</span>
+                            <strong>Фары</strong>
+                            <small>Состояние · Повреждения</small>
                         </div>
 
-                        <div class="ownership-node content-node">
-                            <span class="node-type">ITEM</span>
-                            <strong>Двери</strong>
-                        </div>
                     </div>
-
-                    <!-- WHEELS -->
-                    <div class="ownership-node item-node">
-                        <span class="node-type">ITEM</span>
-                        <strong>Переднее левое колесо</strong>
-                        <div class="ownership-properties">
-                            <span>Износ</span>
-                            <span>Давление</span>
-                        </div>
-                    </div>
-
-                    <div class="ownership-node item-node">
-                        <span class="node-type">ITEM</span>
-                        <strong>Переднее правое колесо</strong>
-                        <div class="ownership-properties">
-                            <span>Износ</span>
-                            <span>Давление</span>
-                        </div>
-                    </div>
-
-                    <div class="ownership-node item-node">
-                        <span class="node-type">ITEM</span>
-                        <strong>Заднее левое колесо</strong>
-                        <div class="ownership-properties">
-                            <span>Износ</span>
-                            <span>Давление</span>
-                        </div>
-                    </div>
-
-                    <div class="ownership-node item-node">
-                        <span class="node-type">ITEM</span>
-                        <strong>Заднее правое колесо</strong>
-                        <div class="ownership-properties">
-                            <span>Износ</span>
-                            <span>Давление</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- BATTERY AND HEADLIGHTS -->
-                <div class="ownership-branch-column">
-
-                    <!-- BATTERY -->
-                    <div class="ownership-node item-node">
-                        <span class="node-type">ITEM</span>
-                        <strong>Аккумулятор</strong>
-                        <div class="ownership-properties">
-                            <span>Заряд</span>
-                            <span>Износ</span>
-                        </div>
-                    </div>
-
-                    <!-- LEFT HEADLIGHT -->
-                    <div class="ownership-node item-node">
-                        <span class="node-type">ITEM</span>
-                        <strong>Левая фара</strong>
-                    </div>
-
-                    <div class="ownership-line"></div>
 
                     <div class="ownership-subbranch">
-                        <div class="ownership-node content-node">
-                            <span class="node-type">ITEM</span>
+
+                        <div class="ownership-node item-node">
+                            <span class="node-type">КОМПОНЕНТ</span>
                             <strong>Левая лампочка</strong>
+                            <small>Исправность</small>
                         </div>
+
+                        <div class="ownership-node item-node">
+                            <span class="node-type">КОМПОНЕНТ</span>
+                            <strong>Правая лампочка</strong>
+                            <small>Исправность</small>
+                        </div>
+
                     </div>
 
-                    <!-- RIGHT HEADLIGHT -->
-                    <div class="ownership-node item-node">
-                        <span class="node-type">ITEM</span>
-                        <strong>Правая фара</strong>
+                </div>
+
+                <!-- BODY AND CHASSIS -->
+                <div class="ownership-branch-column">
+
+                    <div class="ownership-node container-node">
+                        <span class="node-type">СИСТЕМА</span>
+                        <strong>Кузов и ходовая часть</strong>
+                    </div>
+
+                    <div class="ownership-subbranch">
+
+                        <!-- WHEELS -->
+                        <div class="ownership-node item-node">
+                            <span class="node-type">СОСТАВНОЙ ПРЕДМЕТ</span>
+                            <strong>Колёса</strong>
+                            <div class="ownership-properties">
+                                <span>Износ</span>
+                                <span>Давление</span>
+                                <span>Повреждения</span>
+                            </div>
+                        </div>
+
+                        <!-- BODY -->
+                        <div class="ownership-node item-node">
+                            <span class="node-type">СОСТАВНОЙ ПРЕДМЕТ</span>
+                            <strong>Кузов</strong>
+                            <small>Состояние · Повреждения</small>
+                        </div>
+
+                    </div>
+
+                    <div class="ownership-subbranch">
+
+                        <div class="ownership-node item-node">
+                            <span class="node-type">КОМПОНЕНТ</span>
+                            <strong>Двери</strong>
+                            <small>Состояние · Повреждения</small>
+                        </div>
+
+                        <div class="ownership-node item-node">
+                            <span class="node-type">КОМПОНЕНТ</span>
+                            <strong>Капот</strong>
+                            <small>Состояние · Повреждения</small>
+                        </div>
+
                     </div>
 
                     <div class="ownership-line"></div>
 
-                    <div class="ownership-subbranch">
-                        <div class="ownership-node content-node">
-                            <span class="node-type">ITEM</span>
-                            <strong>Правая лампочка</strong>
-                        </div>
+                    <!-- CARGO -->
+                    <div class="ownership-node container-node">
+                        <span class="node-type">КОНТЕЙНЕР</span>
+                        <strong>Багажник</strong>
+                        <small>Содержит другие предметы</small>
+                    </div>
+
+                    <div class="ownership-line"></div>
+
+                    <div class="ownership-node content-node">
+                        <span class="node-type">СОДЕРЖИМОЕ</span>
+                        <strong>Груз</strong>
+                        <small>Инструменты · Запасные части · Другие предметы</small>
                     </div>
 
                 </div>
@@ -1000,37 +1002,37 @@
             </div>
         </div>
 
-        <!-- LEGEND -->
         <div class="ownership-legend">
-            <span>Красная рамка — корневой или самостоятельный предмет</span>
-            <span>Пунктирная рамка — вложенный предмет</span>
+            <span><i class="legend-item"></i> Самостоятельный предмет</span>
+            <span><i class="legend-container"></i> Контейнер или система</span>
+            <span><i class="legend-content"></i> Содержимое</span>
         </div>
 
     </div>
 
     <p>
-        Обрати внимание: здесь нет отдельных механизмов для двигателя,
-        топливной системы, электрооборудования или других частей автомобиля.
-        Каждый элемент — обычный предмет со своими данными и состоянием.
-        Он может быть вложен в другой предмет и сам содержать вложенные
-        предметы.
+        Автомобиль может состоять из десятков самостоятельных компонентов.
+        Двигатель имеет собственный износ и состояние, аккумулятор —
+        уровень заряда, а каждая лампочка в фаре может отдельно выйти
+        из строя. Даже багажник способен содержать другие предметы,
+        которые также имеют собственные характеристики.
     </p>
 
     <p>
-        Тот же принцип работает с оружием, инвентарём и любыми другими
-        составными объектами. Меняется только количество и структура
-        вложенных предметов, но не сама архитектура.
+        При этом для всей этой структуры не требуется отдельная
+        система хранения или специальные правила вложенности.
+        Автомобиль, его компоненты и находящиеся внутри предметы
+        используют тот же общий принцип.
     </p>
 
-    <div class="quote-block quote-small">
-        <strong>
-            Неважно, насколько сложен объект.
-            Вся его структура строится из одного универсального принципа
-            вложенности предметов.
-        </strong>
-    </div>
+    <p>
+        Архитектура не ограничивается заранее заданной сложностью объектов.
+        Новые уровни вложенности и новые типы компонентов не требуют
+        создания отдельной модели данных.
+    </p>
 
 </section>
+
 
 
 
