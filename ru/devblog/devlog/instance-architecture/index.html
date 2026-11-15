@@ -590,52 +590,50 @@
         <strong>JSON</strong>
     </summary>
 
-    <pre><code class="language-json">{
-    [
-        {
-            "Id": "AKM",
-            "DisplayName": "AKM Assault Rifle",
-            "Model": "/Firearm/Rifle/M_AKM",
-            "BarrelFactor": 1.0,
-            "BaseSpreadMOA": 3.0,
-            "ChamberSize": 1,
-            "AutoChamber": true,
-            "AnimTag": "Rifle",
-            "AnimSequences": [
-                "AKM_ReloadSequence",
-                "AKM_Unjam",
-                "AKM_Selector",
-                "AKM_MagCheck",
-                "AKM_ChamberCheck"
-            ],
-            "Wear": {
-                "WearPerShot": 0.0015,
-                "JamChanceMultiplier": 1.0,
-                "CriticalWearThreshold": 0.3
-            },
-            "AcousticPropagation": {
-                "Begin": "/Firearm/SFX/AK_Family/S_AK_Oneshot",
-                "End": "/Firearm/SFX/AK_Family/S_AK_Stop",
-                "Tail": "/Firearm/SFX/AK_Family/S_AK_Tail",
-                "Range": 3000.0
-            },
-            "Magazines": ["Mag_AKM_30Rnd"],
-            "AmmoTypes": [
-                "Ammo_762x39",
-                "Ammo_762x39Tracer",
-                "Ammo_762x39Subsonic"
-            ],
-            "Muzzles": ["Muzzle_PBS1"],
-            "Optics": ["Optic_PSO1],
-            "AmmoSource": "DetachableMag",
-            "FireModes": [
-                { "Mode": "Semi", "Interval": 0.130 },
-                { "Mode": "Auto", "Interval": 0.100 },
-                { "Mode": "Safe" }
-            ]
-        }
-    ]
-}</code></pre>
+    <pre><code>[
+    {
+        "Id": "AKM",
+        "DisplayName": "AKM Assault Rifle",
+        "Model": "/Firearm/Rifle/M_AKM",
+        "BarrelFactor": 1.0,
+        "BaseSpreadMOA": 3.0,
+        "ChamberSize": 1,
+        "AutoChamber": true,
+        "AnimTag": "Rifle",
+        "AnimSequences": [
+            "AKM_ReloadSequence",
+            "AKM_Unjam",
+            "AKM_Selector",
+            "AKM_MagCheck",
+            "AKM_ChamberCheck"
+        ],
+        "Wear": {
+            "WearPerShot": 0.0015,
+            "JamChanceMultiplier": 1.0,
+            "CriticalWearThreshold": 0.3
+        },
+        "AcousticPropagation": {
+            "Begin": "/Firearm/SFX/AK_Family/S_AK_Oneshot",
+            "End": "/Firearm/SFX/AK_Family/S_AK_Stop",
+            "Tail": "/Firearm/SFX/AK_Family/S_AK_Tail",
+            "Range": 3000.0
+        },
+        "Magazines": ["Mag_AKM_30Rnd"],
+        "AmmoTypes": [
+            "Ammo_762x39",
+            "Ammo_762x39Tracer",
+            "Ammo_762x39Subsonic"
+        ],
+        "Muzzles": ["Muzzle_PBS1"],
+        "Optics": ["Optic_PSO1],
+        "AmmoSource": "DetachableMag",
+        "FireModes": [
+            { "Mode": "Semi", "Interval": 0.130 },
+            { "Mode": "Auto", "Interval": 0.100 },
+            { "Mode": "Safe" }
+        ]
+    }
+]</code></pre>
 </details>
 
 <details class="definition-config" id="magazine-configuration">
