@@ -581,51 +581,65 @@
                 </div>
             </div>
 
-            <div class="definition-config">
-                <div class="definition-config-header">
-                    <span>DEFINITION</span>
-                    <strong>AKM</strong>
-                </div>
-
-                <details
+            
+            <details
                 class="definition-config"
-                id="item-configuration">
+                id="firearm-configuration"
+            >
                 <summary class="definition-config-header">
-                    <span>
-                        ITEM CONFIGURATION
-                    </span>
-
-                    <strong>
-                        JSON
-                    </strong>
+                    <span>FIREARM CONFIGURATION</span>
+                    <strong>JSON</strong>
                 </summary>
 
-                <pre><code>[
-                {
-                    "Type": "Ammo_762x39",
-                    "Velocity": 71800,
-                    "BulletWeight": 7.9,
-                    "BallisticCoefficient": 0.294,
-                    "Lifetime": 3.0,
-                    "ProjectileCount": 1
-                },
-                {
-                    "Type": "Ammo_762x39Tracer",
-                    "Parent": "Ammo_762x39",
-                    "Particle": {
-                        "ParticleSystem": "Tracer",
-                        "SpawnDelayDistance": 100
+                <pre><code class="language-json">{
+                "Version": 1,
+                "Firearms": [
+                    {
+                        "Id": "AKM",
+                        "Enabled": true,
+                        "DisplayName": "AKM assault rifle",
+                        "Model": "/Game/Lib/Firearm/Rifle/AKM/Mesh/SKM_AKM.SKM_AKM",
+                        "AnimTag": "OverlayMode.Rifle",
+                        "BarrelFactor": 1.0,
+                        "BaseSpreadMOA": 3.0,
+                        "ChamberSize": 1,
+                        "AutoChamber": true,
+                        "Sequences": [
+                            "AKM_Reload",
+                            "AKM_Unjam",
+                            "AKM_Selector",
+                            "AKM_MagCheck",
+                            "AKM_ChamberCheck"
+                        ],
+                        "Wear": {
+                            "WearPerShot": 0.0015,
+                            "JamChanceMultiplier": 1.0,
+                            "CriticalWearThreshold": 0.3
+                        },
+                        "AcousticPropagation": {
+                            "Begin": "/Game/Lib/Firearm/SFX/Assets/Cues/01_CARBINE/01_CARBINE_Oneshot.01_CARBINE_Oneshot",
+                            "End": "/Game/Lib/Firearm/SFX/Assets/Cues/01_CARBINE/01_CARBINE_Stop.01_CARBINE_Stop",
+                            "Tail": "/Game/Lib/Firearm/SFX/Assets/Cues/01_CARBINE/01_CARBINE_Tail.01_CARBINE_Tail",
+                            "Range": 3000.0
+                        },
+                        "Magazines": ["Mag_AKM_30Rnd"],
+                        "AmmoTypes": [
+                            "Ammo_762x39",
+                            "Ammo_762x39Tracer",
+                            "Ammo_762x39Subsonic"
+                        ],
+                        "Muzzles": ["AK_PBS1"],
+                        "AmmoSource": "DetachableMag",
+                        "FireModes": [
+                            { "Mode": "Semi", "Interval": 0.130 },
+                            { "Mode": "Auto", "Interval": 0.100 },
+                            { "Mode": "Safe" }
+                        ]
                     }
-                },
-                {
-                    "Type": "Ammo_762x39Subsonic",
-                    "Parent": "Ammo_762x39",
-                    "Velocity": 28500,
-                    "BulletWeight": 12.5,
-                    "Lifetime": 4.0
-                }
-            ]</code></pre>
+                ]
+            }</code></pre>
             </details>
+
 
             </div>
 
