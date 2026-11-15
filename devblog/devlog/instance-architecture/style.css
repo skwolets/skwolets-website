@@ -403,7 +403,7 @@ header {
 }
 
 .ownership-nested-group {
-    margin: 0 auto;
+    margin: 25px auto 0;
     padding: 25px 20px;
     border: 1px dashed #555;
 }
