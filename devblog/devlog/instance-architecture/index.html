@@ -650,13 +650,23 @@
         "DisplayName": "PBS-1 Suppressor",
         "Model": "/Firearm/Device/Muzzle/PBS1/M_PBS1",
         "Type": "Suppressor",
-        "BarrelFactor": 0.85,
-        "RecoilMultiplier": 0.95,
+        "BarrelFactor": 1.0,
+        "RecoilMultiplier": 0.9,
         "AcousticPropagation": {
             "Begin": "/Firearm/SFX/AK_Family/S_PBS1_Oneshot",
             "End": "/Firearm/SFX/AK_Family/S_PBS1_Stop",
             "Tail": "/Firearm/SFX/AK_Family/S_PBS1_Tail",
             "Range": 1800.0
+        },
+        "Temperature": {
+			"MaxCelsius": 427.0,
+			"IncreaseAmountPerShot": 3.3,
+			"DecreaseAmountPerSeconds": 1.7,
+			"OverheatThreshold": 0.9
+        },
+        "Resource": {
+            "Type": "Restorable",
+            "PassiveRate": -0.3981
         }
     }
 ]</code></pre>
